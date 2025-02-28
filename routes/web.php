@@ -14,5 +14,22 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // Redirect to the login page
+    return redirect('/login');
 });
+
+Route::get('/login', function () {
+    return view('pages.auth.login');
+});
+
+Route::post('/login', function (){
+    return redirect()->route('dashboard-biro-sdm');
+})->name('login-action');
+
+Route::group(['prefix' => 'biro-sdm'], function () {
+    Route::get('/', function () {
+        return view('pages.biro-sdm.dashboard');
+    })->name('dashboard-biro-sdm');
+});
+
+
