@@ -11,7 +11,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{asset('bower_components/font-awesome/css/font-awesome.min.css')}}">
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{asset('dist/css/AdminLTE.css')}}">
+    <link rel="stylesheet" href="{{asset('dist/css/AdminLTE.min.css')}}">
 <body class="hold-transition h-100 d-flex justify-content-center" style="background: #ececec">
 <div class="login-box m-auto">
     <div class="login-logo">
@@ -24,7 +24,7 @@
             <p class="login-box-msg">Silahkan Login</p>
 
             <form action="{{route('login-action')}}" method="post">
-                @csrf
+                {{csrf_field()}}
                 <div class="input-group mb-3">
                     <input type="email" class="form-control" placeholder="Email">
                     <div class="input-group-append">
