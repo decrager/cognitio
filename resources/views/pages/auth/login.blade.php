@@ -22,19 +22,24 @@
     <div class="card mt-2">
         <div class="card-body login-card-body">
             <p class="login-box-msg">Silahkan Login</p>
-
+            
             <form action="{{route('login-action')}}" method="post">
-                {{csrf_field()}}
+                @csrf
                 <div class="input-group mb-3">
-                    <input type="email" class="form-control" placeholder="Email">
+                    <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" value="{{ old('email') }}" required>
                     <div class="input-group-append">
                         <div class="input-group-text px-2">
                             <span class="fa fa-envelope"></span>
                         </div>
                     </div>
+                    @error('email')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>Email yang dimasukkan belum terdaftar</strong>
+                        </span>
+                    @enderror
                 </div>
                 <div class="input-group mb-3">
-                    <input type="password" class="form-control" placeholder="Password">
+                    <input type="password" name="password" class="form-control" placeholder="Password" required>
                     <div class="input-group-append">
                         <div class="input-group-text px-2">
                             <span class="fa fa-lock"></span>

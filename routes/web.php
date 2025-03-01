@@ -1,6 +1,9 @@
 <?php
 
+use App\Models\Pegawai;
+use App\Models\UnitKerja;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Authentication;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,14 +25,30 @@ Route::get('/login', function () {
     return view('pages.auth.login');
 });
 
-Route::post('/login', function (){
-    return redirect()->route('dashboard-biro-sdm');
-})->name('login-action');
+Route::post('/login', [Authentication::class, 'authenticate'])->name('login-action');
+Route::get('/logout', [Authentication::class, 'logout'])->name('logout-action');
 
 Route::group(['prefix' => 'biro-sdm'], function () {
-    Route::get('/', function () {
+    Route::get('/dashboard', function () {
         return view('pages.biro-sdm.dashboard');
-    })->name('dashboard-biro-sdm');
+    })->name('dashboard.biro-sdm');
 });
 
+Route::group(['prefix' => 'unit-kerja', 'middleware' => 'cekRole:unit-kerja'], function () {
+    Route::get('/dashboard', function () {
+        return view('pages.unit-kerja.dashboard');
+    })->name('dashboard.biro-sdm');
+});
 
+Route::group(['prefix' => 'pegawai', 'middleware' => 'cekRole:pegawai'], function () {
+    Route::get('/dashboard', function () {
+        return view('pages.pegawai.dashboard');
+    })->name('dashboard.biro-sdm');
+});
+
+Route::get('/test', function () {
+    $user = Auth::user();
+    $user['name'] = Pegawai::where('id_user', $user->id)->first()->nama;
+
+    return $user;
+});
