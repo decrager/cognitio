@@ -33,6 +33,7 @@ Route::group(['prefix' => 'biro-sdm', 'middleware' => 'cekRole:biro-sdm'], funct
     })->name('dashboard.biro-sdm');
 
     Route::get('/pegawai', [BiroSdmPegawaiController::class,'index'])->name('pegawai.biro-sdm');
+    Route::get('/pegawai/{id}', [BiroSdmPegawaiController::class,'show'])->name('pegawai.biro-sdm.show');
 });
 
 Route::group(['prefix' => 'unit-kerja', 'middleware' => 'cekRole:unit-kerja'], function () {

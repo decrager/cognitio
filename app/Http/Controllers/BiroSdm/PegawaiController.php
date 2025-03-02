@@ -13,8 +13,37 @@ class PegawaiController extends Controller
      */
     public function index(Request $request)
     {
-        $data = Pegawai::with('standar_kompetensi')->paginate(20);
-        return $data;
+        $results = new Pegawai();
+
+        $results = $results->with('jabatan');
+        $results = $this->withFilter($results, $request);
+
+        $results = $results->paginate(10);
+        return view('pages.biro-sdm.pegawai', compact(['results','request']));
+    }
+
+    private function withFilter($query, $request)
+    {
+        $search = $request->input('search');
+        if ($search) {
+            $query = $query->where(function($query) use ($search) {
+                $query->where('nama', 'like', '%' . $search . '%')
+                    ->orWhere('nip', 'like', '%' . $search . '%')
+                    ->orWhere('nik', 'like', '%' . $search . '%')
+                    ->orWhere('telepon', 'like', '%' . $search . '%')
+                    ->orWhere('alamat', 'like', '%' . $search . '%')
+                    ->orWhereHas('jabatan', function($query) use ($search) {
+                        $query->where('tipe_jabatan', 'like', '%' . $search . '%')
+                            ->orWhere('nama_jabatan', 'like', '%' . $search . '%');
+                    });;
+            });
+        }
+
+        if ($request->input('tipe')){
+            $query = $query->where('tipe', $request->input('tipe'));
+        }
+
+        return $query;
     }
 
     /**
@@ -38,14 +67,10 @@ class PegawaiController extends Controller
      */
     public function show(string $id)
     {
-        $data = Pegawai::with('standar_kompetensi')->find($id);
+        $data = Pegawai::with('standar_kompetensi','jabatan')->find($id);
 
-        // If Not Found Redirect 404 Pages
-        if (!$data) {
-            abort(404);
-        }
-
-        return $data;
+        // Return The Modal Component
+        return view('pages.biro-sdm.modal-pegawai', compact('data'));
     }
 
     /**
