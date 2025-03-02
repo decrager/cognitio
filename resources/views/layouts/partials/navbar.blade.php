@@ -17,11 +17,15 @@
             <span class="sr-only">Toggle navigation</span>
         </a>
 
+        <span>
+            <b style="color: white;">{{ $user->name }}</b>
+        </span>
+
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
-                    <a href="#" class="btn btn-flat">
+                    <a href="{{ route('logout-action') }}" class="btn btn-flat">
                       <i class="fa fa-sign-out"></i>  Sign Out
                     </a>
                 </li>
