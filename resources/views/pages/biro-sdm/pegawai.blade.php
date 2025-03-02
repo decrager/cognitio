@@ -9,7 +9,7 @@
             <div class="row mb-4">
                 <div id="test" class="col-md-12 ">
                     {{-- Filter --}}
-                    <form class="d-flex align-items-center" action="{{ route('pegawai.biro-sdm') }}" method="GET">
+                    <form class="d-flex align-items-center" action="{{ route('biro-sdm.pegawai.index') }}" method="GET">
                         <input class="form-control w-25" name="search" value="{{ old('search', $request->search) }}" placeholder="Nama/Jabatan/NIP/NIK/Telepon/Alamat">
                         <select name="tipe" style="width: 10%" class="form-control ml-2">
                             <option value="">Tipe Pegawai</option>
@@ -100,7 +100,7 @@
     <script>
 
         function resetForm() {
-            const form = document.querySelector('form[action="{{ route('pegawai.biro-sdm') }}"]');
+            const form = document.querySelector('form[action="{{ route('biro-sdm.pegawai.index') }}"]');
             form.querySelector('input[name="search"]').value = '';
             form.querySelector('select[name="tipe"]').value = '';
             form.submit();
@@ -112,7 +112,7 @@
             $('#modal-loader').show(); // Show the loader
 
             $.ajax({
-                url: '{{ route('pegawai.biro-sdm.show', '') }}/' + id,
+                url: '{{ route('biro-sdm.pegawai.show', '') }}/' + id,
                 method: 'GET',
                 success: function (data) {
                     $('#modal-loader').hide(); // Hide the loader

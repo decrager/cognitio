@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Authentication;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\BiroSdm\PegawaiController as BiroSdmPegawaiController;
+use App\Http\Controllers\BiroSdm\ProgramController as BiroSdmProgramController;
+use App\Http\Controllers\BiroSdmController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,12 +30,12 @@ Route::post('/login', [Authentication::class, 'authenticate'])->name('login-acti
 Route::get('/logout', [Authentication::class, 'logout'])->name('logout-action');
 
 Route::group(['prefix' => 'biro-sdm', 'middleware' => 'cekRole:biro-sdm'], function () {
-    Route::get('/dashboard', function () {
-        return view('pages.biro-sdm.dashboard');
-    })->name('dashboard.biro-sdm');
+    Route::get('/dashboard', [BiroSdmController::class, 'index'])->name('dashboard.biro-sdm');
 
-    Route::get('/pegawai', [BiroSdmPegawaiController::class,'index'])->name('pegawai.biro-sdm');
-    Route::get('/pegawai/{id}', [BiroSdmPegawaiController::class,'show'])->name('pegawai.biro-sdm.show');
+    Route::get('/pegawai', [BiroSdmPegawaiController::class,'index'])->name('biro-sdm.pegawai.index');
+    Route::get('/pegawai/{id}', [BiroSdmPegawaiController::class,'show'])->name('biro-sdm.pegawai.show');
+
+    Route::get('/program-pelatihan', [BiroSdmProgramController::class, 'index'])->name('biro-sdm.program.index');
 });
 
 Route::group(['prefix' => 'unit-kerja', 'middleware' => 'cekRole:unit-kerja'], function () {

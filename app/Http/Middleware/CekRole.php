@@ -17,8 +17,10 @@ class CekRole
      */
     public function handle(Request $request, Closure $next, ...$levels): Response
     {
-        if (in_array(Auth::user()->role, $levels)) {
-            return $next($request);
+        if (Auth::check()) {
+            if (in_array(Auth::user()->role, $levels)) {
+                return $next($request);
+            }
         }
         
         return redirect()->route('login-form');

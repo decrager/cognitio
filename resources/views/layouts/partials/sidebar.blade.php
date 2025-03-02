@@ -15,21 +15,21 @@
                         <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                     </a>
                 </li>
-                <li class="{{ Request::routeIs('program-pelatihan.biro-sdm') ? 'active' : '' }}">
-                    <a href="#">
+                <li class="{{ Request::routeIs('biro-sdm.program.*') ? 'active' : ''}}">
+                    <a href="{{ route('biro-sdm.program.index') }}">
                         <i class="fa fa-files-o"></i>
                         <span>Program Pelatihan</span>
                     </a>
                 </li>
-                <li class="{{ Request::routeIs('pegawai.biro-sdm') ? 'active' : '' }}">
-                    <a href="{{route('pegawai.biro-sdm')}}">
+                <li class="{{ Request::routeIs('biro-sdm.pegawai.*') ? 'active' : '' }}">
+                    <a href="{{route('biro-sdm.pegawai.index')}}">
                         <i class="fa fa-user-o"></i>
                         <span>Pegawai</span>
                     </a>
                 </li>
             @elseif ($user->role == 'unit-kerja')
                 <li class="header">UNIT KERJA</li>
-                <li class="{{ Request::routeIs('dashboard.*') ? 'active' : '' }} ">
+                <li class="{{ Request::routeIs('dashboard.*') ? 'active' : '' }}">
                     <a href="{{ route('dashboard.unit-kerja') }}">
                         <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                     </a>
@@ -42,7 +42,7 @@
                 </li>
             @elseif ($user->role == 'pegawai')
                 <li class="header">PEGAWAI</li>
-                <li class="{{ Request::routeIs('dashboard.*') ? 'active' : '' }} ">
+                <li class="{{ Request::routeIs('dashboard.*') ? 'active' : '' }}">
                     <a href="{{ route('dashboard.pegawai') }}">
                         <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                     </a>

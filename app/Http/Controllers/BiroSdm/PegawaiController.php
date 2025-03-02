@@ -27,15 +27,15 @@ class PegawaiController extends Controller
         $search = $request->input('search');
         if ($search) {
             $query = $query->where(function($query) use ($search) {
-                $query->where('nama', 'like', '%' . $search . '%')
-                    ->orWhere('nip', 'like', '%' . $search . '%')
-                    ->orWhere('nik', 'like', '%' . $search . '%')
-                    ->orWhere('telepon', 'like', '%' . $search . '%')
-                    ->orWhere('alamat', 'like', '%' . $search . '%')
-                    ->orWhereHas('jabatan', function($query) use ($search) {
-                        $query->where('tipe_jabatan', 'like', '%' . $search . '%')
-                            ->orWhere('nama_jabatan', 'like', '%' . $search . '%');
-                    });;
+                $query->whereRaw('LOWER(nama) LIKE ?', ['%' . strtolower($search) . '%'])
+                      ->orWhereRaw('LOWER(nip) LIKE ?', ['%' . strtolower($search) . '%'])
+                      ->orWhereRaw('LOWER(nik) LIKE ?', ['%' . strtolower($search) . '%'])
+                      ->orWhereRaw('LOWER(telepon) LIKE ?', ['%' . strtolower($search) . '%'])
+                      ->orWhereRaw('LOWER(alamat) LIKE ?', ['%' . strtolower($search) . '%'])
+                      ->orWhereHas('jabatan', function($query) use ($search) {
+                          $query->whereRaw('LOWER(tipe_jabatan) LIKE ?', ['%' . strtolower($search) . '%'])
+                                ->orWhereRaw('LOWER(nama_jabatan) LIKE ?', ['%' . strtolower($search) . '%']);
+                      });
             });
         }
 
