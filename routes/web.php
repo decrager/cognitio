@@ -4,6 +4,7 @@ use App\Models\Pegawai;
 use App\Models\UnitKerja;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Authentication;
+use App\Http\Controllers\PegawaiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,10 +40,12 @@ Route::group(['prefix' => 'unit-kerja', 'middleware' => 'cekRole:unit-kerja'], f
 });
 
 Route::group(['prefix' => 'pegawai', 'middleware' => 'cekRole:pegawai'], function () {
-    Route::get('/dashboard', function () {
-        return view('pages.pegawai.dashboard');
-    })->name('dashboard.pegawai');
+    // Route::get('/dashboard', function () {
+    //     return view('pages.pegawai.dashboard');
+    // })->name('dashboard.pegawai');
+    Route::get('/dashboard', [PegawaiController::class, 'dashboard'])->name('dashboard.pegawai');
 });
+
 
 Route::get('/test', function () {
     $user = Auth::user();
