@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\BiroSdm\PegawaiController as BiroSdmPegawaiController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,6 +30,8 @@ Route::group(['prefix' => 'biro-sdm'], function () {
     Route::get('/', function () {
         return view('pages.biro-sdm.dashboard');
     })->name('dashboard-biro-sdm');
+
+    Route::get('/pegawai', [BiroSdmPegawaiController::class,'index'])->name('pegawai-index');
 });
 
 
