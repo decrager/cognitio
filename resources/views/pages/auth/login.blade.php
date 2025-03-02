@@ -23,6 +23,12 @@
         <div class="card-body login-card-body">
             <p class="login-box-msg">Silahkan Login</p>
             
+            @error('email')
+                <div class="alert alert-danger" role="alert">
+                    Kredensial yang diberikan tidak sesuai.
+                </div>
+            @enderror
+
             <form action="{{route('login-action')}}" method="post">
                 @csrf
                 <div class="input-group mb-3">
@@ -32,14 +38,14 @@
                             <span class="fa fa-envelope"></span>
                         </div>
                     </div>
-                    @error('email')
+                    {{-- @error('email')
                         <span class="invalid-feedback" role="alert">
                             <strong>Email yang dimasukkan belum terdaftar</strong>
                         </span>
-                    @enderror
+                    @enderror --}}
                 </div>
                 <div class="input-group mb-3">
-                    <input type="password" name="password" class="form-control" placeholder="Password" required>
+                    <input type="password" name="password" class="form-control @error('email') is-invalid @enderror" placeholder="Password" required>
                     <div class="input-group-append">
                         <div class="input-group-text px-2">
                             <span class="fa fa-lock"></span>

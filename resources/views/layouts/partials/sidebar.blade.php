@@ -18,7 +18,7 @@
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-files-o"></i>
-                        <span>Pelatihan</span>
+                        <span>Program Pelatihan</span>
                     </a>
                 </li>
                 <li class="treeview">

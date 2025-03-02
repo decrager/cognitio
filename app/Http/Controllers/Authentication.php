@@ -9,7 +9,15 @@ use Illuminate\Support\Facades\Redirect;
 
 class Authentication extends Controller
 {
-    public function authenticate(Request $request): RedirectResponse
+    public function form()
+    {
+        if (Auth::check()) {
+            return redirect(Auth::user()->role . '/dashboard');
+        }
+
+        return view('pages.auth.login');
+    }
+    public function authenticate(Request $request)
     {
         $credentials = $request->validate([
             'email' => ['required', 'email'],

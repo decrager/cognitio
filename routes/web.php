@@ -19,16 +19,14 @@ use App\Http\Controllers\Authentication;
 Route::get('/', function () {
     // Redirect to the login page
     return redirect('/login');
-});
+})->name('login-form');
 
-Route::get('/login', function () {
-    return view('pages.auth.login');
-});
+Route::get('/login', [Authentication::class, 'form'])->name('login-form');
 
 Route::post('/login', [Authentication::class, 'authenticate'])->name('login-action');
 Route::get('/logout', [Authentication::class, 'logout'])->name('logout-action');
 
-Route::group(['prefix' => 'biro-sdm'], function () {
+Route::group(['prefix' => 'biro-sdm', 'middleware' => 'cekRole:biro-sdm'], function () {
     Route::get('/dashboard', function () {
         return view('pages.biro-sdm.dashboard');
     })->name('dashboard.biro-sdm');
@@ -37,13 +35,13 @@ Route::group(['prefix' => 'biro-sdm'], function () {
 Route::group(['prefix' => 'unit-kerja', 'middleware' => 'cekRole:unit-kerja'], function () {
     Route::get('/dashboard', function () {
         return view('pages.unit-kerja.dashboard');
-    })->name('dashboard.biro-sdm');
+    })->name('dashboard.unit-kerja');
 });
 
 Route::group(['prefix' => 'pegawai', 'middleware' => 'cekRole:pegawai'], function () {
     Route::get('/dashboard', function () {
         return view('pages.pegawai.dashboard');
-    })->name('dashboard.biro-sdm');
+    })->name('dashboard.pegawai');
 });
 
 Route::get('/test', function () {

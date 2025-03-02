@@ -18,7 +18,7 @@
         </a>
 
         <span>
-            <b>{{ $user->name }}</b>
+            <b style="color: white;">{{ $user->name }}</b>
         </span>
 
         <div class="navbar-custom-menu">
