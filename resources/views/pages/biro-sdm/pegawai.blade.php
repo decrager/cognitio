@@ -72,7 +72,7 @@
                         <div class="d-flex justify-content-center">
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination">
-                                    {{ $results->links('pagination::bootstrap-4') }}
+                                    {{ $results->appends(request()->query())->links('pagination::bootstrap-4') }}
                                 </ul>
                             </nav>
                         </div>

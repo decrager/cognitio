@@ -12,7 +12,7 @@ class BiroSdmDashboard
             ->join("standar_kompetensi", "kompetensi_pegawai.id_standar_kompetensi", "=", "standar_kompetensi.id")
 
             ->whereColumn("kompetensi_pegawai.kpi", "<", "standar_kompetensi.kpi_standar")
-
+            ->isPegawai()
             ->select("pegawai.*")
             ->leftJoin("jabatan", "pegawai.id_jabatan", "=", "jabatan.id")
             ->leftJoin("unit_kerja", "pegawai.id_unit", "=", "unit_kerja.id")

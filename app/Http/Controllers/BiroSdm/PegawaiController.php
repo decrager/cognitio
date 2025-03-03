@@ -15,7 +15,7 @@ class PegawaiController extends Controller
     {
         $results = new Pegawai();
 
-        $results = $results->with('jabatan');
+        $results = $results->with('jabatan')->isPegawai();
         $results = $this->withFilter($results, $request);
 
         $results = $results->paginate(10);

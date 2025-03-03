@@ -14,7 +14,7 @@ class DashboardController extends Controller
     {
         $serviceDashboard = new BiroSdmDashboard();
 
-        $jumlah_pegawai = Pegawai::get()->count();
+        $jumlah_pegawai = Pegawai::isPegawai()->get()->count();
 
         $program = new Program();
         $jumlah_program = $program->get()->count();
