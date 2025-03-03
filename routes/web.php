@@ -40,6 +40,10 @@ Route::group(['prefix' => 'biro-sdm', 'middleware' => 'cekRole:biro-sdm'], funct
     Route::get('/pegawai/{id}', [BiroSdmPegawaiController::class,'show'])->name('biro-sdm.pegawai.show');
 
     Route::get('/program-pelatihan', [BiroSdmProgramController::class, 'index'])->name('biro-sdm.program.index');
+    Route::get('/program-pelatihan/{id}', [BiroSdmProgramController::class, 'show'])->name('biro-sdm.program.show');
+    Route::post('/program-pelatihan/create', [BiroSdmProgramController::class, 'create'])->name('biro-sdm.program.create');
+    Route::post('/program-pelatihan/update/{id}', [BiroSdmProgramController::class, 'update'])->name('biro-sdm.program.update');
+    Route::post('/program-pelatihan/delete/{id}', [BiroSdmProgramController::class, 'delete'])->name('biro-sdm.program.delete');
 });
 
 Route::group(['prefix' => 'unit-kerja', 'middleware' => 'cekRole:unit-kerja'], function () {
