@@ -51,8 +51,49 @@ class UnitKerjaController extends Controller
     }
 
     public function usulan_pelatihan(){
-        echo "usulan pelatihan";
-        die();
+        // Mendapatkan ID user yang sedang login
+        $id_user = Auth::id();
+
+        // Mengambil data pegawai berdasarkan id_user
+        $pegawai = Pegawai::where('id_user', $id_user)->first();
+
+        // Jika pegawai ditemukan, ambil assignment pegawai berdasarkan unit kerja
+        $assignment = [];
+        if ($pegawai) {
+            $assignment_usulan = Assignment::with('Program')
+            ->join('pegawai', 'pegawai.id', '=', 'assignment.id_pegawai')
+            ->where('pegawai.id_unit', $pegawai->id_unit) 
+            ->where('assignment.status', '1') 
+            ->select('assignment.*') // Memilih hanya data dari assignment
+            ->get();
+
+            $assignment_non_usulan = Assignment::with('Program')
+            ->join('pegawai', 'pegawai.id', '=', 'assignment.id_pegawai')
+            ->where('pegawai.id_unit', $pegawai->id_unit) 
+            ->whereIn('assignment.status', [2, 3, 4])
+            ->select('assignment.*') // Memilih hanya data dari assignment
+            ->get();
+        }
+
+        
+
+        return view('pages.unit-kerja.usulan', compact('assignment_usulan', 'assignment_non_usulan'));
+    }
+
+
+    public function update_status_assignment(Request $request, $id)
+    {
+        // Validasi status yang dikirim
+        $request->validate([
+            'status' => 'required|in:2,3', // 2 = Konfirmasi, 3 = Tolak
+        ]);
+
+        // Cari assignment berdasarkan ID
+        $assignment = Assignment::findOrFail($id);
+        $assignment->status = $request->status; // Update status
+        $assignment->save(); // Simpan perubahan
+
+        return back()->with('success', 'Status berhasil diperbarui!');
     }
 
     /**

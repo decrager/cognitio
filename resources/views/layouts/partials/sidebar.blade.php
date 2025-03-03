@@ -34,7 +34,7 @@
                         <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                     </a>
                 </li>
-                <li class="{{ Request::routeIs('biro-sdm.usulan_pelatihan.*') ? 'active' : '' }}">
+                <li class="{{ Request::routeIs('unit-kerja.usulan_pelatihan.*') ? 'active' : '' }}">
                     <a href="{{ route('usulan_pelatihan.unit-kerja') }}">
                         <i class="fa fa-files-o"></i>
                         <span>Usulan Pelatihan</span>

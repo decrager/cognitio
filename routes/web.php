@@ -48,6 +48,7 @@ Route::group(['prefix' => 'unit-kerja', 'middleware' => 'cekRole:unit-kerja'], f
     // })->name('dashboard.unit-kerja');
     Route::get('/dashboard', [UnitKerjaController::class, 'dashboard'])->name('dashboard.unit-kerja');
     Route::get('/usulan_pelatihan', [UnitKerjaController::class, 'usulan_pelatihan'])->name('usulan_pelatihan.unit-kerja');
+    Route::post('/update_status_assignment/{id}', [UnitKerjaController::class, 'update_status_assignment'])->name('update_status_assignment.unit-kerja');
 });
 
 Route::group(['prefix' => 'pegawai', 'middleware' => 'cekRole:pegawai'], function () {
