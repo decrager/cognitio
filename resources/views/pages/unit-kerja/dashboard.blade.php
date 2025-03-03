@@ -4,13 +4,62 @@
 
 @section('content')
 
-Nama Unit Kerja : {{$pegawai->unit->nama_unit}} <br>
-Lokasi Unit Kerja : {{$pegawai->unit->lokasi}} <br>
-Status Unit Kerja : {{$pegawai->unit->status}} <br>
-Anggaran Unit Kerja : {{$pegawai->unit->anggaran}} <br> <br>
+<div class="row">
+    <div class="col-md-5 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-aqua"><i class="fa fa-building-o"></i></span>
 
-<!-- Small boxes (Stat box) -->
+            <div class="info-box-content">
+                <span class="info-box-text">Unit Kerja</span>
+                <span class="text-bold">{{$pegawai->unit->nama_unit}}</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-red"><i class="fa fa-dollar"></i></span>
 
+            <div class="info-box-content">
+                <span class="info-box-text">Anggaran</span>
+                <h4 class="text-bold">Rp {{ number_format($pegawai->unit->anggaran, 0, ',', '.') }}</h4>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+    <!-- /.col -->
+    <div class="col-md-2 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-warning text-white"><i class="ion ion-location"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Lokasi</span>
+                <h4 class="text-bold">{{$pegawai->unit->lokasi}}</h4>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+    <!-- /.col -->
+    <div class="col-md-2 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-info text-white"><i class="fa fa-cog"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Status</span>
+                <h4 class="text-bold">{{ucfirst($pegawai->unit->status)}}</h4>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+</div>
 
 <div class="row">
     <div class="col-lg-3 col-xs-6">
@@ -123,8 +172,8 @@ Anggaran Unit Kerja : {{$pegawai->unit->anggaran}} <br> <br>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>
                                         {{ $item2->pegawai->tipe ?? '-' }}
-                                        {{ $item2->pegawai->nama ?? '-' }} 
-                                        {{ $item2->pegawai->nip ?? '-' }} 
+                                        {{ $item2->pegawai->nama ?? '-' }}
+                                        {{ $item2->pegawai->nip ?? '-' }}
                                         {{ $item2->pegawai->telepon ?? '-' }}
                                     </td>
                                     <!-- <td>{{ $item2->id_program ?? '-' }}</td> -->
