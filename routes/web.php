@@ -4,6 +4,7 @@ use App\Models\Pegawai;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Authentication;
 use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\UnitKerjaController;
 use App\Http\Controllers\BiroSdm\PegawaiController as BiroSdmPegawaiController;
 use App\Http\Controllers\BiroSdm\ProgramController as BiroSdmProgramController;
 use App\Http\Controllers\BiroSdmController;
@@ -42,9 +43,11 @@ Route::group(['prefix' => 'biro-sdm', 'middleware' => 'cekRole:biro-sdm'], funct
 });
 
 Route::group(['prefix' => 'unit-kerja', 'middleware' => 'cekRole:unit-kerja'], function () {
-    Route::get('/dashboard', function () {
-        return view('pages.unit-kerja.dashboard');
-    })->name('dashboard.unit-kerja');
+    // Route::get('/dashboard', function () {
+    //     return view('pages.unit-kerja.dashboard');
+    // })->name('dashboard.unit-kerja');
+    Route::get('/dashboard', [UnitKerjaController::class, 'dashboard'])->name('dashboard.unit-kerja');
+    Route::get('/usulan_pelatihan', [UnitKerjaController::class, 'usulan_pelatihan'])->name('usulan_pelatihan.unit-kerja');
 });
 
 Route::group(['prefix' => 'pegawai', 'middleware' => 'cekRole:pegawai'], function () {

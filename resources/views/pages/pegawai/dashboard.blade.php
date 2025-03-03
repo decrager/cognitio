@@ -70,7 +70,7 @@
             <div class="inner">
                 <h3>{{ $jumlah_assignment_konfirmasi }}<sup style="font-size: 20px"></sup></h3>
 
-                <p>Pelatihan Pending Konfirmasi</p>
+                <p>Pelatihan Terkonfirmasi</p>
             </div>
             <div class="icon">
                 <i class="ion ion-help-circled"></i>
@@ -98,7 +98,7 @@
             <div class="inner">
                 <h3>{{ $jumlah_assignment_ditetapkan }}</h3>
 
-                <p>Pelatihan Terkonfirmasi</p>
+                <p>Pelatihan Ditetapkan</p>
             </div>
             <div class="icon">
                 <i class="ion ion-thumbsup"></i>
@@ -167,11 +167,12 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                @if(count($kompetensi) > 0)
+                @if(count($assignment) > 0)
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>No</th>
+                                <th>ID </th>
                                 <th>Nama Pelatihan</th>
                                 <th>Status</th>
                                 <th>Deskripsi</th>
