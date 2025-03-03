@@ -23,12 +23,12 @@
         <!-- small box -->
         <div class="small-box bg-blue flex-fill">
             <div class="inner">
-                <h3>{{ $jumlah_kpi_cukup }} / {{$jumlah_kpi_kurang}}</h3>
+                <h3>{{ $jumlah_kpi_cukup }} Cukup / {{$jumlah_kpi_kurang}} Kurang</h3>
 
                 <h5>Kompetensi Pegawai</h5>
 
                 <div class="progress">
-                    <div class="progress-bar bg-success" style="width: {{($jumlah_kpi_cukup  / $jumlah_kpi_kurang + $jumlah_kpi_cukup) * 100}}%"></div>
+                    <div class="progress-bar bg-success" style="width: {{($jumlah_kpi_cukup  / ($jumlah_kpi_kurang + $jumlah_kpi_cukup)) * 100}}%"></div>
                 </div>
             </div>
             <div class="icon">
