@@ -22,7 +22,7 @@
     <div class="card mt-2">
         <div class="card-body login-card-body">
             <p class="login-box-msg">Silahkan Login</p>
-            
+
             @error('email')
                 <div class="alert alert-danger" role="alert">
                     Kredensial yang diberikan tidak sesuai.
@@ -33,7 +33,7 @@
                 @csrf
                 <div class="input-group mb-3">
                     <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" value="{{ old('email') }}" required>
-                    <div class="input-group-append">
+                    <div class="input-group-append" style="width: 10%">
                         <div class="input-group-text px-2">
                             <span class="fa fa-envelope"></span>
                         </div>
@@ -46,8 +46,8 @@
                 </div>
                 <div class="input-group mb-3">
                     <input type="password" name="password" class="form-control @error('email') is-invalid @enderror" placeholder="Password" required>
-                    <div class="input-group-append">
-                        <div class="input-group-text px-2">
+                    <div class="input-group-append" style="width: 10%">
+                        <div class="input-group-text px-2 w-100 d-flex justify-content-center">
                             <span class="fa fa-lock"></span>
                         </div>
                     </div>
