@@ -205,10 +205,10 @@
                             <tbody>
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $item2->id_pegawai ?? '-' }}</td>
+                                    <!-- <td>{{ $item2->id_pegawai ?? '-' }}</td> -->
+                                    <!-- <td>{{ $item2->id_program ?? '-' }}</td> -->
+                                    <td><b>{{ $item2->Program->nama_pelatihan ?? '-' }}</b></td>
                                     <th style="{{ $warna_status }}">{{ $status_text }}</td>
-                                    <td>{{ $item2->id_program ?? '-' }}</td>
-                                    <td>{{ $item2->Program->nama_pelatihan ?? '-' }}</td>
                                     <td>{{ $item2->Program->deskripsi ?? '-' }}</td>
                                     <td>{{ $item2->Program->tanggal_mulai ?? '-' }}</td>
                                     <td>{{ $item2->Program->tanggal_selesai ?? '-' }}</td>
