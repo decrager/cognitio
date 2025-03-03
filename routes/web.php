@@ -19,6 +19,9 @@ use App\Http\Controllers\BiroSdmController;
 |
 */
 
+// Example of generating PDF
+Route::get('/generate-pdf-example', [\App\Http\Controllers\PDFExampleController::class, 'generatePDF']);
+
 Route::get('/', function () {
     // Redirect to the login page
     return redirect('/login');
@@ -50,7 +53,6 @@ Route::group(['prefix' => 'pegawai', 'middleware' => 'cekRole:pegawai'], functio
     // })->name('dashboard.pegawai');
     Route::get('/dashboard', [PegawaiController::class, 'dashboard'])->name('dashboard.pegawai');
 });
-
 
 Route::get('/test', function () {
     $user = Auth::user();
