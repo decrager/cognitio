@@ -7,7 +7,7 @@ use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\UnitKerjaController;
 use App\Http\Controllers\BiroSdm\PegawaiController as BiroSdmPegawaiController;
 use App\Http\Controllers\BiroSdm\ProgramController as BiroSdmProgramController;
-use App\Http\Controllers\BiroSdmController;
+use App\Http\Controllers\BiroSdm\DashboardController as BiroSdmDashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +34,7 @@ Route::post('/login', [Authentication::class, 'authenticate'])->name('login-acti
 Route::get('/logout', [Authentication::class, 'logout'])->name('logout-action');
 
 Route::group(['prefix' => 'biro-sdm', 'middleware' => 'cekRole:biro-sdm'], function () {
-    Route::get('/dashboard', [BiroSdmController::class, 'index'])->name('dashboard.biro-sdm');
+    Route::get('/dashboard', [BiroSdmDashboardController::class, 'index'])->name('dashboard.biro-sdm');
 
     Route::get('/pegawai', [BiroSdmPegawaiController::class,'index'])->name('biro-sdm.pegawai.index');
     Route::get('/pegawai/{id}', [BiroSdmPegawaiController::class,'show'])->name('biro-sdm.pegawai.show');
