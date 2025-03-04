@@ -10,7 +10,7 @@
                 </h4>
             </div>
         <div class="card-body">
-
+            
             <div class="row">
                 <div class="col-md-12">
                     <div class="table-responsive">
@@ -69,19 +69,13 @@
                                             </td>
                                             <td>
                                                 {{ $item2->pegawai->tipe ?? '-' }}
-                                                {{ $item2->pegawai->nama ?? '-' }}
-                                                {{ $item2->pegawai->nip ?? '-' }}
+                                                {{ $item2->pegawai->nama ?? '-' }} 
+                                                {{ $item2->pegawai->nip ?? '-' }} 
                                                 {{ $item2->pegawai->telepon ?? '-' }}
                                             </td>
                                             <!-- <td>{{ $item2->id_program ?? '-' }}</td> -->
                                             <td><b>{{ $item2->Program->nama_pelatihan ?? '-' }}</b></td>
-                                            <td style="{{ $warna_status }}">
-                                                {{ $status_text }}
-                                                <br>
-                                                <button class="btn btn-info btn-sm mt-1" onclick="showDetail({{ $item2->id_program }})">
-                                                    Detail
-                                                </button>
-                                            </td>
+                                            <th style="{{ $warna_status }}">{{ $status_text }}</td>
                                             <td>{{ $item2->Program->deskripsi ?? '-' }}</td>
                                             <td>{{ $item2->Program->tanggal_mulai ?? '-' }}</td>
                                             <td>{{ $item2->Program->tanggal_selesai ?? '-' }}</td>
@@ -95,7 +89,7 @@
                         @else
                             <p>Belum ada data Assignment Program / Pelatihan.</p>
                         @endif
-
+                        
                     </div>
                 </div>
             </div>
@@ -109,7 +103,7 @@
                 </h4>
             </div>
         <div class="card-body">
-
+            
             <div class="row">
                 <div class="col-md-12">
                     <div class="table-responsive">
@@ -156,8 +150,8 @@
                                             <!-- <td>tes</td> -->
                                             <td>
                                                 {{ $item3->pegawai->tipe ?? '-' }}
-                                                {{ $item3->pegawai->nama ?? '-' }}
-                                                {{ $item3->pegawai->nip ?? '-' }}
+                                                {{ $item3->pegawai->nama ?? '-' }} 
+                                                {{ $item3->pegawai->nip ?? '-' }} 
                                                 {{ $item3->pegawai->telepon ?? '-' }}
                                             </td>
                                             <!-- <td>{{ $item3->id_program ?? '-' }}</td> -->
@@ -176,49 +170,8 @@
                         @else
                             <p>Belum ada data Assignment Program / Pelatihan.</p>
                         @endif
-
+                        
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="modalDetailProgram" tabindex="-1" aria-labelledby="modalDetailLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalDetailLabel">Detail Program</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <table class="table table-bordered">
-                        <tr>
-                            <th>Nama Pelatihan</th>
-                            <td id="detail_nama_pelatihan"></td>
-                        </tr>
-                        <tr>
-                            <th>Deskripsi</th>
-                            <td id="detail_deskripsi"></td>
-                        </tr>
-                        <tr>
-                            <th>Tanggal Mulai</th>
-                            <td id="detail_tanggal_mulai"></td>
-                        </tr>
-                        <tr>
-                            <th>Tanggal Selesai</th>
-                            <td id="detail_tanggal_selesai"></td>
-                        </tr>
-                        <tr>
-                            <th>Lokasi</th>
-                            <td id="detail_lokasi"></td>
-                        </tr>
-                        <tr>
-                            <th>Penyelenggara</th>
-                            <td id="detail_penyelenggara"></td>
-                        </tr>
-                    </table>
                 </div>
             </div>
         </div>
@@ -233,32 +186,5 @@
                 document.getElementById(`${status === 2 ? 'confirm-form' : 'reject-form'}-${id}`).submit();
             }
         }
-    </script>
-
-<script>
-    function showDetail(id_program) {
-    $.ajax({
-        url: "{{ url('unit-kerja/getProgramDetail') }}/" + id_program,
-        type: "GET",
-        success: function(response) {
-            if(response) {
-                $("#detail_nama_pelatihan").text(response.nama_pelatihan || '-');
-                $("#detail_deskripsi").text(response.deskripsi || '-');
-                $("#detail_tanggal_mulai").text(response.tanggal_mulai || '-');
-                $("#detail_tanggal_selesai").text(response.tanggal_selesai || '-');
-                $("#detail_lokasi").text(response.lokasi || '-');
-                $("#detail_penyelenggara").text(response.penyelenggara || '-');
-
-                $("#modalDetailProgram").modal("show"); // Menampilkan modal
-            } else {
-                alert("Data tidak ditemukan!");
-            }
-        },
-        error: function() {
-            alert("Terjadi kesalahan dalam mengambil data.");
-        }
-    });
-}
-
     </script>
 @endsection

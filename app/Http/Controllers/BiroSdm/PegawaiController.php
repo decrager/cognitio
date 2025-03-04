@@ -14,14 +14,9 @@ class PegawaiController extends Controller
      */
     public function index(Request $request)
     {
-        $results = DB::table('pegawai')
-        ->leftJoin('assignment', 'pegawai.id', '=', 'assignment.id_pegawai')
-        ->leftJoin('jabatan', 'pegawai.id_jabatan', '=', 'jabatan.id')
-        ->select(
-            'pegawai.*',
-            'jabatan.*',
-            'assignment.status'
-        );
+        $results = new Pegawai();
+
+        $results = $results->with('jabatan')->isPegawai();
         $results = $this->withFilter($results, $request);
 
         $results = $results->paginate(10);

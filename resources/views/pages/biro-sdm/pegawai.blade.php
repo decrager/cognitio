@@ -59,7 +59,7 @@
                                             {{$val->tipe}}
                                         </span>
                                     </td>
-                                    <td>{{ $val->tipe_jabatan }}<br><span class="text-info">{{$val->nama_jabatan}}</span></td>
+                                    <td>{{ $val->jabatan->tipe_jabatan }}<br><span class="text-info">{{$val->jabatan->nama_jabatan}}</span></td>
                                     <td>{{ $val->nip }}</td>
                                     <td>{{ $val->nik }}</td>
                                     <td>{{ $val->telepon }}</td>
@@ -67,16 +67,8 @@
                                     <td>{{ $val->jenis_kelamin }}</td>
                                     <td>{{ $val->alamat }}</td>
                                     <td>
-                                        @if($val->status == 2)
-                                            <button class="btn btn-success btn-sm" disabled>Konfirmasi</button>
-                                        @elseif($val->status == 3)
-                                            <button class="btn btn-danger btn-sm" disabled>Ditolak</button>
-                                        @else
-                                            <button class="btn btn-primary btn-sm" onclick="openModal({{ $val->id }})">Pilih</button>
-                                        @endif
+                                        <button class="btn btn-primary btn-sm" onclick="openModal({{ $val->id }})">Pilih</button>
                                     </td>
-
-
                                 </tr>
                             @endforeach
                             </tbody>

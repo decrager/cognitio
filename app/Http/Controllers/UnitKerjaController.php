@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Pegawai;
 use App\Models\Assignment;
-use Illuminate\Support\Facades\DB;
 
 class UnitKerjaController extends Controller
 {
@@ -97,18 +96,6 @@ class UnitKerjaController extends Controller
 
         return back()->with('success', 'Status berhasil diperbarui!');
     }
-
-    public function getProgramDetail($id_program)
-    {
-        $program = DB::table('program')->where('id', $id_program)->first();
-
-        if ($program) {
-            return response()->json($program);
-        } else {
-            return response()->json(['error' => 'Data tidak ditemukan'], 404);
-        }
-    }
-
 
     /**
      * Display a listing of the resource.
