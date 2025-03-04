@@ -4,7 +4,6 @@ namespace App\Http\Controllers\BiroSdm;
 
 use App\Models\Assignment;
 use App\Service\BiroSdmAssignment;
-use Barryvdh\DomPDF\PDF;
 use Carbon\Carbon;
 use App\Models\Jabatan;
 use App\Models\Program;
@@ -12,8 +11,6 @@ use App\Models\Kriteria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Session;
-use Yajra\DataTables\Facades\DataTables;
 
 class ProgramController extends Controller
 {
@@ -173,5 +170,5 @@ class ProgramController extends Controller
 
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.assignment-print', compact('program', 'pegawai'));
         return $pdf->download($file_name . '.pdf');
-    }
+
 }
