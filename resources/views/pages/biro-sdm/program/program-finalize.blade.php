@@ -129,6 +129,7 @@
                             <span class="sr-only">Loading...</span>
                         </div>
                     </div>
+                    <div id="section-content"></div>
                 </div>
             </div>
         </div>
@@ -152,13 +153,14 @@
             var modal = $('#detailModal');
             modal.modal('show');
             $('#modal-loader').show(); // Show the loader
+            console.log($('#modal-loader'));
 
             $.ajax({
                 url: '{{ route('biro-sdm.pegawai.show', '') }}/' + id,
                 method: 'GET',
                 success: function (data) {
                     $('#modal-loader').hide(); // Hide the loader
-                    modal.find('.modal-content').html(data);
+                    modal.find('#section-content').html(data);
                 },
                 error: function () {
                     $('#modal-loader').hide(); // Hide the loader
