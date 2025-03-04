@@ -54,11 +54,10 @@
                                             </td>
                                             <!-- <td>{{ $item2->id_program ?? '-' }}</td> -->
                                             <td><b>{{ $item2->Program->nama_pelatihan ?? '-' }}</b></td>
-                                            <td style="{{ $warna_status }}">
-                                                {{ $status_text }}
-                                                <br>
-                                                <button class="btn btn-info btn-sm mt-1" onclick="showDetail({{ $item2->id_program }})">
-                                                    Detail
+                                            <td>
+                                                <x-status-badge :status="$item2->status" /><br>
+                                                <button class="btn btn-info btn-sm mt-1" style="width: 35px !important;" onclick="showDetail({{ $item2->id_program }})">
+                                                    <i class="fa fa-eye mr-1"></i>Detail
                                                 </button>
                                             </td>
                                             <td><b>{{ $item2->Program->nama_pelatihan ?? '-' }}</b></td>
