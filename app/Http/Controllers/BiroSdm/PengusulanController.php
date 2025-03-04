@@ -148,7 +148,7 @@ class PengusulanController extends Controller
                         'id_pegawai' => $pegawai
                     ],
                     [
-                        'status' => 'Usulan',
+                        'status' => 1,
                         'assigned_by_id' => Auth::user()->id,
                         'assigned_by_name' => Auth::user()->name
                     ]
