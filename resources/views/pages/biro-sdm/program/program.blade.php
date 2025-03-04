@@ -110,7 +110,7 @@
         </div>
     </div>
 
-    @include('pages.biro-sdm.modal-add-program')
+    @include('pages.biro-sdm.program.modal-add-program')
 @endsection
 
 @push('scripts')

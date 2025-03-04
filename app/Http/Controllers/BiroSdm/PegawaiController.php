@@ -22,7 +22,7 @@ class PegawaiController extends Controller
         $results = $results->paginate(10);
 
         $programList = DB::table('program')->get();
-        return view('pages.biro-sdm.pegawai', compact(['results','request','programList']));
+        return view('pages.biro-sdm.pegawai.pegawai', compact(['results','request','programList']));
     }
 
     private function withFilter($query, $request)
@@ -73,7 +73,7 @@ class PegawaiController extends Controller
         $data = Pegawai::with('standar_kompetensi','jabatan')->find($id);
 
         // Return The Modal Component
-        return view('pages.biro-sdm.modal-pegawai', compact('data'));
+        return view('pages.biro-sdm.pegawai.modal-pegawai', compact('data'));
     }
 
     /**

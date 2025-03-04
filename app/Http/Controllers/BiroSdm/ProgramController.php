@@ -21,7 +21,7 @@ class ProgramController extends Controller
 
         $jabatan = Jabatan::select('id', 'nama_jabatan')->get();
 
-        return view('pages.biro-sdm.program', compact(['results', 'request', 'jabatan']));
+        return view('pages.biro-sdm.program.program', compact(['results', 'request', 'jabatan']));
     }
 
     private function withFilter($query, $request)
@@ -54,7 +54,7 @@ class ProgramController extends Controller
         ->where('program.id', $id)
         ->get();
 
-        return view('pages.biro-sdm.modal-program', compact('data', 'jabatan', 'kriteria'));
+        return view('pages.biro-sdm.program.modal-program', compact('data', 'jabatan', 'kriteria'));
     }
 
     public function create(Request $request)

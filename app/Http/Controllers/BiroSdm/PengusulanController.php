@@ -24,7 +24,7 @@ class PengusulanController extends Controller
 
         $results = $results->orderByRaw("CASE WHEN tanggal_mulai >= CURDATE() THEN 0 ELSE 1 END, tanggal_mulai ASC")->paginate(10);
 
-        return view('pages.biro-sdm.pengusulan', compact(['results', 'request']));
+        return view('pages.biro-sdm.pengusulan.pengusulan', compact(['results', 'request']));
     }
 
     private function withFilter($query, $request)
@@ -57,12 +57,12 @@ class PengusulanController extends Controller
         ->where('program.id', $id)
         ->get();
 
-        return view('pages.biro-sdm.modal-pengusulan', compact('data', 'jabatan', 'kriteria'));
+        return view('pages.biro-sdm.pengusulan.modal-pengusulan', compact('data', 'jabatan', 'kriteria'));
     }
 
     public function form()
     {
-        return view('pages.biro-sdm.form-pengusulan');
+        return view('pages.biro-sdm.pengusulan.form-pengusulan');
     }
 
     public function listProgram(Request $request)
@@ -125,9 +125,9 @@ class PengusulanController extends Controller
         ->get();
 
         if ($request->assigned) {
-            return view('pages.biro-sdm.pengusulan-detail', compact('pegawai', 'id_program'));
+            return view('pages.biro-sdm.pengusulan.pengusulan-detail', compact('pegawai', 'id_program'));
         } else {
-            return view('pages.biro-sdm.form-pengusulan-pegawai', compact('pegawai', 'id_program'));
+            return view('pages.biro-sdm.pengusulan.form-pengusulan-pegawai', compact('pegawai', 'id_program'));
         }
     }
 
@@ -183,7 +183,7 @@ class PengusulanController extends Controller
         $program->tanggal_mulai = Carbon::parse($program->tanggal_mulai)->translatedFormat('j F Y');
         $program->tanggal_selesai = Carbon::parse($program->tanggal_selesai)->translatedFormat('j F Y');
 
-        return view('pages.biro-sdm.edit-pengusulan-pegawai', compact('pegawai', 'program'));
+        return view('pages.biro-sdm.pengusulan.edit-pengusulan-pegawai', compact('pegawai', 'program'));
     }
 
     public function delete(Request $request)
