@@ -19,8 +19,7 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Action</th>
-                                        <th>Nama Pegawai</th>
+                                        <th width="15%">Nama Pegawai</th>
                                         <th>Nama Pelatihan</th>
                                         <th>Status</th>
                                         <th>Deskripsi</th>
@@ -28,7 +27,7 @@
                                         <th>Tanggal Selesai</th>
                                         <th>Lokasi</th>
                                         <th>Penyelenggara</th>
-                                        <th>Di Usulkan Oleh</th>
+                                        <th width="10%">Aksi</th>
                                     </tr>
                                 </thead>
                                 @foreach($assignment_usulan as $item2)
@@ -55,17 +54,16 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>
-                                                <form id="confirm-form-{{ $item2->id }}" action="{{ route('update_status_assignment.unit-kerja', $item2->id) }}" method="POST" style="display:inline;">
-                                                    @csrf
-                                                    <input type="hidden" name="status" value="2">
-                                                    <button type="button" class="btn btn-success btn-sm" onclick="confirmAction({{ $item2->id }}, 'Konfirmasi', 2)">Konfirmasi</button>
-                                                </form>
+                                                <b>{{ $item2->pegawai->nama ?? '-' }}</b>
+                                               <span class="badge badge-sm badge-info">
+                                                   {{ $item2->pegawai->tipe ?? '-' }}</span>
+                                                <br>
+                                                <span class="text-muted">NIP: {{ $item2->pegawai->nip ?? '-' }}</span>
+                                                <br>
+                                                <span class="text-info">
+                                                    NIK: {{ $item2->pegawai->nik ?? '-' }}
+                                                </span>
 
-                                                <form id="reject-form-{{ $item2->id }}" action="{{ route('update_status_assignment.unit-kerja', $item2->id) }}" method="POST" style="display:inline;">
-                                                    @csrf
-                                                    <input type="hidden" name="status" value="3">
-                                                    <button type="button" class="btn btn-danger btn-sm" onclick="confirmAction({{ $item2->id }}, 'Tolak', 3)">Tolak</button>
-                                                </form>
                                             </td>
                                             <td>
                                                 {{ $item2->pegawai->tipe ?? '-' }}
@@ -82,12 +80,30 @@
                                                     Detail
                                                 </button>
                                             </td>
+                                            <td><b>{{ $item2->Program->nama_pelatihan ?? '-' }}</b></td>
+                                            <td style="{{ $warna_status }}">{{ $status_text }}</td>
                                             <td>{{ $item2->Program->deskripsi ?? '-' }}</td>
                                             <td>{{ $item2->Program->tanggal_mulai ?? '-' }}</td>
                                             <td>{{ $item2->Program->tanggal_selesai ?? '-' }}</td>
                                             <td>{{ $item2->Program->lokasi ?? '-' }}</td>
-                                            <td>{{ $item2->Program->penyelenggara ?? '-' }}</td>
-                                            <td>{{ $item2->assigned_by_name ?? '-' }}</td>
+                                            <td>
+                                                <strong>{{ $item2->Program->penyelenggara ?? '-' }}</strong><br>
+                                                <span class="text-muted text-sm">Assigned by: <span class="text-info">{{ $item2->assigned_by_name ?? '-' }}</span></span>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <form id="status-form-{{ $item2->id }}" action="{{ route('update_status_assignment.unit-kerja', $item2->id) }}" method="POST" style="display:inline;">
+                                                        @csrf
+                                                        <input type="hidden" name="status" id="status-input-{{ $item2->id }}">
+                                                        <button style="width: 35px !important;" type="button" class="btn btn-success btn-sm" onclick="submitForm({{ $item2->id }}, 2)">
+                                                            <i class="fa fa-check"></i>
+                                                        </button>
+                                                        <button style="width: 35px !important;" type="button" class="btn btn-danger btn-sm" onclick="submitForm({{ $item2->id }}, 3)">
+                                                            <i class="fa fa-close"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 @endforeach
@@ -102,7 +118,7 @@
         </div>
     </div>
 
-    <div class="card">
+    <div class="card mt-4">
         <div class="card-header">
                 <h4 class="card-title text-bold">
                     <i class="fa fa-info mr-2"></i> Pelatihan
@@ -118,8 +134,7 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <!-- <th>Action</th> -->
-                                        <th>Nama Pegawai</th>
+                                        <th width="15%">Nama Pegawai</th>
                                         <th>Nama Pelatihan</th>
                                         <th>Status</th>
                                         <th>Deskripsi</th>
@@ -127,7 +142,6 @@
                                         <th>Tanggal Selesai</th>
                                         <th>Lokasi</th>
                                         <th>Penyelenggara</th>
-                                        <th>Di Usulkan Oleh</th>
                                     </tr>
                                 </thead>
                                 @foreach($assignment_non_usulan as $item3)
@@ -159,16 +173,26 @@
                                                 {{ $item3->pegawai->nama ?? '-' }}
                                                 {{ $item3->pegawai->nip ?? '-' }}
                                                 {{ $item3->pegawai->telepon ?? '-' }}
+                                                <b>{{ $item3->pegawai->nama ?? '-' }}</b>
+                                                <span class="badge badge-sm badge-info">
+                                                   {{ $item3->pegawai->tipe ?? '-' }}</span>
+                                                <br>
+                                                <span class="text-muted">NIP: {{ $item3->pegawai->nip ?? '-' }}</span>
+                                                <br>
+                                                <span class="text-info">
+                                                    NIK: {{ $item3->pegawai->nik ?? '-' }}
+                                                </span>
                                             </td>
-                                            <!-- <td>{{ $item3->id_program ?? '-' }}</td> -->
                                             <td><b>{{ $item3->Program->nama_pelatihan ?? '-' }}</b></td>
-                                            <th style="{{ $warna_status }}">{{ $status_text }}</td>
+                                            <td style="{{ $warna_status }}">{{ $status_text }}</td>
                                             <td>{{ $item3->Program->deskripsi ?? '-' }}</td>
                                             <td>{{ $item3->Program->tanggal_mulai ?? '-' }}</td>
                                             <td>{{ $item3->Program->tanggal_selesai ?? '-' }}</td>
                                             <td>{{ $item3->Program->lokasi ?? '-' }}</td>
-                                            <td>{{ $item3->Program->penyelenggara ?? '-' }}</td>
-                                            <td>{{ $item3->assigned_by_name ?? '-' }}</td>
+                                            <td>
+                                                <strong>{{ $item3->Program->penyelenggara ?? '-' }}</strong><br>
+                                                <span class="text-muted text-sm">Assigned by: <span class="text-info">{{ $item3->assigned_by_name ?? '-' }}</span></span>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 @endforeach
@@ -259,6 +283,16 @@
         }
     });
 }
+</script>
 
+<script>
+        function submitForm(id, status) {
+            let action = status === 2 ? 'Konfirmasi' : 'Tolak';
+            let confirmation = confirm(`Apakah Anda yakin ingin ${action} pelatihan ini?`);
+            if (confirmation) {
+                document.getElementById(`status-input-${id}`).value = status;
+                document.getElementById(`status-form-${id}`).submit();
+            }
+        }
     </script>
 @endsection

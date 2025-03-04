@@ -54,8 +54,6 @@ class ProgramController extends Controller
         ->where('program.id', $id)
         ->get();
 
-        // return $kriteria->pluck('nama_jabatan')[0] == null ? 'yes' : 'no';
-
         return view('pages.biro-sdm.modal-program', compact('data', 'jabatan', 'kriteria'));
     }
 

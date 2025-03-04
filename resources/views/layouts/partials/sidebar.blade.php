@@ -15,11 +15,21 @@
                         <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                     </a>
                 </li>
-                <li class="{{ Request::routeIs('biro-sdm.program.*') ? 'active' : ''}}">
-                    <a href="{{ route('biro-sdm.program.index') }}">
-                        <i class="fa fa-files-o"></i>
-                        <span>Program Pelatihan</span>
+                <li class="treeview {{ Request::routeIs('biro-sdm.program.*') || Request::routeIs('biro-sdm.pengusulan.*') ? 'active' : '' }}">
+                    <a href="#">
+                        <i class="fa fa-bars"></i> <span>Program Pelatihan</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
                     </a>
+                    <ul class="treeview-menu">
+                        <li class="{{ Request::routeIs('biro-sdm.program.*') ? 'active' : ''}}">
+                            <a href="{{ route('biro-sdm.program.index') }}""><i class="fa fa-files-o"></i> Daftar Program</a>
+                        </li>
+                        <li class="{{ Request::routeIs('biro-sdm.pengusulan.*') ? 'active' : ''}}">
+                            <a href="{{ route('biro-sdm.pengusulan.index') }}""><i class="fa fa-group"></i> Pengusulan</a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="{{ Request::routeIs('biro-sdm.pegawai.*') ? 'active' : '' }}">
                     <a href="{{route('biro-sdm.pegawai.index')}}">
