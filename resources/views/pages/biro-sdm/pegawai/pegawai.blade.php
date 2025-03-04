@@ -49,8 +49,13 @@
                                 <tr>
                                     <td>{{ ($results->currentPage() - 1) * $results->perPage() + $loop->iteration }}</td>
                                     <td>
-                                        <p class="p-0 m-0 text-decoration-none text-primary text-bold" style="cursor: pointer;" onmouseover="this.classList.add('text-info', 'text-decoration-underline');" onmouseout="this.classList.remove('text-info', 'text-decoration-underline');" onclick="loadDetailModal({{$val->id}})">{{ $val->nama }}</p>
-                                        <span class="badge @if($val->tipe == 'PNS') badge-success @else badge-warning @endif">
+                                        <x-employee-name :id="$val->id" :name="$val->nama" />
+                                        <span class="badge
+                                            @if($val->tipe == 'PNS')
+                                            badge-success
+                                            @else
+                                            badge-warning
+                                             @endif">
                                             {{$val->tipe}}
                                         </span>
                                     </td>

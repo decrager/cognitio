@@ -9,6 +9,7 @@ use App\Http\Controllers\BiroSdm\PegawaiController as BiroSdmPegawaiController;
 use App\Http\Controllers\BiroSdm\ProgramController as BiroSdmProgramController;
 use App\Http\Controllers\BiroSdm\PengusulanController as BiroSdmPengusulanController;
 use App\Http\Controllers\BiroSdm\DashboardController as BiroSdmDashboardController;
+use App\Http\Controllers\AssignmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +55,10 @@ Route::group(['prefix' => 'biro-sdm', 'middleware' => 'cekRole:biro-sdm'], funct
     Route::post('/pengusulan/updateOrCreate', [BiroSdmPengusulanController::class, 'updateOrCreate'])->name('biro-sdm.pengusulan.updateOrCreate');
     Route::get('/pengusulan/edit', [BiroSdmPengusulanController::class, 'edit'])->name('biro-sdm.pengusulan.edit');
     Route::post('/pengusulan/delete', [BiroSdmPengusulanController::class, 'delete'])->name('biro-sdm.pengusulan.delete');
+
+    Route::get('/program-finalization/{id_program}', [BiroSdmProgramController::class, 'programFinalization'])->name('biro-sdm.program.finalization');
+    Route::put('/update-status-assignment-final/{id_assignment}', [BiroSdmProgramController::class, 'updateStatusAssignmentFinal'])->name('biro-sdm.program.update-assignment-final');
+    Route::get('/program-finalization/{id_program}/print', [BiroSdmProgramController::class, 'printFinalization'])->name('biro-sdm.program.print-finalization');
 });
 
 Route::group(['prefix' => 'unit-kerja', 'middleware' => 'cekRole:unit-kerja'], function () {
