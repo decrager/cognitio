@@ -21,7 +21,7 @@ class UnitKerjaController extends Controller
         if ($pegawai) {
             $assignment = Assignment::with('Program')
             ->join('pegawai', 'pegawai.id', '=', 'assignment.id_pegawai')
-            ->where('pegawai.id_unit', $pegawai->id_unit) 
+            ->where('pegawai.id_unit', $pegawai->id_unit)
             // ->select('assignment.*') // Memilih hanya data dari assignment
             ->get();
 
@@ -54,6 +54,7 @@ class UnitKerjaController extends Controller
         // Mendapatkan ID user yang sedang login
         $id_user = Auth::id();
 
+
         // Mengambil data pegawai berdasarkan id_user
         $pegawai = Pegawai::where('id_user', $id_user)->first();
 
@@ -62,20 +63,20 @@ class UnitKerjaController extends Controller
         if ($pegawai) {
             $assignment_usulan = Assignment::with('Program')
             ->join('pegawai', 'pegawai.id', '=', 'assignment.id_pegawai')
-            ->where('pegawai.id_unit', $pegawai->id_unit) 
-            ->where('assignment.status', '1') 
+            ->where('pegawai.id_unit', $pegawai->id_unit)
+            ->where('assignment.status', '1')
             ->select('assignment.*') // Memilih hanya data dari assignment
             ->get();
 
             $assignment_non_usulan = Assignment::with('Program')
             ->join('pegawai', 'pegawai.id', '=', 'assignment.id_pegawai')
-            ->where('pegawai.id_unit', $pegawai->id_unit) 
+            ->where('pegawai.id_unit', $pegawai->id_unit)
             ->whereIn('assignment.status', [2, 3, 4])
             ->select('assignment.*') // Memilih hanya data dari assignment
             ->get();
         }
 
-        
+
 
         return view('pages.unit-kerja.usulan', compact('assignment_usulan', 'assignment_non_usulan'));
     }

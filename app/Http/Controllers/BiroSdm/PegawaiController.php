@@ -5,6 +5,7 @@ namespace App\Http\Controllers\BiroSdm;
 use App\Http\Controllers\Controller;
 use App\Models\Pegawai;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PegawaiController extends Controller
 {
@@ -19,7 +20,9 @@ class PegawaiController extends Controller
         $results = $this->withFilter($results, $request);
 
         $results = $results->paginate(10);
-        return view('pages.biro-sdm.pegawai', compact(['results','request']));
+
+        $programList = DB::table('program')->get();
+        return view('pages.biro-sdm.pegawai', compact(['results','request','programList']));
     }
 
     private function withFilter($query, $request)
