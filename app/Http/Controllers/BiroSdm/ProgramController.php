@@ -150,7 +150,7 @@ class ProgramController extends Controller
             $item->status_text = $service->mappingStatusAssignment($item->status);
         });
 
-        return view('pages.biro-sdm.program-finalize', compact('program', 'pegawai','request'));
+        return view('pages.biro-sdm.program.program-finalize', compact('program', 'pegawai','request'));
     }
 
     public function updateStatusAssignmentFinal($id_assignment)
@@ -169,7 +169,9 @@ class ProgramController extends Controller
         $service = new BiroSdmAssignment();
         $pegawai = $service->getAssignmentEmployeeByProgramId($id_program, $request)->where("assignment.status",4)->get();
 
+        $file_name = 'Program Pelatihan - ' . $program->nama_pelatihan . ' - ' . Carbon::now()->format('d-m-Y H:i:s');
+
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.assignment-print', compact('program', 'pegawai'));
-        return $pdf->download('program.pdf');
+        return $pdf->download($file_name . '.pdf');
     }
 }

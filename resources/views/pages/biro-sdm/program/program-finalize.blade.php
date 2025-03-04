@@ -59,6 +59,9 @@
                         <button type="button" onclick="resetForm()" class="btn btn-danger ml-2">
                             <i class="fa fa-refresh mr-1"></i> Reset
                         </button>
+                        <a href="{{ route('biro-sdm.program.print-finalization', ['id_program' => $program->id]) }}" class="btn btn-success ml-auto">
+                            <i class="fa fa-print mr-2"></i> Cetak
+                        </a>
                     </form>
                     {{-- End Filter --}}
                     <div class="table-responsive">
