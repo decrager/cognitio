@@ -164,11 +164,11 @@ class ProgramController extends Controller
         $program = Program::with(['kriteria'])->find($id_program);
 
         $service = new BiroSdmAssignment();
-        $pegawai = $service->getAssignmentEmployeeByProgramId($id_program, $request)->where("assignment.status",4)->get();
+        $pegawai = $service->getAssignmentEmployeeByProgramId($id_program, $request)->where("assignment.status", 4)->get();
 
         $file_name = 'Program Pelatihan - ' . $program->nama_pelatihan . ' - ' . Carbon::now()->format('d-m-Y H:i:s');
 
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.assignment-print', compact('program', 'pegawai'));
         return $pdf->download($file_name . '.pdf');
-
+    }
 }
