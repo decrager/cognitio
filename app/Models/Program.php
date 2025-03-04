@@ -19,6 +19,13 @@ class Program extends Model
         'penyelenggara',
     ];
 
+    protected $appends = ['status'];
+
+    public function getStatusAttribute()
+    {
+        return $this->attributes['tanggal_selesai'] < now() ? 'non aktif' : 'aktif';
+    }
+
     public function assignment()
     {
         return $this->hasMany(Assignment::class, 'id_program', 'id');
@@ -27,5 +34,10 @@ class Program extends Model
     public function kriteria()
     {
         return $this->hasMany(Kriteria::class, 'id_program', 'id');
+    }
+
+    public function assignmentCount()
+    {
+        return $this->assignment()->count();
     }
 }

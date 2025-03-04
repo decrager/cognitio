@@ -7,6 +7,7 @@ use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\UnitKerjaController;
 use App\Http\Controllers\BiroSdm\PegawaiController as BiroSdmPegawaiController;
 use App\Http\Controllers\BiroSdm\ProgramController as BiroSdmProgramController;
+use App\Http\Controllers\BiroSdm\PengusulanController as BiroSdmPengusulanController;
 use App\Http\Controllers\BiroSdm\DashboardController as BiroSdmDashboardController;
 
 /*
@@ -44,6 +45,15 @@ Route::group(['prefix' => 'biro-sdm', 'middleware' => 'cekRole:biro-sdm'], funct
     Route::post('/program-pelatihan/create', [BiroSdmProgramController::class, 'create'])->name('biro-sdm.program.create');
     Route::post('/program-pelatihan/update/{id}', [BiroSdmProgramController::class, 'update'])->name('biro-sdm.program.update');
     Route::post('/program-pelatihan/delete/{id}', [BiroSdmProgramController::class, 'delete'])->name('biro-sdm.program.delete');
+
+    Route::get('/pengusulan', [BiroSdmPengusulanController::class, 'index'])->name('biro-sdm.pengusulan.index');
+    Route::get('/pengusulan/get/{id}', [BiroSdmPengusulanController::class, 'show'])->name('biro-sdm.pengusulan.show');
+    Route::get('/pengusulan/form', [BiroSdmPengusulanController::class, 'form'])->name('biro-sdm.pengusulan.form');
+    Route::get('/listProgram', [BiroSdmPengusulanController::class, 'listProgram'])->name('biro-sdm.pengusulan.listProgram');
+    Route::get('/listPegawai', [BiroSdmPengusulanController::class, 'listPegawai'])->name('biro-sdm.pengusulan.listPegawai');
+    Route::post('/pengusulan/updateOrCreate', [BiroSdmPengusulanController::class, 'updateOrCreate'])->name('biro-sdm.pengusulan.updateOrCreate');
+    Route::get('/pengusulan/edit', [BiroSdmPengusulanController::class, 'edit'])->name('biro-sdm.pengusulan.edit');
+    Route::post('/pengusulan/delete', [BiroSdmPengusulanController::class, 'delete'])->name('biro-sdm.pengusulan.delete');
 });
 
 Route::group(['prefix' => 'unit-kerja', 'middleware' => 'cekRole:unit-kerja'], function () {

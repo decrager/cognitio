@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Program Pelatihan')
+@section('title', 'Pengusulan Pegawai')
 
 @section('content')
     <div class="card">
@@ -35,10 +35,9 @@
                         <button type="button" onclick="resetForm()" class="btn btn-danger ml-2">
                             <i class="fa fa-refresh mr-1"></i> Reset
                         </button>
-                        <button type="button" href="#" class="btn btn-success ml-auto"
-                            onclick="showAddModal()">
+                        <a type="button" href="{{ route('biro-sdm.pengusulan.form') }}" class="btn btn-success ml-auto">
                             <i class="fa fa-plus mr-1"></i> Tambah
-                        </button>
+                        </a>
                     </form>
                     {{-- End Filter --}}
                 </div>
@@ -53,19 +52,17 @@
                                     <th scope="col">Program Pelatihan</th>
                                     <th scope="col">Deskripsi</th>
                                     <th scope="col">Tanggal Pelaksanaan</th>
+                                    <th scope="col">Jumlah Usulan</th>
                                     <th scope="col">Kuota</th>
-                                    <th scope="col">Lokasi</th>
-                                    <th scope="col">Penyelenggara</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($results as $val)
                                     <tr>
-                                        <td>{{ ($results->currentPage() - 1) * $results->perPage() + $loop->iteration }}
-                                        </td>
+                                        <td>{{ ($results->currentPage() - 1) * $results->perPage() + $loop->iteration }}</td>
                                         <td>
-                                            {{-- <p class="p-0 m-0 text-decoration-none text-primary text-bold">
-                                                {{ $val->nama_pelatihan }}</p> --}}
                                             <p class="p-0 m-0 text-decoration-none text-primary text-bold"
                                                 style="cursor: pointer;"
                                                 onmouseover="this.classList.add('text-info', 'text-decoration-underline');"
@@ -73,12 +70,26 @@
                                                 onclick="loadDetailModal({{ $val->id }})">{{ $val->nama_pelatihan }}</p>
                                         </td>
                                         <td>{{ $val->deskripsi }}<br></td>
-                                        <td>{{ \Carbon\Carbon::parse($val->tanggal_mulai)->translatedFormat('j F Y') }} -
+                                        <td>
+                                            {{ \Carbon\Carbon::parse($val->tanggal_mulai)->translatedFormat('j F Y') }} -
                                             {{ \Carbon\Carbon::parse($val->tanggal_selesai)->translatedFormat('j F Y') }}
                                         </td>
-                                        <td><span class="badge badge-info">{{ $val->kuota }}</span></td>
-                                        <td>{{ $val->lokasi }}</td>
-                                        <td>{{ $val->penyelenggara }}</td>
+                                        <td>
+                                            <span class="badge badge-info">{{ count($val->assignment) }}</span>
+                                        </td>
+                                        <td><span class="badge badge-secondary">{{ $val->kuota }}</span></td>
+                                        <td>
+                                            @if ($val->status == 'aktif')
+                                                <span class="badge badge-success">
+                                                    Aktif
+                                                </span>
+                                            @else
+                                                <span class="badge badge-danger">
+                                                    Non Aktif
+                                                </span>
+                                            @endif
+                                        </td>
+                                        <td><button type="button" class="btn btn-sm btn-info detailUsulan" data-id_program="{{ $val->id }}"><i class="fa fa-users"></i></button></td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -96,6 +107,10 @@
         </div>
     </div>
 
+    <div class="box box-info mt-5" id="formPegawai" style="display: none;">
+        {{-- form-pegawai-usulan --}}
+    </div>
+
     <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -109,11 +124,40 @@
             </div>
         </div>
     </div>
-
-    @include('pages.biro-sdm.modal-add-program')
 @endsection
 
 @push('scripts')
+    <script>
+        $(document).ready(function () {
+            $('.detailUsulan').on('click', function () {
+                let id_program = $(this).data('id_program');
+                $('#formPegawai').empty();
+                $('#formPegawai').append(`<div class="box-body" style="height: 100px;" id="loadingPegawai"><div class="overlay"><i class="fa fa-refresh fa-spin"></i></div></div>`);
+                $('#formPegawai').show();
+                $('html, body').animate({
+                    scrollTop: $("#formPegawai").offset().top
+                }, 1000);
+
+                $('#formPegawai').empty();
+                $('#formPegawai').append(`<div class="box-body" style="height: 100px;" id="loadingPegawai"><div class="overlay"><i class="fa fa-refresh fa-spin"></i></div></div>`);
+                $('#formPegawai').show();
+    
+                $.ajax({
+                    url: '{{ route('biro-sdm.pengusulan.listPegawai') }}',
+                    type: 'GET',
+                    data: {
+                        id_program: id_program,
+                        assigned: true,
+                    },
+                    success: function (data) {
+                        $('#formPegawai').empty();
+                        $('#formPegawai').html(data);
+                    }
+                });
+            });
+        });
+    </script>
+
     <script>
         function resetForm() {
             const form = document.querySelector('form[action="{{ route('biro-sdm.program.index') }}"]');
@@ -123,19 +167,13 @@
             form.submit();
         }
 
-        function showAddModal() {
-            const fields = ['nama_pelatihan', 'deskripsi', 'tanggal_mulai', 'tanggal_selesai', 'lokasi', 'kuota', 'penyelenggara', 'jabatan[]'];
-            fields.forEach(field => document.querySelector(`[name="${field}"]`).value = '');
-            $('#addModal').modal('show');
-        }
-
         function loadDetailModal(id) {
             var modal = $('#detailModal');
             modal.modal('show');
             $('#modal-loader').show(); // Show the loader
 
             $.ajax({
-                url: '{{ route('biro-sdm.program.show', '') }}/' + id,
+                url: '{{ route('biro-sdm.pengusulan.show', '') }}/' + id,
                 method: 'GET',
                 success: function (data) {
                     $('#modal-loader').hide(); // Hide the loader
