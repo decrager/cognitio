@@ -50,7 +50,7 @@
                     <tr>
                         <th scope="row">Kuota</th>
                         <td id="input_6" style="display: none;">
-                            <input type="number" name="kuota" class="form-control" placeholder="Kuota..." value="{{ $data->kuota }}" required>
+                            <input type="number" name="kuota" class="form-control" placeholder="Kuota..." min="1" value="{{ $data->kuota }}" required>
                         </td>
                         <td id="read_6"><span class="badge badge-info" style="font-size: 14px;">{{ $data->kuota }}</span></td>
                     </tr>

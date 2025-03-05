@@ -36,7 +36,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row" style="width: 250px;">Kuota</th>
-                                    <td><input type="number" name="kuota" class="form-control" placeholder="Kuota..." required></td>
+                                    <td><input type="number" name="kuota" class="form-control" placeholder="Kuota..." min="1" required ></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" style="width: 250px;">Penyelenggara</th>
