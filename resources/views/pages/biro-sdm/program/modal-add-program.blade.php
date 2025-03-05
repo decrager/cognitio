@@ -108,7 +108,7 @@
                             // Loop through the errors object
                             $.each(xhr.responseJSON.message, function (key, value) {
                                 // Append the error message to the form
-                                $('#formCreate').find(`[id="${key}"]`).after(`<span class="text-danger">${value[0]}</span>`);
+                                $('#formCreate').find(`[id="${key}"]`).after(`<br><span class="text-danger">${value[0]}</span>`);
                             });
                         }
                     }
