@@ -17,36 +17,36 @@
                                 <tbody>
                                 <tr>
                                     <th scope="row" style="width: 250px;">Nama Program Pelatihan</th>
-                                    <td><input type="text" name="nama_pelatihan" class="form-control" placeholder="Nama Program Pelatihan..." required><br></td>
+                                    <td><input type="text" id="nama_pelatihan" name="nama_pelatihan" class="form-control" placeholder="Nama Program Pelatihan..." required><br></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" style="width: 250px;">Deskripsi</th>
-                                    <td><textarea name="deskripsi" class="form-control" rows="3" placeholder="Deskripsi..." required></textarea><br></td>
+                                    <td><textarea id="deskripsi" name="deskripsi" class="form-control" rows="3" placeholder="Deskripsi..." required></textarea><br></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" style="width: 250px;">Tanggal Mulai</th>
-                                    <td><input type="date" name="tanggal_mulai" class="form-control" required></td>
+                                    <td><input id="tanggal_mulai" type="date" name="tanggal_mulai" class="form-control" required></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" style="width: 250px;">Tanggal Selesai</th>
-                                    <td><input type="date" name="tanggal_selesai" class="form-control" required></td>
+                                    <td><input id="tanggal_selesai" type="date" name="tanggal_selesai" class="form-control" required></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" style="width: 250px;">Lokasi</th>
-                                    <td><textarea name="lokasi" class="form-control" rows="3" placeholder="Lokasi..." required></textarea><br></td>
+                                    <td><textarea id="lokasi" name="lokasi" class="form-control" rows="3" placeholder="Lokasi..." required></textarea><br></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" style="width: 250px;">Kuota</th>
-                                    <td><input type="number" name="kuota" class="form-control" placeholder="Kuota..." min="1" required ></td>
+                                    <td><input id="kuota" type="number" name="kuota" class="form-control" placeholder="Kuota..." min="1" required ></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" style="width: 250px;">Penyelenggara</th>
-                                    <td><input type="penyelenggara" name="penyelenggara" class="form-control" placeholder="Penyelenggara" required><br></td>
+                                    <td><input id="penyelenggara" type="penyelenggara" name="penyelenggara" class="form-control" placeholder="Penyelenggara" required><br></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" style="width: 250px;">Kriteria Jabatan</th>
                                     <td>
-                                        <select class="form-control select2" name="jabatan[]" multiple="multiple" data-placeholder="Pilih Jabatan" style="width: 100%; background: blue;" required>
+                                        <select id="jabatan" class="form-control select2" name="jabatan[]" multiple="multiple" data-placeholder="Pilih Jabatan" style="width: 100%; background: blue;" required>
                                             @foreach ($jabatan as $row)
                                                 <option value="{{ $row->id }}">{{ $row->nama_jabatan }}</option>
                                             @endforeach
@@ -108,7 +108,7 @@
                             // Loop through the errors object
                             $.each(xhr.responseJSON.message, function (key, value) {
                                 // Append the error message to the form
-                                $('#formCreate').find(`[name="${key}"]`).after(`<span class="text-danger">${value[0]}</span>`);
+                                $('#formCreate').find(`[id="${key}"]`).after(`<span class="text-danger">${value[0]}</span>`);
                             });
                         }
                     }

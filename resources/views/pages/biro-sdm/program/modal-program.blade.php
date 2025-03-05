@@ -16,56 +16,56 @@
                     <tr>
                         <th scope="row">Nama Program Pelatihan</th>
                         <td id="input_1" style="display: none;">
-                            <input value="{{ $data->nama_pelatihan }}" type="text" name="nama_pelatihan" class="form-control" placeholder="Nama Program Pelatihan..." required><br>
+                            <input id="nama_pelatihan" value="{{ $data->nama_pelatihan }}" type="text" name="nama_pelatihan" class="form-control" placeholder="Nama Program Pelatihan..." required><br>
                         </td>
                         <td id="read_1">{{ $data->nama_pelatihan }}<br></td>
                     </tr>
                     <tr>
                         <th scope="row">Deskripsi</th>
                         <td id="input_2" style="display: none;">
-                            <textarea name="deskripsi" class="form-control" rows="3" placeholder="Deskripsi..." required>{!! $data->deskripsi !!}</textarea><br>
+                            <textarea id="deskripsi" name="deskripsi" class="form-control" rows="3" placeholder="Deskripsi..." required>{!! $data->deskripsi !!}</textarea><br>
                         </td>
                         <td id="read_2">{{ $data->deskripsi }}<br></td>
                     </tr>
                     <tr>
                         <th scope="row">Tanggal Mulai</th>
                         <td id="input_3" style="display: none;">
-                            <input type="date" name="tanggal_mulai" class="form-control" value="{{ \Carbon\Carbon::parse($data->tanggal_mulai)->format('Y-m-d') }}" required>
+                            <input id="tanggal_mulai" type="date" name="tanggal_mulai" class="form-control" value="{{ \Carbon\Carbon::parse($data->tanggal_mulai)->format('Y-m-d') }}" required>
                         </td>
                         <td id="read_3">{{ \Carbon\Carbon::parse($data->tanggal_mulai)->translatedFormat('j F Y') }}</td>
                     </tr>
                     <tr>
                         <th scope="row">Tanggal Selesai</th>
                         <td id="input_4" style="display: none;">
-                            <input type="date" name="tanggal_selesai" class="form-control" value="{{ \Carbon\Carbon::parse($data->tanggal_selesai)->format('Y-m-d') }}" required>
+                            <input type="date" id="tanggal_selesai" name="tanggal_selesai" class="form-control" value="{{ \Carbon\Carbon::parse($data->tanggal_selesai)->format('Y-m-d') }}" required>
                         </td>
                         <td id="read_4">{{ \Carbon\Carbon::parse($data->tanggal_selesai)->translatedFormat('j F Y') }}</td>
                     </tr>
                     <tr>
                         <th scope="row">Lokasi</th>
                         <td id="input_5" style="display: none;">
-                            <textarea name="lokasi" class="form-control" rows="3" placeholder="Lokasi..." required>{!! $data->lokasi !!}</textarea><br>
+                            <textarea id="lokasi" name="lokasi" class="form-control" rows="3" placeholder="Lokasi..." required>{!! $data->lokasi !!}</textarea><br>
                         </td>
                         <td id="read_5">{{ $data->lokasi }}</td>
                     </tr>
                     <tr>
                         <th scope="row">Kuota</th>
                         <td id="input_6" style="display: none;">
-                            <input type="number" name="kuota" class="form-control" placeholder="Kuota..." min="1" value="{{ $data->kuota }}" required>
+                            <input id="kuota" type="number" name="kuota" class="form-control" placeholder="Kuota..." min="1" value="{{ $data->kuota }}" required>
                         </td>
                         <td id="read_6"><span class="badge badge-info" style="font-size: 14px;">{{ $data->kuota }}</span></td>
                     </tr>
                     <tr>
                         <th scope="row">Penyelenggara</th>
                         <td id="input_7" style="display: none;">
-                            <input type="penyelenggara" name="penyelenggara" class="form-control" placeholder="Penyelenggara" value="{{ $data->penyelenggara }}" required><br>
+                            <input id="penyelenggara" type="penyelenggara" name="penyelenggara" class="form-control" placeholder="Penyelenggara" value="{{ $data->penyelenggara }}" required><br>
                         </td>
                         <td id="read_7">{{ $data->penyelenggara }}</td>
                     </tr>
                     <tr>
                         <th scope="row">Kriteria Jabatan</th>
                         <td scope="row" id="input_8" style="display: none;">
-                            <select class="form-control select2" name="jabatan[]" multiple="multiple" data-placeholder="Pilih Jabatan" style="width: 100%; background: blue;" required>
+                            <select id="jabatan" class="form-control select2" name="jabatan[]" multiple="multiple" data-placeholder="Pilih Jabatan" style="width: 100%; background: blue;" required>
                                 @foreach ($jabatan as $row)
                                     <?php $selected_jabatan = $kriteria->pluck('nama_jabatan')->toArray(); ?>
                                     <option value="{{ $row->id }}" @if(in_array($row->nama_jabatan, $selected_jabatan)) selected @endif>{{ $row->nama_jabatan }}</option>
@@ -145,7 +145,7 @@
                     // Loop through the errors object
                     $.each(xhr.responseJSON.message, function (key, value) {
                         // Append the error message to the form
-                        $('#formUpdate').find(`[name="${key}"]`).after(`<span class="text-danger">${value[0]}</span>`);
+                        $('#formUpdate').find(`[id="${key}"]`).after(`<span class="text-danger">${value[0]}</span>`);
                     });
                 }
             }
