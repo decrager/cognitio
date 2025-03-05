@@ -46,11 +46,12 @@
                                 <tr>
                                     <th scope="row" style="width: 250px;">Kriteria Jabatan</th>
                                     <td>
-                                        <select id="jabatan" class="form-control select2" name="jabatan[]" multiple="multiple" data-placeholder="Pilih Jabatan" style="width: 100%; background: blue;" required>
+                                        <select class="form-control select2" name="jabatan[]" multiple="multiple" data-placeholder="Pilih Jabatan" style="width: 100%; background: blue;" required>
                                             @foreach ($jabatan as $row)
                                                 <option value="{{ $row->id }}">{{ $row->nama_jabatan }}</option>
                                             @endforeach
                                         </select>
+                                        <div id="jabatan"></div>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -108,7 +109,7 @@
                             // Loop through the errors object
                             $.each(xhr.responseJSON.message, function (key, value) {
                                 // Append the error message to the form
-                                $('#formCreate').find(`[id="${key}"]`).after(`<br><span class="text-danger">${value[0]}</span>`);
+                                $('#formCreate').find(`[id="${key}"]`).after(`<span class="text-danger">${value[0]}</span>`);
                             });
                         }
                     }

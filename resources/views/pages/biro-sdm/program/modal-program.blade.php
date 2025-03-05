@@ -65,12 +65,13 @@
                     <tr>
                         <th scope="row">Kriteria Jabatan</th>
                         <td scope="row" id="input_8" style="display: none;">
-                            <select id="jabatan" class="form-control select2" name="jabatan[]" multiple="multiple" data-placeholder="Pilih Jabatan" style="width: 100%; background: blue;" required>
+                            <select class="form-control select2" name="jabatan[]" multiple="multiple" data-placeholder="Pilih Jabatan" style="width: 100%; background: blue;" required>
                                 @foreach ($jabatan as $row)
                                     <?php $selected_jabatan = $kriteria->pluck('nama_jabatan')->toArray(); ?>
                                     <option value="{{ $row->id }}" @if(in_array($row->nama_jabatan, $selected_jabatan)) selected @endif>{{ $row->nama_jabatan }}</option>
                                 @endforeach
                             </select>
+                            <div id="jabatan"></div>
                         </td>
                         <th scope="row" id="read_8">
                             <ol style="padding-left: 0; list-style-position: inside;">
@@ -145,7 +146,7 @@
                     // Loop through the errors object
                     $.each(xhr.responseJSON.message, function (key, value) {
                         // Append the error message to the form
-                        $('#formUpdate').find(`[id="${key}"]`).after(`<br><span class="text-danger">${value[0]}</span>`);
+                        $('#formUpdate').find(`[id="${key}"]`).after(`<span class="text-danger">${value[0]}</span>`);
                     });
                 }
             }
