@@ -34,11 +34,11 @@
         <!-- small box -->
         <div class="small-box bg-success flex-fill">
             <div class="inner text-white">
-                <h3>{{$pegawai_kompeten}} / {{ $pegawai_non_kompeten }}</h3>
-                <h5>Pegawai Kompeten / Belum Kompeten</h5>
+                <h3>{{$total_unit_kerja }}</h3>
+                <h5>Total Unit Kerja</h5>
             </div>
             <div class="icon">
-                <i class="ion ion-ios-people"></i>
+                <i class="fa fa-building"></i>
             </div>
         </div>
     </div>

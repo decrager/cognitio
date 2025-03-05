@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Assignment;
 use App\Models\Pegawai;
 use App\Models\Program;
+use App\Models\UnitKerja;
 use App\Service\BiroSdmDashboard;
 
 class DashboardController extends Controller
@@ -35,6 +36,7 @@ class DashboardController extends Controller
             'jumlah_assignment_konfirmasi' => $assignmet->where('status', 2)->count(),
             'jumlah_assignment_tidak_dikonfirmasi' => $assignmet->where('status', 3)->count(),
             'jumlah_assignment_ditetapkan' => $assignmet->where('status', 4)->count(),
+            'total_unit_kerja' => UnitKerja::count(),
         ]);
     }
 }
