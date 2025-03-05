@@ -23,10 +23,10 @@
                     <form class="d-flex align-items-center" action="{{ route('biro-sdm.program.index') }}" method="GET">
                         <input class="form-control w-auto" name="search" value="{{ old('search', $request->search) }}"
                             placeholder="Cari...">
-                        <input type="date" name="tanggal_mulai"
+                        <input type="date" id="tanggalMulai" name="tanggal_mulai"
                             value="{{ old('tanggal_mulai', $request->tanggal_mulai) }}" class="form-control ml-2"
                             style="width: 10%">
-                        <input type="date" name="tanggal_selesai"
+                        <input type="date" id="tanggalSelesai" name="tanggal_selesai"
                             value="{{ old('tanggal_selesai', $request->tanggal_selesai) }}" class="form-control ml-2"
                             style="width: 10%">
                         <button type="submit" class="btn btn-primary ml-2">
@@ -159,5 +159,17 @@
                 }
             });
         }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const tanggalMulai = document.getElementById('tanggalMulai');
+            const tanggalSelesai = document.getElementById('tanggalSelesai');
+
+            tanggalSelesai.addEventListener('change', function () {
+                if (tanggalSelesai.value < tanggalMulai.value) {
+                    alert('Tanggal selesai tidak boleh kurang dari tanggal mulai');
+                    tanggalSelesai.value = '';
+                }
+            });
+        });
     </script>
 @endpush
