@@ -45,10 +45,7 @@ class PegawaiController extends Controller
                       ->orWhereRaw('LOWER(alamat) LIKE ?', ['%' . strtolower($search) . '%'])
                       ->orWhereRaw('LOWER(email) LIKE ?', ['%' . strtolower($search) . '%'])
                       ->orWhereRaw('LOWER(unit_kerja.nama_unit) LIKE ?', ['%' . strtolower($search) . '%'])
-                      ->orWhereHas('jabatan', function($query) use ($search) {
-                          $query->whereRaw('LOWER(tipe_jabatan) LIKE ?', ['%' . strtolower($search) . '%'])
-                                ->orWhereRaw('LOWER(nama_jabatan) LIKE ?', ['%' . strtolower($search) . '%']);
-                      });
+                      ->orWhereRaw('LOWER(jabatan.nama_jabatan) LIKE ?', ['%' . strtolower($search) . '%']);
             });
         }
 
