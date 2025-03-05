@@ -15,7 +15,7 @@
                         <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                     </a>
                 </li>
-                <li class="treeview {{ Request::routeIs('biro-sdm.program.*') || Request::routeIs('biro-sdm.pengusulan.*') ? 'active' : '' }}">
+                <li class="treeview {{ Request::routeIs('biro-sdm.program.*') || Request::routeIs('biro-sdm.pengusulan.*') || Request::routeIs('biro-sdm.penetapan.*') ? 'active' : '' }}">
                     <a href="#">
                         <i class="fa fa-bars"></i> <span>Program Pelatihan</span>
                         <span class="pull-right-container">
@@ -23,14 +23,14 @@
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li class="{{ Request::routeIs('biro-sdm.program.*') ? 'active' : ''}}">
-                            <a href="{{ route('biro-sdm.program.index') }}""><i class="fa fa-files-o"></i> Daftar Program</a>
+                        <li class="{{ Request::routeIs('biro-sdm.program.*') ? 'active' : ''}} py-1">
+                            <a href="{{ route('biro-sdm.program.index') }}"><i class="fa fa-files-o"></i> Daftar Program</a>
                         </li>
-                        <li class="{{ Request::routeIs('biro-sdm.pengusulan.*') ? 'active' : ''}}">
-                            <a href="{{ route('biro-sdm.pengusulan.index') }}""><i class="fa fa-group"></i> Pengusulan</a>
+                        <li class="{{ Request::routeIs('biro-sdm.pengusulan.*') ? 'active' : ''}} py-1">
+                            <a href="{{ route('biro-sdm.pengusulan.index') }}"><i class="fa fa-group"></i> Pengusulan</a>
                         </li>
-                        <li class="{{ Request::routeIs('biro-sdm.penetapan.*') ? 'active' : ''}}">
-                            <a href="{{ route('biro-sdm.penetapan.index') }}""><i class="fa fa-thumb-tack"></i> Penetapan</a>
+                        <li class="{{ Request::routeIs('biro-sdm.penetapan.*') ? 'active' : ''}} py-1">
+                            <a href="{{ route('biro-sdm.penetapan.index') }}"><i class="fa fa-thumb-tack"></i> Penetapan</a>
                         </li>
                     </ul>
                 </li>
