@@ -83,12 +83,11 @@ class PengusulanController extends Controller
         } else if ($request->listLocation) {
             $results = Program::select('lokasi')
             ->where('nama_pelatihan', $request->nama_pelatihan)
-            ->orderBy('tanggal_mulai', 'asc')
             ->where(function ($q) {
                 $q->where('tanggal_mulai', '>=', now())
                 ->orWhere('tanggal_selesai', '>=', now());
             })
-            ->groupBy('lokasi', 'tanggal_mulai')
+            ->groupBy('lokasi')
             ->get()
             ->makeHidden(['status']);
         } else if ($request->listSchedule) {
