@@ -7,6 +7,7 @@
 </div>
 <form id="formUpdate" action="{{ route('biro-sdm.program.update', $data->id) }}" method="POST">
     @csrf
+    <input type="hidden" name="action" value="">
     <div class="modal-body" id="modal-body-content">
         <div class="row">
             <div class="col-md-12">
@@ -86,7 +87,7 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-danger mr-auto" onclick="deleteProgram({{ $data->id }})">Hapus</button>
-        <button id="input_9" type="submit" class="btn btn-success" style="display: none;">Simpan</button>
+        <button id="input_9" type="button" onclick="updateProgram()" class="btn btn-success" style="display: none;">Simpan</button>
         <button id="read_9" type="button" class="btn btn-warning bold text-white" onclick="editProgram()">Ubah</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
     </div>
@@ -110,10 +111,44 @@
         }
 
         $('.select2').select2();
-        console.log('Edit Program');
     }
 
     function updateProgram() {
-        $('#formUpdate').submit();
+
+        var myForm = document.getElementById('formUpdate');
+        var formData = new FormData(myForm);
+        var url = myForm.getAttribute('action');
+
+        $.ajax({
+            url: url, // Get the form action URL
+            method: 'POST',
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                // Handle success response
+                if (response.status == 'success') {
+                    $('input[name="action"]').val('submit');
+                    $('#formUpdate').off('submit').submit();
+                } else {
+                    alert('Failed to create program');
+                }
+            },
+            error: function (xhr) {
+                // Handle error response
+
+                // If Error Response Code 422
+                if (xhr.status === 422) {
+                    // Reset The Errors
+                    $('#formUpdate').find('span.text-danger').remove();
+                    // Loop through the errors object
+                    $.each(xhr.responseJSON.message, function (key, value) {
+                        // Append the error message to the form
+                        $('#formUpdate').find(`[name="${key}"]`).after(`<span class="text-danger">${value[0]}</span>`);
+                    });
+                }
+            }
+        });
     }
 </script>

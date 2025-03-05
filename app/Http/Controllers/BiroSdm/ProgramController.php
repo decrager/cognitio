@@ -11,6 +11,7 @@ use App\Models\Kriteria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class ProgramController extends Controller
 {
@@ -61,8 +62,72 @@ class ProgramController extends Controller
         return view('pages.biro-sdm.program.modal-program', compact('data', 'jabatan', 'kriteria'));
     }
 
+    private function validateProgram($request, $isCreate = true)
+    {
+        $rules = [
+            'deskripsi' => 'required',
+            'tanggal_mulai' => 'required|date|after:now',
+            'tanggal_selesai' => 'required|date|after:tanggal_mulai',
+            'lokasi' => 'required',
+            'kuota' => 'required|numeric|min:1',
+            'penyelenggara' => 'required',
+            'jabatan' => 'required'
+        ];
+
+// If the request is for creating a new record, add the unique validation rule
+        if ($isCreate) {
+            $rules['nama_pelatihan'] = 'required|unique:program,nama_pelatihan';
+        } else {
+            // If the request is for updating an existing record, ignore the unique validation for the current record
+            $rules['nama_pelatihan'] = 'required|unique:program,nama_pelatihan,' . $request->id;
+        }
+
+        $messages = [
+            'nama_pelatihan.required' => 'Nama pelatihan harus diisi',
+            'nama_pelatihan.unique' => 'Nama pelatihan sudah ada',
+            'deskripsi.required' => 'Deskripsi harus diisi',
+            'tanggal_mulai.required' => 'Tanggal mulai harus diisi',
+            'tanggal_mulai.date' => 'Tanggal mulai harus berupa tanggal',
+            'tanggal_mulai.after' => 'Tanggal mulai harus setelah hari ini',
+            'tanggal_selesai.required' => 'Tanggal selesai harus diisi',
+            'tanggal_selesai.date' => 'Tanggal selesai harus berupa tanggal',
+            'tanggal_selesai.after' => 'Tanggal selesai harus setelah tanggal mulai',
+            'lokasi.required' => 'Lokasi harus diisi',
+            'kuota.required' => 'Kuota harus diisi',
+            'kuota.numeric' => 'Kuota harus berupa angka',
+            'kuota.min' => 'Kuota minimal 1',
+            'penyelenggara.required' => 'Penyelenggara harus diisi',
+            'jabatan.required' => 'Jabatan harus diisi'
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        return $validator;
+    }
+
     public function create(Request $request)
     {
+
+        $validator = $this->validateProgram($request);
+
+        // Check if validation fails
+        if ($validator->fails()) {
+            // Return JSON with validation errors
+            return response()->json([
+                'status' => 'error',
+                'message' => $validator->errors()
+            ], 422);
+        }
+
+        // If validation passes, proceed with the rest of the logic
+        if ($request->action != 'submit') {
+            // Return JSON
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Data program dan pelatihan berhasil disimpan'
+            ]);
+        }
+
         DB::beginTransaction();
 
         try {
@@ -92,6 +157,27 @@ class ProgramController extends Controller
 
     public function update($id, Request $request)
     {
+        $validator = $this->validateProgram($request, false);
+
+        // Check if validation fails
+        if ($validator->fails()) {
+            // Return JSON with validation errors
+            return response()->json([
+                'status' => 'error',
+                'message' => $validator->errors()
+            ], 422);
+        }
+
+        // If validation passes, proceed with the rest of the logic
+        if ($request->action != 'submit') {
+            // Return JSON
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Data program dan pelatihan berhasil disimpan'
+            ]);
+        }
+
+
         DB::beginTransaction();
 
         try {

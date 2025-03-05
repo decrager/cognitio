@@ -2,6 +2,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <form id="formCreate" action="{{ route('biro-sdm.program.create') }}" method="POST">
             @csrf
+            <input type="hidden" name="action" value="">
             <div class="modal-content">
                 <div class="modal-header d-flex align-items-center">
                     <h5 class="modal-title" id="detailModalLabel">Tambah Program</h5>
@@ -59,7 +60,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-success">Simpan</button>
+                    <button type="button" onclick="createProgram()" id="formCreate-save" class="btn btn-success">Simpan</button>
                 </div>
             </div>
         </form>
@@ -73,8 +74,45 @@
             $('.select2').select2()
         })
 
+
         function createProgram() {
-            $('#formCreate').submit();
+
+
+                var myForm = document.getElementById('formCreate');
+                var formData = new FormData(myForm);
+                var url = myForm.getAttribute('action');
+
+                $.ajax({
+                    url: url, // Get the form action URL
+                    method: 'POST',
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        // Handle success response
+                        if (response.status == 'success') {
+                            $('input[name="action"]').val('submit');
+                            $('#formCreate').off('submit').submit();
+                        } else {
+                            alert('Failed to create program');
+                        }
+                    },
+                    error: function (xhr) {
+                        // Handle error response
+
+                        // If Error Response Code 422
+                        if (xhr.status === 422) {
+                            // Reset The Errors
+                            $('#formCreate').find('span.text-danger').remove();
+                            // Loop through the errors object
+                            $.each(xhr.responseJSON.message, function (key, value) {
+                                // Append the error message to the form
+                                $('#formCreate').find(`[name="${key}"]`).after(`<span class="text-danger">${value[0]}</span>`);
+                            });
+                        }
+                    }
+                });
         }
     </script>
 @endpush
