@@ -61,7 +61,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                    <button type="button" onclick="createProgram()" id="formCreate-save" class="btn btn-success">Simpan</button>
+                    <button type="submit" id="formCreate-save" class="btn btn-success">Simpan</button>
                 </div>
             </div>
         </form>
@@ -76,8 +76,11 @@
         })
 
 
-        function createProgram() {
-
+        $("#formCreate-save").click(function (e) {
+                if (!document.getElementById('formCreate').checkValidity()) {
+                    return;
+                }
+                e.preventDefault();
 
                 var myForm = document.getElementById('formCreate');
                 var formData = new FormData(myForm);
@@ -114,6 +117,6 @@
                         }
                     }
                 });
-        }
+        });
     </script>
 @endpush

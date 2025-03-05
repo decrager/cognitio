@@ -88,7 +88,7 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-danger mr-auto" onclick="deleteProgram({{ $data->id }})">Hapus</button>
-        <button id="input_9" type="button" onclick="updateProgram()" class="btn btn-success" style="display: none;">Simpan</button>
+        <button id="input_9" type="submit" class="btn btn-success" style="display: none;">Simpan</button>
         <button id="read_9" type="button" class="btn btn-warning bold text-white" onclick="editProgram()">Ubah</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
     </div>
@@ -114,7 +114,11 @@
         $('.select2').select2();
     }
 
-    function updateProgram() {
+    $("#input_9").click(function (e) {
+        if (!document.getElementById('formUpdate').checkValidity()) {
+            return;
+        }
+        e.preventDefault();
 
         var myForm = document.getElementById('formUpdate');
         var formData = new FormData(myForm);
@@ -151,5 +155,5 @@
                 }
             }
         });
-    }
+    });
 </script>
