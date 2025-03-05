@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="row">
-    <div class="col-md-5 col-sm-6 col-xs-12">
+    <div class="col-xl-5 col-lg-6 col-md-6 col-sm-6 col-xs-12">
         <div class="info-box">
             <span class="info-box-icon bg-aqua"><i class="fa fa-building-o"></i></span>
 
@@ -18,7 +18,7 @@
         <!-- /.info-box -->
     </div>
     <!-- /.col -->
-    <div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
         <div class="info-box">
             <span class="info-box-icon bg-red"><i class="fa fa-dollar"></i></span>
 
@@ -32,7 +32,7 @@
     </div>
     <!-- /.col -->
     <!-- /.col -->
-    <div class="col-md-2 col-sm-6 col-xs-12">
+    <div class="col-xl-2 col-lg-6 col-md-6 col-sm-6 col-xs-12">
         <div class="info-box">
             <span class="info-box-icon bg-warning text-white"><i class="ion ion-location"></i></span>
 
@@ -46,7 +46,7 @@
     </div>
     <!-- /.col -->
     <!-- /.col -->
-    <div class="col-md-2 col-sm-6 col-xs-12">
+    <div class="col-xl-2 col-lg-6 col-md-6 col-sm-6 col-xs-12">
         <div class="info-box">
             <span class="info-box-icon bg-info text-white"><i class="fa fa-cog"></i></span>
 
