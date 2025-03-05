@@ -56,6 +56,7 @@
                                     <th scope="col">Kuota</th>
                                     <th scope="col">Lokasi</th>
                                     <th scope="col">Penyelenggara</th>
+                                    <th scope="col">Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -79,6 +80,17 @@
                                         <td><span class="badge badge-info">{{ $val->kuota }}</span></td>
                                         <td>{{ $val->lokasi }}</td>
                                         <td>{{ $val->penyelenggara }}</td>
+                                        <td>
+                                            @if ($val->status == 'aktif')
+                                                <span class="badge badge-success">
+                                                    Aktif
+                                                </span>
+                                            @else
+                                                <span class="badge badge-danger">
+                                                    Non Aktif
+                                                </span>
+                                            @endif
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

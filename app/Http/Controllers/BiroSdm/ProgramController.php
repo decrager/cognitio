@@ -18,7 +18,7 @@ class ProgramController extends Controller
     {
         $results = new Program();
         $results = $this->withFilter($results, $request);
-        $results = $results->where('tanggal_mulai', '>=', now())->orderBy('tanggal_mulai')->paginate(10);
+        $results = $results->orderByRaw("CASE WHEN tanggal_mulai >= CURDATE() THEN 0 ELSE 1 END, tanggal_mulai ASC")->paginate(10);
 
         $jabatan = Jabatan::select('id', 'nama_jabatan')->get();
 
@@ -37,9 +37,12 @@ class ProgramController extends Controller
             });
         }
 
-        if ($request->input('tanggal_mulai') && $request->input('tanggal_selesai')) {
-            $query = $query->where('tanggal_mulai', '>=', $request->input('tanggal_mulai'))
-                ->where('tanggal_selesai', '<=', $request->input('tanggal_selesai'));
+        if ($request->input('tanggal_mulai')) {
+            $query = $query->where('tanggal_mulai', '>=', $request->input('tanggal_mulai'));
+        }
+
+        if ($request->input('tanggal_selesai')) {
+            $query = $query->where('tanggal_selesai', '<=', $request->input('tanggal_selesai'));
         }
 
         return $query;

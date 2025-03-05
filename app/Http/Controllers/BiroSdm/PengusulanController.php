@@ -39,9 +39,12 @@ class PengusulanController extends Controller
             });
         }
 
-        if ($request->input('tanggal_mulai') && $request->input('tanggal_selesai')) {
-            $query = $query->where('tanggal_mulai', '>=', $request->input('tanggal_mulai'))
-                ->where('tanggal_selesai', '<=', $request->input('tanggal_selesai'));
+        if ($request->input('tanggal_mulai')) {
+            $query = $query->where('tanggal_mulai', '>=', $request->input('tanggal_mulai'));
+        }
+
+        if ($request->input('tanggal_selesai')) {
+            $query = $query->where('tanggal_selesai', '<=', $request->input('tanggal_selesai'));
         }
 
         return $query;
