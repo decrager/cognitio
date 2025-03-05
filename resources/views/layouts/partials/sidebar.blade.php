@@ -29,6 +29,9 @@
                         <li class="{{ Request::routeIs('biro-sdm.pengusulan.*') ? 'active' : ''}}">
                             <a href="{{ route('biro-sdm.pengusulan.index') }}""><i class="fa fa-group"></i> Pengusulan</a>
                         </li>
+                        <li class="{{ Request::routeIs('biro-sdm.penetapan.*') ? 'active' : ''}}">
+                            <a href="{{ route('biro-sdm.penetapan.index') }}""><i class="fa fa-thumb-tack"></i> Penetapan</a>
+                        </li>
                     </ul>
                 </li>
                 <li class="{{ Request::routeIs('biro-sdm.pegawai.*') ? 'active' : '' }}">

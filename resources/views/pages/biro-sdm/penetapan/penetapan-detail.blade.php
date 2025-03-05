@@ -1,7 +1,7 @@
 <div class="box-header with-border text-center">
     <h3 class="box-title">Detail Pegawai yang Diusulkan</h3>
 </div>
-<form action="{{ route('biro-sdm.pengusulan.edit') }}" method="GET">
+<form action="{{ route('biro-sdm.penetapan.update') }}" method="POST">
     @csrf
     <div class="box-body">
         <table id="employeeTable" class="table table-bordered table-striped">
@@ -12,6 +12,8 @@
                     <th>NIP</th>
                     <th>Jabatan</th>
                     <th>Unit Kerja</th>
+                    <th>Status</th>
+                    <th>Pilih</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,6 +29,23 @@
                         <td>{{ $employee->nip }}</td>
                         <td>{{ $employee->jabatan->nama_jabatan }}</td>
                         <td>{{ $employee->unit->nama_unit }}</td>
+                        <td>
+                            @if ($employee->status == 1)
+                                <span class="badge badge-warning">Pending</span>
+                            @elseif ($employee->status == 2)
+                                <span class="badge badge-primary">Terkonfirmasi</span>
+                            @elseif ($employee->status == 3)
+                                <span class="badge badge-danger">Ditolak</span>
+                            @elseif ($employee->status == 4)
+                                <span class="badge badge-success">Diterima</span>
+                            @endif
+                        </td>
+                        <td>
+                            <input type="checkbox" name="id_pegawai[]" value="{{ $employee->id }}" style="transform: scale(1.5);"
+                            @if ($employee->status != 2)
+                                disabled
+                            @endif>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
@@ -35,13 +54,13 @@
     <div class="box-footer">
         <input type="text" hidden name="id_program" value="{{ $id_program }}">
         <div class="d-flex justify-content-between">
-            <button type="button" class="btn btn-danger" id="btn-delete">Hapus Semua</button>
-            <button type="submit" class="btn btn-success">Edit</button>
+            <button type="button" class="btn btn-danger" id="btn-delete">Hapus Pengusulan yang Ditolak</button>
+            <button type="submit" class="btn btn-success">Tetapkan</button>
         </div>
     </div>
 </form>
 
-<form action="{{ route('biro-sdm.pengusulan.delete') }}" hidden method="POST" id="formDelete">
+<form action="{{ route('biro-sdm.penetapan.delete') }}" hidden method="POST" id="formDelete">
     @csrf
     <input type="text" hidden name="id_program" value="{{ $id_program }}">
 </form>
@@ -65,7 +84,7 @@
         $('#employeeTable').DataTable();
 
         $('#btn-delete').click(function () {
-            if (confirm('Apakah anda yakin ingin menghapus semua pegawai yang diusulkan?')) {
+            if (confirm('Apakah anda yakin ingin menghapus semua pegawai yang ditolak?')) {
                 $('#formDelete').submit();
             }
         });

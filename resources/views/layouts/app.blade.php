@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" href="{{ asset('dist/img/BPKP_Logo.png') }}" type="image/png">
     <title>BPKP</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">

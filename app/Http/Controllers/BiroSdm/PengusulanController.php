@@ -57,7 +57,7 @@ class PengusulanController extends Controller
         ->where('program.id', $id)
         ->get();
 
-        return view('pages.biro-sdm.pengusulan.modal-pengusulan', compact('data', 'jabatan', 'kriteria'));
+        return view('pages.biro-sdm.pengusulan.modal-detail-program', compact('data', 'jabatan', 'kriteria'));
     }
 
     public function form()

@@ -9,6 +9,7 @@ use App\Http\Controllers\BiroSdm\PegawaiController as BiroSdmPegawaiController;
 use App\Http\Controllers\BiroSdm\ProgramController as BiroSdmProgramController;
 use App\Http\Controllers\BiroSdm\PengusulanController as BiroSdmPengusulanController;
 use App\Http\Controllers\BiroSdm\DashboardController as BiroSdmDashboardController;
+use App\Http\Controllers\BiroSdm\PenetapanController as BiroSdmPenetapanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +55,11 @@ Route::group(['prefix' => 'biro-sdm', 'middleware' => 'cekRole:biro-sdm'], funct
     Route::post('/pengusulan/updateOrCreate', [BiroSdmPengusulanController::class, 'updateOrCreate'])->name('biro-sdm.pengusulan.updateOrCreate');
     Route::get('/pengusulan/edit', [BiroSdmPengusulanController::class, 'edit'])->name('biro-sdm.pengusulan.edit');
     Route::post('/pengusulan/delete', [BiroSdmPengusulanController::class, 'delete'])->name('biro-sdm.pengusulan.delete');
+
+    Route::get('/penetapan', [BiroSdmPenetapanController::class, 'index'])->name('biro-sdm.penetapan.index');
+    Route::get('/penetapan/listPegawai', [BiroSdmPenetapanController::class, 'listPegawai'])->name('biro-sdm.penetapan.listPegawai');
+    Route::post('/penetapan/update', [BiroSdmPenetapanController::class, 'update'])->name('biro-sdm.penetapan.update');
+    Route::post('/penetapan/delete', [BiroSdmPenetapanController::class, 'delete'])->name('biro-sdm.penetapan.delete');
 });
 
 Route::group(['prefix' => 'unit-kerja', 'middleware' => 'cekRole:unit-kerja'], function () {
