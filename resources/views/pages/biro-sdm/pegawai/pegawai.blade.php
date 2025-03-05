@@ -49,8 +49,13 @@
                                 <tr>
                                     <td>{{ ($results->currentPage() - 1) * $results->perPage() + $loop->iteration }}</td>
                                     <td>
-                                        <p class="p-0 m-0 text-decoration-none text-primary text-bold" style="cursor: pointer;" onmouseover="this.classList.add('text-info', 'text-decoration-underline');" onmouseout="this.classList.remove('text-info', 'text-decoration-underline');" onclick="loadDetailModal({{$val->id}})">{{ $val->nama }}</p>
-                                        <span class="badge @if($val->tipe == 'PNS') badge-success @else badge-warning @endif">
+                                        <x-employee-name :id="$val->id" :name="$val->nama" />
+                                        <span class="badge
+                                            @if($val->tipe == 'PNS')
+                                            badge-success
+                                            @else
+                                            badge-warning
+                                             @endif">
                                             {{$val->tipe}}
                                         </span>
                                     </td>
@@ -92,10 +97,13 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <div id="modal-loader" class="d-flex justify-content-center">
+                    <div id="modal-loader" class="d-none justify-content-center">
                         <div  class="spinner-border text-primary" role="status" >
                             <span class="sr-only">Loading...</span>
                         </div>
+                    </div>
+                    <div id="section-content">
+
                     </div>
                 </div>
             </div>
@@ -186,16 +194,17 @@
         }
 
         function loadDetailModal(id) {
-            var modal = $('#detailModal');
+            let modal = $('#detailModal');
             modal.modal('show');
-            $('#modal-loader').show(); // Show the loader
+
+            $('#modal-loader').removeClass('d-none').addClass('d-flex');
 
             $.ajax({
                 url: '{{ route('biro-sdm.pegawai.show', '') }}/' + id,
                 method: 'GET',
                 success: function (data) {
-                    $('#modal-loader').hide(); // Hide the loader
-                    modal.find('.modal-content').html(data);
+                    $('#modal-loader').removeClass('d-flex').addClass('d-none');
+                    modal.find('#section-content').html(data);
                 },
                 error: function () {
                     $('#modal-loader').hide(); // Hide the loader

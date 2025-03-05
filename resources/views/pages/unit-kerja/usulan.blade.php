@@ -31,25 +31,6 @@
                                     </tr>
                                 </thead>
                                 @foreach($assignment_usulan as $item2)
-                                @php
-                                    $status = (int) $item2->status; // Konversi ke integer
-
-                                    $warna_status = match($status) {
-                                        1 => 'color:orange;font-weight:bold;', // Usulan (kuning)
-                                        2 => 'color:blue;font-weight:bold;',   // Konfirmasi (biru)
-                                        3 => 'color:red;font-weight:bold;',    // Tidak Dikonfirmasi (merah)
-                                        4 => 'color:green;font-weight:bold;',  // Ditetapkan (hijau)
-                                        default => 'color:black;',             // Default (hitam)
-                                    };
-
-                                    $status_text = match($status) {
-                                        1 => 'Usulan',
-                                        2 => 'Konfirmasi',
-                                        3 => 'Tidak Dikonfirmasi',
-                                        4 => 'Ditetapkan',
-                                        default => 'Tidak Diketahui',
-                                    };
-                                @endphp
                                     <tbody>
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
@@ -65,23 +46,15 @@
                                                 </span>
 
                                             </td>
-                                            <td>
-                                                {{ $item2->pegawai->tipe ?? '-' }}
-                                                {{ $item2->pegawai->nama ?? '-' }}
-                                                {{ $item2->pegawai->nip ?? '-' }}
-                                                {{ $item2->pegawai->telepon ?? '-' }}
-                                            </td>
-                                            <!-- <td>{{ $item2->id_program ?? '-' }}</td> -->
                                             <td><b>{{ $item2->Program->nama_pelatihan ?? '-' }}</b></td>
-                                            <td style="{{ $warna_status }}">
-                                                {{ $status_text }}
-                                                <br>
-                                                <button class="btn btn-info btn-sm mt-1" onclick="showDetail({{ $item2->id_program }})">
-                                                    Detail
+                                            <td>
+                                                <x-status-badge :status="$item2->status" /><br>
+                                                <button class="btn btn-info btn-sm mt-1" style="width: 35px !important;" onclick="showDetail({{ $item2->id_program }})">
+                                                    <i class="fa fa-eye mr-1"></i>
                                                 </button>
                                             </td>
                                             <td><b>{{ $item2->Program->nama_pelatihan ?? '-' }}</b></td>
-                                            <td style="{{ $warna_status }}">{{ $status_text }}</td>
+                                            <td><x-status-badge :status="$item2->status" /></td>
                                             <td>{{ $item2->Program->deskripsi ?? '-' }}</td>
                                             <td>{{ $item2->Program->tanggal_mulai ?? '-' }}</td>
                                             <td>{{ $item2->Program->tanggal_selesai ?? '-' }}</td>
@@ -145,25 +118,6 @@
                                     </tr>
                                 </thead>
                                 @foreach($assignment_non_usulan as $item3)
-                                @php
-                                    $status = (int) $item3->status; // Konversi ke integer
-
-                                    $warna_status = match($status) {
-                                        1 => 'color:orange;font-weight:bold;', // Usulan (kuning)
-                                        2 => 'color:blue;font-weight:bold;',   // Konfirmasi (biru)
-                                        3 => 'color:red;font-weight:bold;',    // Tidak Dikonfirmasi (merah)
-                                        4 => 'color:green;font-weight:bold;',  // Ditetapkan (hijau)
-                                        default => 'color:black;',             // Default (hitam)
-                                    };
-
-                                    $status_text = match($status) {
-                                        1 => 'Usulan',
-                                        2 => 'Konfirmasi',
-                                        3 => 'Tidak Dikonfirmasi',
-                                        4 => 'Ditetapkan',
-                                        default => 'Tidak Diketahui',
-                                    };
-                                @endphp
                                     <tbody>
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
@@ -184,7 +138,7 @@
                                                 </span>
                                             </td>
                                             <td><b>{{ $item3->Program->nama_pelatihan ?? '-' }}</b></td>
-                                            <td style="{{ $warna_status }}">{{ $status_text }}</td>
+                                            <td><x-status-badge :status="$item3->status" /></td>
                                             <td>{{ $item3->Program->deskripsi ?? '-' }}</td>
                                             <td>{{ $item3->Program->tanggal_mulai ?? '-' }}</td>
                                             <td>{{ $item3->Program->tanggal_selesai ?? '-' }}</td>

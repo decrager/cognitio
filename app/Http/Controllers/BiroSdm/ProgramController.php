@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\BiroSdm;
 
+use App\Models\Assignment;
+use App\Service\BiroSdmAssignment;
 use Carbon\Carbon;
 use App\Models\Jabatan;
 use App\Models\Program;
@@ -9,7 +11,6 @@ use App\Models\Kriteria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Session;
 
 class ProgramController extends Controller
 {
@@ -60,7 +61,7 @@ class ProgramController extends Controller
     public function create(Request $request)
     {
         DB::beginTransaction();
-        
+
         try {
             $program = Program::create([
                 'nama_pelatihan' => $request->nama_pelatihan,
@@ -89,7 +90,7 @@ class ProgramController extends Controller
     public function update($id, Request $request)
     {
         DB::beginTransaction();
-        
+
         try {
             $program = Program::find($id);
             $program->update([
@@ -120,16 +121,54 @@ class ProgramController extends Controller
     public function delete($id)
     {
         DB::beginTransaction();
-        
+
         try {
             Program::find($id)->delete();
             Kriteria::where('id_program', $id)->delete();
             DB::commit();
-            
+
             return redirect()->route('biro-sdm.program.index')->with('success', 'Data program dan pelatihan berhasil dihapus');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', $e->getMessage());
         }
+    }
+
+    public function programFinalization($id_program, Request $request)
+    {
+        $program = Program::with(['kriteria'])->find($id_program);
+
+        $service = new BiroSdmAssignment();
+        $pegawai = $service->getAssignmentEmployeeByProgramId($id_program, $request)
+           ->whereIn("assignment.status", [2,4])->paginate(20);
+
+        // Mapping Status
+        $pegawai->map(function ($item) use ($program, $service) {
+            $item->status_text = $service->mappingStatusAssignment($item->status);
+        });
+
+        return view('pages.biro-sdm.program.program-finalize', compact('program', 'pegawai','request'));
+    }
+
+    public function updateStatusAssignmentFinal($id_assignment)
+    {
+        $assignment = Assignment::find($id_assignment);
+        $assignment->status = 4;
+        $assignment->save();
+
+        return redirect()->back()->with('success', 'Status assignment berhasil diperbarui');
+    }
+
+    public function printFinalization($id_program, Request $request)
+    {
+        $program = Program::with(['kriteria'])->find($id_program);
+
+        $service = new BiroSdmAssignment();
+        $pegawai = $service->getAssignmentEmployeeByProgramId($id_program, $request)->where("assignment.status", 4)->get();
+
+        $file_name = 'Program Pelatihan - ' . $program->nama_pelatihan . ' - ' . Carbon::now()->format('d-m-Y H:i:s');
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.assignment-print', compact('program', 'pegawai'));
+        return $pdf->download($file_name . '.pdf');
     }
 }
