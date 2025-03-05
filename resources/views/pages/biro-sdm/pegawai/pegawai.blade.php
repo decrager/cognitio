@@ -10,7 +10,7 @@
                 <div id="test" class="col-md-12 ">
                     {{-- Filter --}}
                     <form class="d-flex align-items-center" action="{{ route('biro-sdm.pegawai.index') }}" method="GET">
-                        <input class="form-control w-25" name="search" value="{{ old('search', $request->search) }}" placeholder="Nama/Jabatan/NIP/NIK/Telepon/Alamat">
+                        <input class="form-control w-25" name="search" value="{{ old('search', $request->search) }}" placeholder="Nama/Unit Kerja/Jabatan/NIP/NIK/Telepon/Alamat">
                         <select name="tipe" style="width: 10%" class="form-control ml-2">
                             <option value="">Tipe Pegawai</option>
                             <option value="pns" {{ old('tipe', $request->tipe) == 'pns' ? 'selected' : '' }}>PNS</option>
@@ -34,6 +34,7 @@
                             <tr>
                                 <th scope="col">No</th>
                                 <th scope="col">Nama</th>
+                                <th scope="col">Unit Kerja</th>
                                 <th scope="col">Jabatan</th>
                                 <th scope="col">NIP</th>
                                 <th scope="col">NIK</th>
@@ -58,7 +59,10 @@
                                              @endif">
                                             {{$val->tipe}}
                                         </span>
+                                        <br>
+                                        <span class="text-info">{{$val->email}}</span>
                                     </td>
+                                    <td>{{$val->nama_unit}}</td>
                                     <td>{{ $val->tipe_jabatan }}<br><span class="text-info">{{$val->nama_jabatan}}</span></td>
                                     <td>{{ $val->nip }}</td>
                                     <td>{{ $val->nik }}</td>

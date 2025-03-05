@@ -17,11 +17,14 @@ class PegawaiController extends Controller
         $results = DB::table('pegawai')
         ->leftJoin('assignment', 'pegawai.id', '=', 'assignment.id_pegawai')
         ->leftJoin('jabatan', 'pegawai.id_jabatan', '=', 'jabatan.id')
+        ->leftJoin('unit_kerja', 'pegawai.id_unit', '=', 'unit_kerja.id')
         ->select(
             'pegawai.*',
             'jabatan.*',
-            'assignment.status'
-        );
+            'assignment.status',
+            'users.email',
+            'unit_kerja.nama_unit'
+        )->leftJoin('users', 'pegawai.id_user', '=', 'users.id');
         $results = $this->withFilter($results, $request);
 
         $results = $results->paginate(10);
@@ -40,6 +43,8 @@ class PegawaiController extends Controller
                       ->orWhereRaw('LOWER(nik) LIKE ?', ['%' . strtolower($search) . '%'])
                       ->orWhereRaw('LOWER(telepon) LIKE ?', ['%' . strtolower($search) . '%'])
                       ->orWhereRaw('LOWER(alamat) LIKE ?', ['%' . strtolower($search) . '%'])
+                      ->orWhereRaw('LOWER(email) LIKE ?', ['%' . strtolower($search) . '%'])
+                      ->orWhereRaw('LOWER(unit_kerja.nama_unit) LIKE ?', ['%' . strtolower($search) . '%'])
                       ->orWhereHas('jabatan', function($query) use ($search) {
                           $query->whereRaw('LOWER(tipe_jabatan) LIKE ?', ['%' . strtolower($search) . '%'])
                                 ->orWhereRaw('LOWER(nama_jabatan) LIKE ?', ['%' . strtolower($search) . '%']);

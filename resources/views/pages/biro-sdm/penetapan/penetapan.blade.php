@@ -36,9 +36,9 @@
                             <i class="fa fa-refresh mr-1"></i> Reset
                         </button>
                         <span class="ml-4"><b>Info Status :</b></span>
-                        <span class="badge badge-warning mx-2">Pending</span> / 
-                        <span class="badge badge-primary mx-2">Terkonfirmasi</span> / 
-                        <span class="badge badge-danger mx-2">Ditolak</span> / 
+                        <span class="badge badge-warning mx-2">Pending</span> /
+                        <span class="badge badge-primary mx-2">Terkonfirmasi</span> /
+                        <span class="badge badge-danger mx-2">Ditolak</span> /
                         <span class="badge badge-success mx-2">Ditetapkan</span>
                         {{-- <a type="button" href="{{ route('biro-sdm.pengusulan.form') }}" class="btn btn-success ml-auto">
                             <i class="fa fa-plus mr-1"></i> Tambah
@@ -81,9 +81,9 @@
                                             {{ \Carbon\Carbon::parse($val->tanggal_selesai)->translatedFormat('j F Y') }}
                                         </td>
                                         <td>
-                                            <span class="badge badge-warning">{{ $val->jml_usulan }}</span> / 
-                                            <span class="badge badge-primary">{{ $val->jml_konfirm }}</span> / 
-                                            <span class="badge badge-danger">{{ $val->jml_tolak }}</span> / 
+                                            <span class="badge badge-warning">{{ $val->jml_usulan }}</span> /
+                                            <span class="badge badge-primary">{{ $val->jml_konfirm }}</span> /
+                                            <span class="badge badge-danger">{{ $val->jml_tolak }}</span> /
                                             <span class="badge badge-success">{{ $val->jml_tetap }}</span>
                                         </td>
                                         <td>
@@ -103,7 +103,9 @@
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-sm btn-info detailUsulan" data-id_program="{{ $val->id }}"><i class="fa fa-users"></i></button>
-                                            <a href="{{route('biro-sdm.penetapan.finalization', $val->id)}}" class="btn btn-secondary btn-sm text-white text-bold">Penetapan</a>
+                                            <a href="{{route('biro-sdm.penetapan.finalization', $val->id)}}" class="mt-1 btn btn-secondary btn-sm text-white text-bold">
+                                               <i class="fa fa-chevron-right mr-1"></i>Penetapan
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -156,7 +158,7 @@
                 $('#formPegawai').empty();
                 $('#formPegawai').append(`<div class="box-body" style="height: 100px;" id="loadingPegawai"><div class="overlay"><i class="fa fa-refresh fa-spin"></i></div></div>`);
                 $('#formPegawai').show();
-    
+
                 $.ajax({
                     url: '{{ route('biro-sdm.penetapan.listPegawai') }}',
                     type: 'GET',
