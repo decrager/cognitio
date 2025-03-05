@@ -22,7 +22,7 @@ class PengusulanController extends Controller
         // $results = $results->with('assignment');
         $results = $this->withFilter($results, $request);
 
-        $results = $results->orderByRaw("CASE WHEN tanggal_mulai >= CURDATE() THEN 0 ELSE 1 END, tanggal_mulai ASC")->paginate(10);
+        $results = $results->orderByRaw("CASE WHEN tanggal_mulai > CURDATE() THEN 0 ELSE 1 END, tanggal_mulai ASC")->paginate(10);
 
         return view('pages.biro-sdm.pengusulan.pengusulan', compact(['results', 'request']));
     }

@@ -33,7 +33,7 @@ class PenetapanController extends Controller
         ->whereHas('assignment')->with('assignment');
         $results = $this->withFilter($results, $request);
 
-        $results = $results->orderByRaw("CASE WHEN tanggal_mulai >= CURDATE() THEN 0 ELSE 1 END, tanggal_mulai ASC")->paginate(10);
+        $results = $results->orderByRaw("CASE WHEN tanggal_mulai > CURDATE() THEN 0 ELSE 1 END, tanggal_mulai ASC")->paginate(10);
 
         return view('pages.biro-sdm.penetapan.penetapan', compact(['results', 'request']));
     }

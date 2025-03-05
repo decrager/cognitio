@@ -23,7 +23,7 @@ class Program extends Model
 
     public function getStatusAttribute()
     {
-        return $this->attributes['tanggal_selesai'] < now() ? 'non aktif' : 'aktif';
+        return $this->attributes['tanggal_mulai'] < now() ? 'non aktif' : 'aktif';
     }
 
     public function assignment()

@@ -18,7 +18,7 @@ class ProgramController extends Controller
     {
         $results = new Program();
         $results = $this->withFilter($results, $request);
-        $results = $results->orderByRaw("CASE WHEN tanggal_mulai >= CURDATE() THEN 0 ELSE 1 END, tanggal_mulai ASC")->paginate(10);
+        $results = $results->orderByRaw("CASE WHEN tanggal_mulai > CURDATE() THEN 0 ELSE 1 END, tanggal_mulai ASC")->paginate(10);
 
         $jabatan = Jabatan::select('id', 'nama_jabatan')->get();
 

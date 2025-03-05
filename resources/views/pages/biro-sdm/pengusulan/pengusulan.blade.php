@@ -89,7 +89,7 @@
                                                 </span>
                                             @endif
                                         </td>
-                                        <td><button type="button" class="btn btn-sm btn-info detailUsulan" data-id_program="{{ $val->id }}"><i class="fa fa-users"></i></button></td>
+                                        <td><button type="button" class="btn btn-sm btn-info detailUsulan" data-id_program="{{ $val->id }}" @if ($val->status != 'aktif') disabled @endif><i class="fa fa-users"></i></button></td> @endif><i class="fa fa-users"></i></button></td>
                                     </tr>
                                 @endforeach
                             </tbody>
