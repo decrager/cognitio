@@ -40,9 +40,9 @@
                         <span class="badge badge-primary mx-2">Terkonfirmasi</span> / 
                         <span class="badge badge-danger mx-2">Ditolak</span> / 
                         <span class="badge badge-success mx-2">Ditetapkan</span>
-                        <a type="button" href="{{ route('biro-sdm.pengusulan.form') }}" class="btn btn-success ml-auto">
+                        {{-- <a type="button" href="{{ route('biro-sdm.pengusulan.form') }}" class="btn btn-success ml-auto">
                             <i class="fa fa-plus mr-1"></i> Tambah
-                        </a>
+                        </a> --}}
                     </form>
                     {{-- End Filter --}}
                 </div>
@@ -101,7 +101,10 @@
                                                 </span>
                                             @endif
                                         </td>
-                                        <td><button type="button" class="btn btn-sm btn-info detailUsulan" data-id_program="{{ $val->id }}"><i class="fa fa-users"></i></button></td>
+                                        <td>
+                                            <button type="button" class="btn btn-sm btn-info detailUsulan" data-id_program="{{ $val->id }}"><i class="fa fa-users"></i></button>
+                                            <a href="{{route('biro-sdm.penetapan.finalization', $val->id)}}" class="btn btn-secondary btn-sm text-white text-bold">Penetapan</a>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

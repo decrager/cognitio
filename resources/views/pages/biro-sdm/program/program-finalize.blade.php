@@ -51,7 +51,7 @@
                 <div class="card-body">
                     <x-alert />
                     {{-- Filter --}}
-                    <form class="d-flex align-items-center mb-2" action="{{ route('biro-sdm.program.finalization', ['id_program' => $program->id]) }}" method="GET">
+                    <form class="d-flex align-items-center mb-2" action="{{ route('biro-sdm.penetapan.finalization', ['id_program' => $program->id]) }}" method="GET">
                         <input class="form-control w-25" name="search" value="{{ old('search', $request->search) }}" placeholder="Nama/Jabatan/Unit Kerja">
                         <button type="submit" class="btn btn-primary ml-2">
                             <i class="fa fa-search mr-1"></i> Cari
@@ -59,7 +59,7 @@
                         <button type="button" onclick="resetForm()" class="btn btn-danger ml-2">
                             <i class="fa fa-refresh mr-1"></i> Reset
                         </button>
-                        <a href="{{ route('biro-sdm.program.print-finalization', ['id_program' => $program->id]) }}" class="btn btn-success ml-auto">
+                        <a href="{{ route('biro-sdm.penetapan.print-finalization', ['id_program' => $program->id]) }}" class="btn btn-success ml-auto">
                             <i class="fa fa-print mr-2"></i> Cetak
                         </a>
                     </form>
@@ -91,7 +91,7 @@
                                             </td>
                                             <td>
                                                 @if($val->status == 2)
-                                                    <form id="status-form-{{ $val->id }}" action="{{ route('biro-sdm.program.update-assignment-final', $val->id_assignment) }}" method="POST" style="display: none;">
+                                                    <form id="status-form-{{ $val->id }}" action="{{ route('biro-sdm.penetapan.update-assignment-final', $val->id_assignment) }}" method="POST" style="display: none;">
                                                         @csrf
                                                         @method('PUT')
                                                         <input type="hidden" name="status" id="status-input-{{ $val->id }}">
@@ -144,7 +144,7 @@
         }
 
         function resetForm() {
-            const form = document.querySelector('form[action="{{ route('biro-sdm.program.finalization', ['id_program' => $program->id]) }}"]');
+            const form = document.querySelector('form[action="{{ route('biro-sdm.penetapan.finalization', ['id_program' => $program->id]) }}"]');
             form.querySelector('input[name="search"]').value = '';
             form.submit();
         }

@@ -56,7 +56,6 @@
                                     <th scope="col">Kuota</th>
                                     <th scope="col">Lokasi</th>
                                     <th scope="col">Penyelenggara</th>
-                                    <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -80,10 +79,6 @@
                                         <td><span class="badge badge-info">{{ $val->kuota }}</span></td>
                                         <td>{{ $val->lokasi }}</td>
                                         <td>{{ $val->penyelenggara }}</td>
-                                        <td>
-                                            <a href="{{route('biro-sdm.program.finalization', $val->id)}}"
-                                                class="btn btn-secondary btn-sm text-white text-bold">Penetapan</a>
-                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

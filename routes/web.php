@@ -61,9 +61,9 @@ Route::group(['prefix' => 'biro-sdm', 'middleware' => 'cekRole:biro-sdm'], funct
     Route::get('/penetapan/listPegawai', [BiroSdmPenetapanController::class, 'listPegawai'])->name('biro-sdm.penetapan.listPegawai');
     Route::post('/penetapan/update', [BiroSdmPenetapanController::class, 'update'])->name('biro-sdm.penetapan.update');
     Route::post('/penetapan/delete', [BiroSdmPenetapanController::class, 'delete'])->name('biro-sdm.penetapan.delete');
-    Route::get('/program-finalization/{id_program}', [BiroSdmProgramController::class, 'programFinalization'])->name('biro-sdm.program.finalization');
-    Route::put('/update-status-assignment-final/{id_assignment}', [BiroSdmProgramController::class, 'updateStatusAssignmentFinal'])->name('biro-sdm.program.update-assignment-final');
-    Route::get('/program-finalization/{id_program}/print', [BiroSdmProgramController::class, 'printFinalization'])->name('biro-sdm.program.print-finalization');
+    Route::get('/program-finalization/{id_program}', [BiroSdmProgramController::class, 'programFinalization'])->name('biro-sdm.penetapan.finalization');
+    Route::put('/update-status-assignment-final/{id_assignment}', [BiroSdmProgramController::class, 'updateStatusAssignmentFinal'])->name('biro-sdm.penetapan.update-assignment-final');
+    Route::get('/program-finalization/{id_program}/print', [BiroSdmProgramController::class, 'printFinalization'])->name('biro-sdm.penetapan.print-finalization');
 });
 
 Route::group(['prefix' => 'unit-kerja', 'middleware' => 'cekRole:unit-kerja'], function () {
