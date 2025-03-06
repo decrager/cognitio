@@ -44,9 +44,18 @@
     <div class="box box-info" id="formPegawai">
         <div class="box-header with-border text-center">
             <h3 class="box-title">Pilih Pegawai</h3>
+            <br>
+            Kuota Pengusulan : <span class="badge badge-primary">{{ $kuota }}</span>
+            {{-- Alert Max Kuota --}}
+            <div class="w-100 mt-4 d-flex justify-content-center" id="alertDiv">
+                
+            </div>
         </div>
+
+        <input type="hidden" value="{{$kuota}}"><br>
         <form action="{{ route('biro-sdm.pengusulan.updateOrCreate') }}" method="POST">
             @csrf
+            <input id="checked_ids" type="hidden" name="checked_ids" value="{{$checked_ids}}">
             <div class="box-body">
                 <table id="employeeTable" class="table table-bordered table-striped">
                     <thead>
@@ -86,12 +95,12 @@
                 <button type="submit" class="btn btn-success">Ajukan</button>
             </div>
         </form>
-        
+
         <script>
             $(document).ready(function () {
                 $('#employeeTable').DataTable();
             });
-        </script>        
+        </script>
     </div>
 
     <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
@@ -112,6 +121,30 @@
 @push('scripts')
     <script>
         $(document).ready(function () {
+            let kuota = parseInt('{{ $kuota }}');
+            let checkedIdsInput = $('#checked_ids');
+            let checkedIds = checkedIdsInput.val().split(',').filter(id => id);
+
+            $('input[name="id_pegawai[]"]').on('change', function() {
+                let value = $(this).val();
+                if ($(this).is(':checked')) {
+                    if (checkedIds.length < kuota) {
+                        checkedIds.push(value);
+                    } else {
+                        // Show id AlertKuota
+                        $('#alertDiv').html('<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><span><i class="icon fa fa-ban"></i> Jumlah usulan tidak boleh melebihi kuota !</span></div>');
+                        $(this).prop('checked', false);
+                        // Make the page scroll to the alertDiv
+                        $('html, body').animate({
+                            scrollTop: $('#formPegawai').offset().top
+                        }, 300);
+                    }
+                } else {
+                    checkedIds = checkedIds.filter(id => id !== value);
+                }
+                checkedIdsInput.val(checkedIds.join(','));
+            });
+
             $('#employeeTable').DataTable();
 
             $('#employeeTable').on('click', '#detailPegawai', function () {
