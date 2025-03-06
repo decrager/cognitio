@@ -109,21 +109,31 @@ class PengusulanController extends Controller
     public function listPegawai(Request $request)
     {
         $id_program = $request->id_program;
-        $pegawai = Pegawai::select('pegawai.*', 'assignment.id as id_assignment')
-        ->whereHas('kompetensi', function($query) use ($request) {
+        $pegawais = Program::select('pegawai.id')
+        ->join('kriteria', 'program.id', 'kriteria.id_program')
+        ->join('jabatan', 'kriteria.id_jabatan', 'jabatan.id')
+        ->join('pegawai', 'jabatan.id', 'pegawai.id_jabatan')
+        ->where('program.id', $id_program)
+        ->groupBy('pegawai.id')
+        ->get();
+
+        $pegawai = Pegawai::select('pegawai.*')
+        ->whereHas('kompetensi', function ($query) {
             $query->join('standar_kompetensi', 'kompetensi_pegawai.id_standar_kompetensi', 'standar_kompetensi.id')
-            ->join('jabatan', 'standar_kompetensi.id_jabatan', 'jabatan.id')
-            ->join('kriteria', 'jabatan.id', 'kriteria.id_jabatan')
-            ->where('kriteria.id_program', $request->id_program)
-            ->whereColumn('kompetensi_pegawai.kpi', '<=', 'standar_kompetensi.kpi_standar');
+                    ->whereColumn('kompetensi_pegawai.kpi', '<', 'standar_kompetensi.kpi_standar');
         })
-        ->when($request->assigned, function($query) use ($request) {
-            $query->join('assignment', 'pegawai.id', 'assignment.id_pegawai')
-            ->where('assignment.id_program', $request->id_program);
-        })->when(!$request->assigned, function($query) {
-            $query->leftJoin('assignment', 'pegawai.id', 'assignment.id_pegawai')
-            ->orderBy('assignment.id', 'desc');
+        ->leftJoin('assignment', 'pegawai.id', 'assignment.id_pegawai')
+        ->selectRaw("CASE WHEN assignment.id_program IS NOT NULL THEN 'Assigned' ELSE 'Not Assigned' END AS assignment_status")
+        ->when($request->assigned, function ($query) use ($request) {
+            $query->where('assignment.id_program', $request->id_program);
         })
+        ->when(!$request->assigned, function ($query) use ($request) {
+            $query->where(function ($query) use ($request) {
+                $query->where('assignment.id_program', '!=', $request->id_program)
+                        ->orWhereNull('assignment.id_program');
+            });
+        })
+        ->whereIn('pegawai.id', $pegawais->pluck('id'))
         ->get();
 
         if ($request->assigned) {
@@ -135,6 +145,25 @@ class PengusulanController extends Controller
 
     public function updateOrCreate(Request $request)
     {
+        $now = Assignment::where('id_program', $request->id_program)->get();
+        if ($now->count() > 0) {
+            $program = Program::find($request->id_program);
+            $now = $now->pluck('id_pegawai')->toArray();
+            
+            // Find added and removed employees
+            $added = array_diff($request->id_pegawai, $now); // Employees in request but not in now
+            $removed = array_diff($now, $request->id_pegawai); // Employees in now but not in request
+
+            // Count added and removed employees
+            $countAdded = count($added);
+            $countRemoved = count($removed);
+            $total = $countAdded + count($now); // Total employees after addition
+
+            if ($total > $program->kuota) {
+                return redirect()->back()->with('error', 'Jumlah pegawai yang diusulkan melebihi batas program.');
+            }
+        }
+
         DB::beginTransaction();
         try {
             if ($request->update) {

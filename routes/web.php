@@ -1,16 +1,17 @@
 <?php
 
+use App\Models\Jabatan;
 use App\Models\Pegawai;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Authentication;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\UnitKerjaController;
+use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\BiroSdm\PegawaiController as BiroSdmPegawaiController;
 use App\Http\Controllers\BiroSdm\ProgramController as BiroSdmProgramController;
-use App\Http\Controllers\BiroSdm\PengusulanController as BiroSdmPengusulanController;
 use App\Http\Controllers\BiroSdm\DashboardController as BiroSdmDashboardController;
 use App\Http\Controllers\BiroSdm\PenetapanController as BiroSdmPenetapanController;
-use App\Http\Controllers\AssignmentController;
+use App\Http\Controllers\BiroSdm\PengusulanController as BiroSdmPengusulanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,6 +65,12 @@ Route::group(['prefix' => 'biro-sdm', 'middleware' => 'cekRole:biro-sdm'], funct
     Route::get('/program-finalization/{id_program}', [BiroSdmProgramController::class, 'programFinalization'])->name('biro-sdm.penetapan.finalization');
     Route::put('/update-status-assignment-final/{id_assignment}', [BiroSdmProgramController::class, 'updateStatusAssignmentFinal'])->name('biro-sdm.penetapan.update-assignment-final');
     Route::get('/program-finalization/{id_program}/print', [BiroSdmProgramController::class, 'printFinalization'])->name('biro-sdm.penetapan.print-finalization');
+});
+
+Route::get('/test-query', function() {
+    $data = Jabatan::withCount('pegawai')->get();
+
+    return $data;
 });
 
 Route::group(['prefix' => 'unit-kerja', 'middleware' => 'cekRole:unit-kerja'], function () {

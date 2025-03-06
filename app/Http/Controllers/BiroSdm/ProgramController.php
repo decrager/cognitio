@@ -75,12 +75,12 @@ class ProgramController extends Controller
         ];
 
 // If the request is for creating a new record, add the unique validation rule
-        if ($isCreate) {
-            $rules['nama_pelatihan'] = 'required|unique:program,nama_pelatihan';
-        } else {
-            // If the request is for updating an existing record, ignore the unique validation for the current record
-            $rules['nama_pelatihan'] = 'required|unique:program,nama_pelatihan,' . $request->id;
-        }
+        // if ($isCreate) {
+        //     $rules['nama_pelatihan'] = 'required';
+        // } else {
+        //     // If the request is for updating an existing record, ignore the unique validation for the current record
+        //     $rules['nama_pelatihan'] = 'required,' . $request->id;
+        // }
 
         $messages = [
             'nama_pelatihan.required' => 'Nama pelatihan harus diisi',
