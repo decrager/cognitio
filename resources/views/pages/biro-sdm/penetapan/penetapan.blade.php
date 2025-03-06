@@ -61,7 +61,7 @@
                                     <th scope="col">Diusulkan</th>
                                     <th scope="col">Kuota</th>
                                     <th scope="col">Status</th>
-                                    <th scope="col">Aksi</th>
+                                    <th scope="col" width="128px">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>

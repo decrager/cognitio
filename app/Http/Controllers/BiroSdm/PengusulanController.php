@@ -139,7 +139,11 @@ class PengusulanController extends Controller
         if ($request->assigned) {
             return view('pages.biro-sdm.pengusulan.pengusulan-detail', compact('pegawai', 'id_program'));
         } else {
-            return view('pages.biro-sdm.pengusulan.form-pengusulan-pegawai', compact('pegawai', 'id_program'));
+            // Kuota & Checked Ids, buat handle validasi dan pengusulan ter check
+            $kuota  = Program::find($id_program)->kuota;
+            $checked_ids_arr = Assignment::where('id_program', $id_program)->pluck('id_pegawai')->toArray();
+            $checked_ids = implode(',', $checked_ids_arr);
+            return view('pages.biro-sdm.pengusulan.form-pengusulan-pegawai', compact('pegawai', 'id_program','kuota','checked_ids'));
         }
     }
 
@@ -166,13 +170,17 @@ class PengusulanController extends Controller
 
         DB::beginTransaction();
         try {
-            if ($request->update) {
-                Assignment::where('id_program', $request->id_program)
-                ->whereNotIn('id_pegawai', $request->id_pegawai)
-                ->delete();
-            }
+            //checkedIds
+            $checked_ids = explode(',', $request->checked_ids);
 
-            foreach ($request->id_pegawai as $pegawai) {
+            // Comment: $request->update, handling pengusulan dari form tambah pengusulan, jika tidak di komen check box yang dihapus tidak hilang
+            //if ($request->update) {
+            Assignment::where('id_program', $request->id_program)
+            ->whereNotIn('id_pegawai', $checked_ids)
+            ->delete();
+            //}
+
+            foreach ($checked_ids as $pegawai) {
                 Assignment::firstOrCreate(
                     [
                         'id_program' => $request->id_program,
@@ -200,6 +208,7 @@ class PengusulanController extends Controller
     {
         $id_program = $request->id_program;
         $program = Program::find($id_program);
+        $kuota = $program->kuota;
         $pegawai = Pegawai::select('pegawai.*', 'assignment.id as id_assignment')
         ->whereHas('kompetensi', function($query) use ($request) {
             $query->join('standar_kompetensi', 'kompetensi_pegawai.id_standar_kompetensi', 'standar_kompetensi.id')
@@ -214,7 +223,11 @@ class PengusulanController extends Controller
         $program->tanggal_mulai = Carbon::parse($program->tanggal_mulai)->translatedFormat('j F Y');
         $program->tanggal_selesai = Carbon::parse($program->tanggal_selesai)->translatedFormat('j F Y');
 
-        return view('pages.biro-sdm.pengusulan.edit-pengusulan-pegawai', compact('pegawai', 'program'));
+        $assignment = Assignment::where('id_program', $id_program)->get();
+        $checked_ids_arr = $assignment->pluck('id_pegawai')->toArray();
+        $checked_ids = implode(',', $checked_ids_arr);
+
+        return view('pages.biro-sdm.pengusulan.edit-pengusulan-pegawai', compact('pegawai', 'program','kuota','checked_ids'));
     }
 
     public function delete(Request $request)
