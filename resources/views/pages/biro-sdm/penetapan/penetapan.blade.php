@@ -103,8 +103,8 @@
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-sm btn-info detailUsulan" data-id_program="{{ $val->id }}"><i class="fa fa-users"></i></button>
-                                            <a href="{{route('biro-sdm.penetapan.finalization', $val->id)}}" class="mt-1 btn btn-secondary btn-sm text-white text-bold">
-                                               <i class="fa fa-chevron-right mr-1"></i>Penetapan
+                                            <a href="{{route('biro-sdm.penetapan.finalization', $val->id)}}" class="{{ $val->jml_konfirm == 0 && $val->jml_tetap == 0 ? 'disabled' : ''}} mt-1 btn btn-primary btn-sm text-white text-bold">
+                                                <i class="fa fa-chevron-right mr-1" style="font-size: 0.8em;"></i>Finalisasi
                                             </a>
                                         </td>
                                     </tr>
