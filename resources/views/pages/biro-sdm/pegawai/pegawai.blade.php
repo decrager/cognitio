@@ -198,7 +198,9 @@
         }
 
         function loadDetailModal(id) {
+
             let modal = $('#detailModal');
+            modal.find('#section-content').html('');
             modal.modal('show');
 
             $('#modal-loader').removeClass('d-none').addClass('d-flex');
