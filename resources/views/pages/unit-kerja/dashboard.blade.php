@@ -135,7 +135,7 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title text-bold">
-                    <i class="fa fa-info mr-2"></i> Jadwal Pelatihan
+                    <i class="fa fa-info mr-2"></i> Usulan Pelatihan
                 </h4>
             </div>
             <!-- /.card-header -->
@@ -180,14 +180,19 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>
-                                        {{ $item2->pegawai->tipe ?? '-' }}
-                                        {{ $item2->pegawai->nama ?? '-' }}
-                                        {{ $item2->pegawai->nip ?? '-' }}
-                                        {{ $item2->pegawai->telepon ?? '-' }}
+                                        <b>{{ $item2->pegawai->nama ?? '-' }}</b>
+                                        <span class="badge badge-sm badge-info">
+                                                   {{ $item2->pegawai->tipe ?? '-' }}</span>
+                                        <br>
+                                        <span class="text-muted">NIP: {{ $item2->pegawai->nip ?? '-' }}</span>
+                                        <br>
+                                        <span class="text-info">
+                                                    NIK: {{ $item2->pegawai->nik ?? '-' }}
+                                                </span>
                                     </td>
-                                    <!-- <td>{{ $item2->id_program ?? '-' }}</td> -->
-                                    <td><b>{{ $item2->Program->nama_pelatihan ?? '-' }}</b></td>
-                                    <th style="{{ $warna_status }}">{{ $status_text }}</td>
+                                    <td><b>{{ $item2->Program->nama_pelatihan ?? '-' }}</b>
+                                    </td>
+                                    <td style="{{ $warna_status }}">{{ $status_text }}</td>
                                     <td>{{ $item2->Program->deskripsi ?? '-' }}</td>
                                     <td>{{ $item2->Program->tanggal_mulai ?? '-' }}</td>
                                     <td>{{ $item2->Program->tanggal_selesai ?? '-' }}</td>

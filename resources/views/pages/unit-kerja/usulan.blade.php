@@ -15,7 +15,7 @@
                 <div class="col-md-12">
                     <div class="table-responsive">
                         @if(count($assignment_usulan) > 0)
-                            <table id="example1" class="table table-bordered table-striped">
+                            <table id="datatable_unit_kerja_1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -46,16 +46,18 @@
                                                 </span>
 
                                             </td>
-                                            <td><b>{{ $item2->Program->nama_pelatihan ?? '-' }}</b></td>
                                             <td>
-                                                <x-status-badge :status="$item2->status" /><br>
+                                                <b>
+                                                    {{ $item2->Program->nama_pelatihan ?? '-' }}
+                                                </b>
+                                                <br>
                                                 <button class="btn btn-info btn-sm mt-1" style="width: 35px !important;" onclick="showDetail({{ $item2->id_program }})">
-                                                    <i class="fa fa-eye mr-1"></i>
-                                                </button>
+                                                    <i class="fa fa-eye"></i>
+                                                </button></td>
+                                            <td>
+                                                <x-status-badge :status="$item2->status" />
                                             </td>
                                             <td><b>{{ $item2->Program->nama_pelatihan ?? '-' }}</b></td>
-                                            <td><x-status-badge :status="$item2->status" /></td>
-                                            <td>{{ $item2->Program->deskripsi ?? '-' }}</td>
                                             <td>{{ $item2->Program->tanggal_mulai ?? '-' }}</td>
                                             <td>{{ $item2->Program->tanggal_selesai ?? '-' }}</td>
                                             <td>{{ $item2->Program->lokasi ?? '-' }}</td>
@@ -103,7 +105,7 @@
                 <div class="col-md-12">
                     <div class="table-responsive">
                         @if(count($assignment_non_usulan) > 0)
-                            <table id="example1" class="table table-bordered table-striped">
+                            <table id="datatable_unit_kerja_2" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -121,12 +123,7 @@
                                     <tbody>
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <!-- <td>tes</td> -->
                                             <td>
-                                                {{ $item3->pegawai->tipe ?? '-' }}
-                                                {{ $item3->pegawai->nama ?? '-' }}
-                                                {{ $item3->pegawai->nip ?? '-' }}
-                                                {{ $item3->pegawai->telepon ?? '-' }}
                                                 <b>{{ $item3->pegawai->nama ?? '-' }}</b>
                                                 <span class="badge badge-sm badge-info">
                                                    {{ $item3->pegawai->tipe ?? '-' }}</span>
@@ -137,7 +134,12 @@
                                                     NIK: {{ $item3->pegawai->nik ?? '-' }}
                                                 </span>
                                             </td>
-                                            <td><b>{{ $item3->Program->nama_pelatihan ?? '-' }}</b></td>
+                                            <td><b>{{ $item3->Program->nama_pelatihan ?? '-' }}</b>
+                                                <br>
+                                                <button class="btn btn-info btn-sm mt-1" style="width: 35px !important;" onclick="showDetail({{ $item3->id_program }})">
+                                                    <i class="fa fa-eye"></i>
+                                                </button></td>
+                                            </td>
                                             <td><x-status-badge :status="$item3->status" /></td>
                                             <td>{{ $item3->Program->deskripsi ?? '-' }}</td>
                                             <td>{{ $item3->Program->tanggal_mulai ?? '-' }}</td>
@@ -248,5 +250,11 @@
                 document.getElementById(`status-form-${id}`).submit();
             }
         }
+
+        // Initiate Datatable
+        $(document).ready(function() {
+            $('#datatable_unit_kerja_1').DataTable();
+            $('#datatable_unit_kerja_2').DataTable();
+        });
     </script>
 @endsection
