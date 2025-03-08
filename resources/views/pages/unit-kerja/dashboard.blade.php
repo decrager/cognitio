@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="row">
-    <div class="col-xl-5 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+    <div class="col-xl-8 col-lg-12 col-sm-6 col-xs-12">
         <div class="info-box">
             <span class="info-box-icon bg-aqua"><i class="fa fa-building-o"></i></span>
 
@@ -18,7 +18,7 @@
         <!-- /.info-box -->
     </div>
     <!-- /.col -->
-    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">
         <div class="info-box">
             <span class="info-box-icon bg-red"><i class="fa fa-dollar"></i></span>
 
@@ -31,8 +31,19 @@
         <!-- /.info-box -->
     </div>
     <!-- /.col -->
-    <!-- /.col -->
-    <div class="col-xl-2 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-orange"><i class="fa fa-users"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Total Pegawai</span>
+                <h4 class="text-bold">{{$total_pegawai_unit_kerja}}</h4>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">
         <div class="info-box">
             <span class="info-box-icon bg-warning text-white"><i class="ion ion-location"></i></span>
 
@@ -44,9 +55,7 @@
         </div>
         <!-- /.info-box -->
     </div>
-    <!-- /.col -->
-    <!-- /.col -->
-    <div class="col-xl-2 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">
         <div class="info-box">
             <span class="info-box-icon bg-info text-white"><i class="fa fa-cog"></i></span>
 

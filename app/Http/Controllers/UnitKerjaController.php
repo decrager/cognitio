@@ -45,10 +45,12 @@ class UnitKerjaController extends Controller
                 ->where('pegawai.id_unit', $pegawai->id_unit)
                 ->where('assignment.status', 4)
                 ->count();
+
+            $total_pegawai_unit_kerja = Pegawai::where('id_unit', $pegawai->id_unit)->count();
         }
 
         // Passing data pegawai ke view dashboard
-        return view('pages.unit-kerja.dashboard', compact('pegawai', 'assignment', 'jumlah_assignment_usulan', 'jumlah_assignment_konfirmasi', 'jumlah_assignment_tidak_dikonfirmasi', 'jumlah_assignment_ditetapkan'));
+        return view('pages.unit-kerja.dashboard', compact('pegawai','total_pegawai_unit_kerja', 'assignment', 'jumlah_assignment_usulan', 'jumlah_assignment_konfirmasi', 'jumlah_assignment_tidak_dikonfirmasi', 'jumlah_assignment_ditetapkan'));
     }
 
     public function usulan_pelatihan(){
