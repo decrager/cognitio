@@ -78,7 +78,9 @@ class PegawaiController extends Controller
      */
     public function show(string $id)
     {
-        $data = Pegawai::with('standar_kompetensi','jabatan')->find($id);
+        $data = Pegawai::with('kompetensi_pegawai')
+        ->with('jabatan')
+        ->find($id);
 
         // Return The Modal Component
         return view('pages.biro-sdm.pegawai.modal-pegawai', compact('data'));

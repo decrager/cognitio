@@ -53,6 +53,13 @@ class Pegawai extends Model
         return $this->belongsToMany(StandarKompetensi::class, 'kompetensi_pegawai', 'id_standar_kompetensi','id_pegawai')->withPivot('kpi');
     }
 
+    public function kompetensi_pegawai()
+    {
+        return $this->hasMany(KompetensiPegawai::class, 'id_pegawai', 'id')
+        ->join('standar_kompetensi', 'kompetensi_pegawai.id_standar_kompetensi', 'standar_kompetensi.id')
+        ->select('kompetensi_pegawai.*', 'standar_kompetensi.nama_kompetensi', 'standar_kompetensi.kpi_standar');
+    }
+
     public function scopeIsPegawai()
     {
        // Where By users table

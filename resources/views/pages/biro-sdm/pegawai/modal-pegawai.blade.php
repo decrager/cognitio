@@ -25,7 +25,7 @@
                 </tr>
                 <tr>
                     <th scope="row">Jabatan</th>
-                    <td>{{$data->jabatan->tipe_jabatan}}<br><span class="text-info">{{$data->jabatan->nama_jabatan}}</span></td>
+                    <td>{{ $data->jabatan->nama_jabatan }}<br><span class="text-info">{{ $data->jabatan->tipe_jabatan }} - {{ $data->jabatan->golongan }}</span></td>
                 </tr>
                 <tr>
                     <th scope="row">NIP</th>
@@ -36,12 +36,16 @@
                     <td>{{$data->nik}}</td>
                 </tr>
                 <tr>
+                    <th scope="row">Email</th>
+                    <td>{{$data->user->email}}</td>
+                </tr>
+                <tr>
                     <th scope="row">Telepon</th>
                     <td>{{$data->telepon}}</td>
                 </tr>
                 <tr>
                     <th scope="row">Tanggal Lahir</th>
-                    <td>{{$data->tanggal_lahir}}</td>
+                    <td>{{ Carbon\Carbon::parse($data->tanggal_lahir)->translatedFormat('j F Y') }}</td>
                 </tr>
                 <tr>
                     <th scope="row">Jenis Kelamin</th>
@@ -68,11 +72,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($data->standar_kompetensi as $key => $val)
-                    <tr class="{{ $val->pivot->kpi < $val->kpi_standar ? 'bg-warning' : '' }}">
+                @foreach($data->kompetensi_pegawai as $key => $val)
+                    <tr class="{{ $val->kpi < $val->kpi_standar ? 'bg-warning' : '' }}">
                         <td>{{$key + 1}}</td>
                         <td>{{$val->nama_kompetensi}}</td>
-                        <td>{{$val->pivot->kpi}}</td>
+                        <td>{{$val->kpi}}</td>
                         <td>{{$val->kpi_standar}}</td>
                     </tr>
                 @endforeach

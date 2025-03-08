@@ -37,12 +37,12 @@
                                 <th scope="col">Unit Kerja</th>
                                 <th scope="col">Jabatan</th>
                                 <th scope="col">NIP</th>
-                                <th scope="col">NIK</th>
-                                <th scope="col">Telepon</th>
+                                {{-- <th scope="col">NIK</th> --}}
+                                <th scope="col">Nomor Telepon</th>
                                 <th scope="col">Tanggal Lahir</th>
                                 <th scope="col">Jenis Kelamin</th>
-                                <th scope="col">Alamat</th>
-                                <th scope="col">Usulkan Pelatihan</th>
+                                {{-- <th scope="col">Alamat</th> --}}
+                                <th scope="col">Pengusulan</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -63,24 +63,22 @@
                                         <span class="text-info">{{$val->email}}</span>
                                     </td>
                                     <td>{{$val->nama_unit}}</td>
-                                    <td>{{ $val->tipe_jabatan }}<br><span class="text-info">{{$val->nama_jabatan}}</span></td>
+                                    <td>{{ $val->nama_jabatan }}<br><span class="text-info">{{ $val->tipe_jabatan }} - {{ $val->golongan }}</span></td>
                                     <td>{{ $val->nip }}</td>
-                                    <td>{{ $val->nik }}</td>
+                                    {{-- <td>{{ $val->nik }}</td> --}}
                                     <td>{{ $val->telepon }}</td>
-                                    <td>{{ $val->tanggal_lahir }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($val->tanggal_lahir)->translatedFormat('j F Y') }}</td>
                                     <td>{{ $val->jenis_kelamin }}</td>
-                                    <td>{{ $val->alamat }}</td>
-                                    <td>
+                                    {{-- <td>{{ $val->alamat }}</td> --}}
+                                    <td class="text-center">
                                         @if($val->status == 2)
                                             <button class="btn btn-success btn-sm" disabled>Konfirmasi</button>
                                         @elseif($val->status == 3)
                                             <button class="btn btn-danger btn-sm" disabled>Ditolak</button>
                                         @else
-                                            <button class="btn btn-primary btn-sm" onclick="openModal({{ $val->id }})">Pilih</button>
+                                            <button class="btn btn-primary btn-sm" onclick="openModal({{ $val->id }})"><i class="fa fa-files-o"></i></button>
                                         @endif
                                     </td>
-
-
                                 </tr>
                             @endforeach
                             </tbody>

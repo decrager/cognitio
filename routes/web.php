@@ -2,6 +2,7 @@
 
 use App\Models\Jabatan;
 use App\Models\Pegawai;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Authentication;
 use App\Http\Controllers\PegawaiController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\BiroSdm\ProgramController as BiroSdmProgramController;
 use App\Http\Controllers\BiroSdm\DashboardController as BiroSdmDashboardController;
 use App\Http\Controllers\BiroSdm\PenetapanController as BiroSdmPenetapanController;
 use App\Http\Controllers\BiroSdm\PengusulanController as BiroSdmPengusulanController;
+use App\Models\KompetensiPegawai;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,9 +70,28 @@ Route::group(['prefix' => 'biro-sdm', 'middleware' => 'cekRole:biro-sdm'], funct
 });
 
 Route::get('/test-query', function() {
-    $data = Jabatan::withCount('pegawai')->get();
+    $pegawai = Pegawai::select('pegawai.id as id_pegawai', 'pegawai.id_jabatan', 'standar_kompetensi.id as id_standar_kompetensi')
+    ->join('jabatan', 'pegawai.id_jabatan', 'jabatan.id')
+    ->join('standar_kompetensi', 'jabatan.id', 'standar_kompetensi.id_jabatan')
+    ->join('users', 'pegawai.id_user', 'users.id')
+    ->where('users.role', 'pegawai')
+    ->get();
 
-    return $data;
+    // DB::beginTransaction();
+    foreach ($pegawai as $p)
+    {
+        KompetensiPegawai::updateOrCreate(
+            [
+            'id_pegawai' => $p->id_pegawai,
+            'id_standar_kompetensi' => $p->id_standar_kompetensi
+            ],
+            [
+                'kpi' => rand(50, 90)
+            ]
+        );    
+    }
+    
+    return $pegawai;
 });
 
 Route::group(['prefix' => 'unit-kerja', 'middleware' => 'cekRole:unit-kerja'], function () {
