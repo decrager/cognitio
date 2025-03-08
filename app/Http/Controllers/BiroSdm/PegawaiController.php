@@ -23,7 +23,8 @@ class PegawaiController extends Controller
             'jabatan.*',
             'assignment.status',
             'users.email',
-            'unit_kerja.nama_unit'
+            'unit_kerja.nama_unit',
+            'pegawai.id as id_pegawai'
         )->leftJoin('users', 'pegawai.id_user', '=', 'users.id');
         $results = $this->withFilter($results, $request);
 

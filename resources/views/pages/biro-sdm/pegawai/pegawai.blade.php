@@ -50,7 +50,7 @@
                                 <tr>
                                     <td>{{ ($results->currentPage() - 1) * $results->perPage() + $loop->iteration }}</td>
                                     <td>
-                                        <x-employee-name :id="$val->id" :name="$val->nama" />
+                                        <x-employee-name :id="$val->id_pegawai" :name="$val->nama" />
                                         <span class="badge
                                             @if($val->tipe == 'PNS')
                                             badge-success
