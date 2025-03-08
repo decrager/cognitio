@@ -172,7 +172,6 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>ID </th>
                                 <th>Nama Pelatihan</th>
                                 <th>Status</th>
                                 <th>Deskripsi</th>
@@ -206,8 +205,6 @@
                             <tbody>
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <!-- <td>{{ $item2->id_pegawai ?? '-' }}</td> -->
-                                    <!-- <td>{{ $item2->id_program ?? '-' }}</td> -->
                                     <td><b>{{ $item2->Program->nama_pelatihan ?? '-' }}</b></td>
                                     <th style="{{ $warna_status }}">{{ $status_text }}</td>
                                     <td>{{ $item2->Program->deskripsi ?? '-' }}</td>
