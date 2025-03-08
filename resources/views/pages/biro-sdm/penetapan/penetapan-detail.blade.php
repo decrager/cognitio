@@ -31,13 +31,13 @@
                         <td>{{ $employee->unit->nama_unit }}</td>
                         <td>
                             @if ($employee->status == 1)
-                                <span class="badge badge-warning">Pending</span>
+                                <span data-status="{{$employee->status}}" class="badge badge-warning">Pending</span>
                             @elseif ($employee->status == 2)
-                                <span class="badge badge-primary">Terkonfirmasi</span>
+                                <span  data-status="{{$employee->status}}"  class="badge badge-primary">Terkonfirmasi</span>
                             @elseif ($employee->status == 3)
-                                <span class="badge badge-danger">Ditolak</span>
+                                <span  data-status="{{$employee->status}}"  class="badge badge-danger">Ditolak</span>
                             @elseif ($employee->status == 4)
-                                <span class="badge badge-success">Diterima</span>
+                                <span  data-status="{{$employee->status}}"  class="badge badge-success">Diterima</span>
                             @endif
                         </td>
                         <td>
@@ -55,7 +55,7 @@
         <input type="text" hidden name="id_program" value="{{ $id_program }}">
         <div class="d-flex justify-content-between">
             <button type="button" class="btn btn-danger" id="btn-delete">Hapus Pengusulan yang Ditolak</button>
-            <button type="submit" class="btn btn-success">Tetapkan</button>
+            <button type="submit" id="btnTetapkan" disabled class="btn btn-success">Tetapkan</button>
         </div>
     </div>
 </form>
@@ -86,6 +86,16 @@
         $('#btn-delete').click(function () {
             if (confirm('Apakah anda yakin ingin menghapus semua pegawai yang ditolak?')) {
                 $('#formDelete').submit();
+            }
+        });
+
+        // Disabled id btnTetapkan if There Is No Status 2
+        let status = 0;
+        $('#employeeTable tbody tr').each(function () {
+            status = $(this).find('td').eq(5).find('span').data('status');
+            if (status == 2) {
+                $('#btnTetapkan').prop('disabled', false);
+                return false;
             }
         });
 

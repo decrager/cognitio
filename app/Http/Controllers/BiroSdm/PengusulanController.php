@@ -122,18 +122,24 @@ class PengusulanController extends Controller
             $query->join('standar_kompetensi', 'kompetensi_pegawai.id_standar_kompetensi', 'standar_kompetensi.id')
                     ->whereColumn('kompetensi_pegawai.kpi', '<', 'standar_kompetensi.kpi_standar');
         })
-        ->leftJoin('assignment', 'pegawai.id', 'assignment.id_pegawai')
-        ->selectRaw("CASE WHEN assignment.id_program IS NOT NULL THEN 'Assigned' ELSE 'Not Assigned' END AS assignment_status")
+        ->leftJoin('assignment', function ($q) use ($id_program, $request) {
+            $q->on('pegawai.id', '=', 'assignment.id_pegawai')
+            ->when(!$request->assigned, function ($query) use ($request) {
+                $query->where('assignment.id_program', '=', $request->id_program);
+            });
+        })
+        ->selectRaw("CASE WHEN assignment.id_program IS NOT NULL THEN 'Assigned' ELSE 'Not Assigned' END AS assignment_status, assignment.id as id_assignment")
         ->when($request->assigned, function ($query) use ($request) {
             $query->where('assignment.id_program', $request->id_program);
         })
-        ->when(!$request->assigned, function ($query) use ($request) {
-            $query->where(function ($query) use ($request) {
-                $query->where('assignment.id_program', '!=', $request->id_program)
-                        ->orWhereNull('assignment.id_program');
-            });
-        })
+//        ->when(!$request->assigned, function ($query) use ($request) {
+//            $query->where(function ($query) use ($request) {
+//                $query->where('assignment.id_program', '!=', $request->id_program)
+//                        ->orWhereNull('assignment.id_program');
+//            });
+//        })
         ->whereIn('pegawai.id', $pegawais->pluck('id'))
+        ->orderBy('assignment.id', 'desc')
         ->get();
 
         if ($request->assigned) {
@@ -150,10 +156,15 @@ class PengusulanController extends Controller
     public function updateOrCreate(Request $request)
     {
         $now = Assignment::where('id_program', $request->id_program)->get();
+
+        if (count($request->id_pegawai) == 0) {
+            goto skip;
+        }
+
         if ($now->count() > 0) {
             $program = Program::find($request->id_program);
             $now = $now->pluck('id_pegawai')->toArray();
-            
+
             // Find added and removed employees
             $added = array_diff($request->id_pegawai, $now); // Employees in request but not in now
             $removed = array_diff($now, $request->id_pegawai); // Employees in now but not in request
@@ -168,6 +179,13 @@ class PengusulanController extends Controller
             }
         }
 
+        skip:
+
+        // If Checked Ids Empty
+        if ($request->checked_ids == '') {
+            return redirect()->back()->with('error', 'Pilih pegawai yang akan diusulkan.');
+        }
+
         DB::beginTransaction();
         try {
             //checkedIds
@@ -180,6 +198,8 @@ class PengusulanController extends Controller
             ->delete();
             //}
 
+            $pegawai_auth = Pegawai::where('id_user', Auth::user()->id)->first();
+
             foreach ($checked_ids as $pegawai) {
                 Assignment::firstOrCreate(
                     [
@@ -189,7 +209,7 @@ class PengusulanController extends Controller
                     [
                         'status' => 1,
                         'assigned_by_id' => Auth::user()->id,
-                        'assigned_by_name' => Auth::user()->name
+                        'assigned_by_name' => $pegawai_auth->nama,
                     ]
                 );
             }
@@ -216,7 +236,10 @@ class PengusulanController extends Controller
             ->join('kriteria', 'jabatan.id', 'kriteria.id_jabatan')
             ->where('kriteria.id_program', $request->id_program)
             ->whereColumn('kompetensi_pegawai.kpi', '<=', 'standar_kompetensi.kpi_standar');
-        })->leftJoin('assignment', 'pegawai.id', 'assignment.id_pegawai')
+        })->leftJoin('assignment', function ($q) use ($request){
+            $q->on('pegawai.id', '=', 'assignment.id_pegawai')
+            ->where('assignment.id_program', '=', $request->id_program);
+        })
         ->orderBy('assignment.id', 'desc')
         ->get();
 

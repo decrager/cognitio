@@ -30,8 +30,9 @@
                                         <th width="10%">Aksi</th>
                                     </tr>
                                 </thead>
-                                @foreach($assignment_usulan as $item2)
+
                                     <tbody>
+                                    @foreach($assignment_usulan as $item2)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>
@@ -80,13 +81,12 @@
                                                 </div>
                                             </td>
                                         </tr>
+                                        @endforeach
                                     </tbody>
-                                @endforeach
                             </table>
                         @else
                             <p>Belum ada data Assignment Program / Pelatihan.</p>
                         @endif
-
                     </div>
                 </div>
             </div>
@@ -100,45 +100,47 @@
                 </h4>
             </div>
         <div class="card-body">
-
             <div class="row">
                 <div class="col-md-12">
                     <div class="table-responsive">
                         @if(count($assignment_non_usulan) > 0)
                             <table id="datatable_unit_kerja_2" class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th width="15%">Nama Pegawai</th>
-                                        <th>Nama Pelatihan</th>
-                                        <th>Status</th>
-                                        <th>Deskripsi</th>
-                                        <th>Tanggal Mulai</th>
-                                        <th>Tanggal Selesai</th>
-                                        <th>Lokasi</th>
-                                        <th>Penyelenggara</th>
-                                    </tr>
-                                </thead>
-                                @foreach($assignment_non_usulan as $item3)
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th width="15%">Nama Pegawai</th>
+                                            <th>Nama Pelatihan</th>
+                                            <th>Status</th>
+                                            <th>Deskripsi</th>
+                                            <th>Tanggal Mulai</th>
+                                            <th>Tanggal Selesai</th>
+                                            <th>Lokasi</th>
+                                            <th>Penyelenggara</th>
+                                        </tr>
+                                    </thead>
                                     <tbody>
+                                    @foreach($assignment_non_usulan as $item3)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>
                                                 <b>{{ $item3->pegawai->nama ?? '-' }}</b>
                                                 <span class="badge badge-sm badge-info">
-                                                   {{ $item3->pegawai->tipe ?? '-' }}</span>
-                                                <br>
-                                                <span class="text-muted">NIP: {{ $item3->pegawai->nip ?? '-' }}</span>
-                                                <br>
+                                                   {{ $item3->pegawai->tipe ?? '-' }}
+                                                </span>
+                                                <br />
+                                                <span class="text-muted">NIP: {{ $item3->pegawai->nip ?? '-' }}
+                                                </span>
+                                                <br />
                                                 <span class="text-info">
                                                     NIK: {{ $item3->pegawai->nik ?? '-' }}
                                                 </span>
                                             </td>
-                                            <td><b>{{ $item3->Program->nama_pelatihan ?? '-' }}</b>
+                                            <td>
+                                                <b>{{ $item3->Program->nama_pelatihan ?? '-' }}</b>
                                                 <br>
                                                 <button class="btn btn-info btn-sm mt-1" style="width: 35px !important;" onclick="showDetail({{ $item3->id_program }})">
                                                     <i class="fa fa-eye"></i>
-                                                </button></td>
+                                                </button>
                                             </td>
                                             <td><x-status-badge :status="$item3->status" /></td>
                                             <td>{{ $item3->Program->deskripsi ?? '-' }}</td>
@@ -150,8 +152,8 @@
                                                 <span class="text-muted text-sm">Assigned by: <span class="text-info">{{ $item3->assigned_by_name ?? '-' }}</span></span>
                                             </td>
                                         </tr>
+                                    @endforeach
                                     </tbody>
-                                @endforeach
                             </table>
                         @else
                             <p>Belum ada data Assignment Program / Pelatihan.</p>

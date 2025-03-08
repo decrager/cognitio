@@ -9,7 +9,7 @@
 </div>
 <form action="{{ route('biro-sdm.pengusulan.updateOrCreate') }}" method="POST">
     @csrf
-    <input id="checked_ids" type="text" name="checked_ids" value="{{$checked_ids}}">
+    <input id="checked_ids" type="hidden" name="checked_ids" value="{{$checked_ids}}">
     <div class="box-body">
         <table id="employeeTable" class="table table-bordered table-striped">
             <thead>
