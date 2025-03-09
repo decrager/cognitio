@@ -42,7 +42,7 @@
                                 <th scope="col">Tanggal Lahir</th>
                                 <th scope="col">Jenis Kelamin</th>
                                 {{-- <th scope="col">Alamat</th> --}}
-                                <th scope="col">Pengusulan</th>
+                                {{-- <th scope="col">Pengusulan</th> --}}
                             </tr>
                             </thead>
                             <tbody>
@@ -70,7 +70,7 @@
                                     <td>{{ \Carbon\Carbon::parse($val->tanggal_lahir)->translatedFormat('j F Y') }}</td>
                                     <td>{{ $val->jenis_kelamin }}</td>
                                     {{-- <td>{{ $val->alamat }}</td> --}}
-                                    <td class="text-center">
+                                    {{-- <td class="text-center">
                                         @if($val->status == 2)
                                             <button class="btn btn-success btn-sm" disabled>Konfirmasi</button>
                                         @elseif($val->status == 3)
@@ -78,7 +78,7 @@
                                         @else
                                             <button class="btn btn-primary btn-sm" onclick="openModal({{ $val->id }})"><i class="fa fa-files-o"></i></button>
                                         @endif
-                                    </td>
+                                    </td> --}}
                                 </tr>
                             @endforeach
                             </tbody>
@@ -129,8 +129,8 @@
                                 <option value="">-- Pilih Program Pelatihan --</option>
                                 @foreach($programList as $program)
                                     <option value="{{ $program->id }}"
-                                            data-mulai="{{ $program->tanggal_mulai }}"
-                                            data-selesai="{{ $program->tanggal_selesai }}"
+                                            data-mulai="{{ \Carbon\Carbon::parse($program->tanggal_mulai)->translatedFormat('j F Y') }}"
+                                            data-selesai="{{ \Carbon\Carbon::parse($program->tanggal_selesai)->translatedFormat('j F Y') }}"
                                             data-kuota="{{ $program->kuota }}"
                                             data-lokasi="{{ $program->lokasi }}"
                                             data-penyelenggara="{{ $program->penyelenggara }}"

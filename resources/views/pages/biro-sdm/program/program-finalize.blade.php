@@ -90,14 +90,13 @@
                                                 <x-status-badge :status="$val->status" />
                                             </td>
                                             <td>
-                                                @if($val->status == 2)
-                                                    <form id="status-form-{{ $val->id }}" action="{{ route('biro-sdm.penetapan.update-assignment-final', $val->id_assignment) }}" method="POST" style="display: none;">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <input type="hidden" name="status" id="status-input-{{ $val->id }}">
-                                                    </form>
-                                                    <button class="btn btn-success btn-sm" onclick="submitForm({{ $val->id }}, 2)"><i class="fa fa-check mr-2"></i>Tetapkan</button>
-                                                @endif
+                                                <form id="status-form-{{ $val->id }}" action="{{ route('biro-sdm.penetapan.update-assignment-final', $val->id_assignment) }}" method="POST" style="display: none;">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <input type="hidden" name="status" id="status-input-{{ $val->id }}">
+                                                </form>
+                                                <?php $isDisabled = ($val->status != 2 || $program->status != 'aktif') ? 'disabled' : '' ?>
+                                                <button class="btn btn-success btn-sm {{ $isDisabled }}" onclick="submitForm({{ $val->id }}, 2)" {{ $isDisabled }}><i class="fa fa-check mr-2"></i>Tetapkan</button>
                                             </td>
                                         </tr>
                                     @endforeach

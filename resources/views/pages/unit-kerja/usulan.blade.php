@@ -36,7 +36,7 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>
-                                                <b>{{ $item2->pegawai->nama ?? '-' }}</b>
+                                                {{-- <b>{{ $item2->pegawai->nama ?? '-' }}</b>
                                                <span class="badge badge-sm badge-info">
                                                    {{ $item2->pegawai->tipe ?? '-' }}</span>
                                                 <br>
@@ -44,8 +44,8 @@
                                                 <br>
                                                 <span class="text-info">
                                                     NIK: {{ $item2->pegawai->nik ?? '-' }}
-                                                </span>
-
+                                                </span> --}}
+                                                <x-employee-name :id="$item2->pegawai->id" :name="$item2->pegawai->nama" />
                                             </td>
                                             <td>
                                                 <b>
@@ -59,8 +59,8 @@
                                                 <x-status-badge :status="$item2->status" />
                                             </td>
                                             <td><b>{{ $item2->Program->nama_pelatihan ?? '-' }}</b></td>
-                                            <td>{{ $item2->Program->tanggal_mulai ?? '-' }}</td>
-                                            <td>{{ $item2->Program->tanggal_selesai ?? '-' }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($item2->Program->tanggal_mulai)->translatedFormat('j F Y') ?? '-' }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($item2->Program->tanggal_selesai)->translatedFormat('j F Y') ?? '-' }}</td>
                                             <td>{{ $item2->Program->lokasi ?? '-' }}</td>
                                             <td>
                                                 <strong>{{ $item2->Program->penyelenggara ?? '-' }}</strong><br>
@@ -123,7 +123,7 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>
-                                                <b>{{ $item3->pegawai->nama ?? '-' }}</b>
+                                                {{-- <b>{{ $item3->pegawai->nama ?? '-' }}</b>
                                                 <span class="badge badge-sm badge-info">
                                                    {{ $item3->pegawai->tipe ?? '-' }}
                                                 </span>
@@ -133,7 +133,8 @@
                                                 <br />
                                                 <span class="text-info">
                                                     NIK: {{ $item3->pegawai->nik ?? '-' }}
-                                                </span>
+                                                </span> --}}
+                                                <x-employee-name :id="$item3->pegawai->id" :name="$item3->pegawai->nama" />
                                             </td>
                                             <td>
                                                 <b>{{ $item3->Program->nama_pelatihan ?? '-' }}</b>
@@ -144,8 +145,8 @@
                                             </td>
                                             <td><x-status-badge :status="$item3->status" /></td>
                                             <td>{{ $item3->Program->deskripsi ?? '-' }}</td>
-                                            <td>{{ $item3->Program->tanggal_mulai ?? '-' }}</td>
-                                            <td>{{ $item3->Program->tanggal_selesai ?? '-' }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($item3->Program->tanggal_mulai)->translatedFormat('j F Y') ?? '-' }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($item3->Program->tanggal_selesai)->translatedFormat('j F Y') ?? '-' }}</td>
                                             <td>{{ $item3->Program->lokasi ?? '-' }}</td>
                                             <td>
                                                 <strong>{{ $item3->Program->penyelenggara ?? '-' }}</strong><br>
@@ -160,6 +161,21 @@
                         @endif
 
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="modal-loader" class="d-flex justify-content-center">
+                        <div  class="spinner-border text-primary" role="status" >
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                    <div id="section-content"></div>
                 </div>
             </div>
         </div>
@@ -214,6 +230,26 @@
             if (confirmation) {
                 document.getElementById(`${status === 2 ? 'confirm-form' : 'reject-form'}-${id}`).submit();
             }
+        }
+
+        function loadDetailModal(id) {
+            var modal = $('#detailModal');
+            modal.modal('show');
+            $('#modal-loader').show(); // Show the loader
+            console.log($('#modal-loader'));
+
+            $.ajax({
+                url: '{{ route('biro-sdm.pegawai.show', '') }}/' + id,
+                method: 'GET',
+                success: function (data) {
+                    $('#modal-loader').hide(); // Hide the loader
+                    modal.find('#section-content').html(data);
+                },
+                error: function () {
+                    $('#modal-loader').hide(); // Hide the loader
+                    alert('Error');
+                }
+            });
         }
     </script>
 
