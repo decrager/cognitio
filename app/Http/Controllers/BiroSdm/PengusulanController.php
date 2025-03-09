@@ -20,7 +20,9 @@ class PengusulanController extends Controller
         $results = new Program();
         $results = $results->whereHas('assignment')
         // ->where('tanggal_selesai', '>=', now())
-        ->whereHas('onGoingProgram')
+        ->where(function ($q) {
+            $q->onGoingProgram();
+        })
         ->with('assignment');
         // $results = $results->with('assignment');
         $results = $this->withFilter($results, $request);
@@ -76,18 +78,19 @@ class PengusulanController extends Controller
         if ($request->listProgram) {
             $results = Program::select('nama_pelatihan')
             ->orderBy('nama_pelatihan')
-            ->whereHas('onGoingProgram')
-            // ->where(function ($q) {
-            //     $q->where('tanggal_mulai', '>=', now())
-            //     ->orWhere('tanggal_selesai', '>=', now());
-            // })
+            ->where(function ($q) {
+                $q->where('tanggal_mulai', '>=', now());
+                // ->orWhere('tanggal_selesai', '>=', now());
+            })
             ->groupBy('nama_pelatihan')
             ->get()
             ->makeHidden(['status']);
         } else if ($request->listLocation) {
             $results = Program::select('lokasi')
             ->where('nama_pelatihan', $request->nama_pelatihan)
-            ->whereHas('onGoingProgram')
+            ->where(function ($q) {
+                $q->onGoingProgram();
+            })
             // ->where(function ($q) {
             //     $q->where('tanggal_mulai', '>=', now())
             //     ->orWhere('tanggal_selesai', '>=', now());
@@ -114,6 +117,7 @@ class PengusulanController extends Controller
     public function listPegawai(Request $request)
     {
         $id_program = $request->id_program;
+        $program = Program::find($id_program);
         $pegawais = Program::select('pegawai.id')
         ->join('kriteria', 'program.id', 'kriteria.id_program')
         ->join('jabatan', 'kriteria.id_jabatan', 'jabatan.id')
@@ -148,7 +152,7 @@ class PengusulanController extends Controller
         ->get();
 
         if ($request->assigned) {
-            return view('pages.biro-sdm.pengusulan.pengusulan-detail', compact('pegawai', 'id_program'));
+            return view('pages.biro-sdm.pengusulan.pengusulan-detail', compact('pegawai', 'id_program', 'program'));
         } else {
             // Kuota & Checked Ids, buat handle validasi dan pengusulan ter check
             $kuota  = Program::find($id_program)->kuota;

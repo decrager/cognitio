@@ -90,7 +90,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-sm btn-info detailUsulan" data-id_program="{{ $val->id }}" @if ($val->status != 'aktif') disabled @endif>
+                                            <button type="button" class="btn btn-sm btn-info detailUsulan" data-id_program="{{ $val->id }}">
                                                 <i class="fa fa-users"></i>
                                             </button>
                                         </td>

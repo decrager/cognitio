@@ -31,8 +31,11 @@ class PenetapanController extends Controller
             }
         ])
         // ->where('tanggal_selesai', '>=', now())
-        ->whereHas('onGoingProgram')
-        ->whereHas('assignment')->with('assignment');
+        ->whereHas('assignment')
+        ->where(function ($q) {
+            $q->onGoingProgram();
+        })
+        ->with('assignment');
         $results = $this->withFilter($results, $request);
 
         $results = $results->orderByRaw("CASE WHEN tanggal_mulai > CURDATE() THEN 0 ELSE 1 END, tanggal_mulai ASC")->paginate(10);

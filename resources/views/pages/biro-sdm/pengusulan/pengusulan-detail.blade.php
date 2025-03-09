@@ -35,8 +35,8 @@
     <div class="box-footer">
         <input type="text" hidden name="id_program" value="{{ $id_program }}">
         <div class="d-flex justify-content-between">
-            <button type="button" class="btn btn-danger" id="btn-delete">Hapus Semua</button>
-            <button type="submit" class="btn btn-success">Edit</button>
+            <button type="button" class="btn btn-danger" id="btn-delete" {{ $program->status != 'aktif' ? 'disabled' : '' }}>Hapus Semua</button>
+            <button type="submit" class="btn btn-success" {{ $program->status != 'aktif' ? 'disabled' : '' }}>Edit</button>
         </div>
     </div>
 </form>
