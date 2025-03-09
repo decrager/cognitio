@@ -68,13 +68,14 @@
                                             </td>
                                             <td>
                                                 <div>
+                                                    <?php $isDisabled = $item2->program->status != 'aktif' ? 'disabled' : '' ?>
                                                     <form id="status-form-{{ $item2->id }}" action="{{ route('update_status_assignment.unit-kerja', $item2->id) }}" method="POST" style="display:inline;">
                                                         @csrf
                                                         <input type="hidden" name="status" id="status-input-{{ $item2->id }}">
-                                                        <button style="width: 35px !important;" type="button" class="btn btn-success btn-sm" onclick="submitForm({{ $item2->id }}, 2)">
+                                                        <button style="width: 35px !important;" type="button" class="btn btn-success btn-sm {{ $isDisabled }}" {{ $isDisabled }} onclick="submitForm({{ $item2->id }}, 2)">
                                                             <i class="fa fa-check"></i>
                                                         </button>
-                                                        <button style="width: 35px !important;" type="button" class="btn btn-danger btn-sm" onclick="submitForm({{ $item2->id }}, 3)">
+                                                        <button style="width: 35px !important;" type="button" class="btn btn-danger btn-sm {{ $isDisabled }}" {{ $isDisabled }} onclick="submitForm({{ $item2->id }}, 3)">
                                                             <i class="fa fa-close"></i>
                                                         </button>
                                                     </form>
