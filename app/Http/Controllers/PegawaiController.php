@@ -43,13 +43,14 @@ class PegawaiController extends Controller
         $assignment = [];
         if ($pegawai) {
             $assignment = Assignment::with('Program')
+                ->whereHas('onGoingProgram')
                 ->where('id_pegawai', $pegawai->id)
                 ->get();
 
-            $jumlah_assignment_usulan = Assignment::where('id_pegawai', $pegawai->id)->where('status', 1)->count();
-            $jumlah_assignment_konfirmasi = Assignment::where('id_pegawai', $pegawai->id)->where('status', 2)->count();
-            $jumlah_assignment_tidak_dikonfirmasi = Assignment::where('id_pegawai', $pegawai->id)->where('status', 3)->count();
-            $jumlah_assignment_ditetapkan = Assignment::where('id_pegawai', $pegawai->id)->where('status', 4)->count();
+            $jumlah_assignment_usulan = Assignment::whereHas('onGoingProgram')->where('id_pegawai', $pegawai->id)->where('status', 1)->count();
+            $jumlah_assignment_konfirmasi = Assignment::whereHas('onGoingProgram')->where('id_pegawai', $pegawai->id)->where('status', 2)->count();
+            $jumlah_assignment_tidak_dikonfirmasi = Assignment::whereHas('onGoingProgram')->where('id_pegawai', $pegawai->id)->where('status', 3)->count();
+            $jumlah_assignment_ditetapkan = Assignment::whereHas('onGoingProgram')->where('id_pegawai', $pegawai->id)->where('status', 4)->count();
         }
 
         // Passing data pegawai ke view dashboard

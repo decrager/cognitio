@@ -30,6 +30,8 @@ class PenetapanController extends Controller
                 $query->where('status', 4);
             }
         ])
+        // ->where('tanggal_selesai', '>=', now())
+        ->whereHas('onGoingProgram')
         ->whereHas('assignment')->with('assignment');
         $results = $this->withFilter($results, $request);
 

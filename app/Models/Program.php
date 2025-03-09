@@ -31,6 +31,11 @@ class Program extends Model
         return $this->hasMany(Assignment::class, 'id_program', 'id');
     }
 
+    public function onGoingProgram()
+    {
+        return $this->where('tanggal_mulai', '>=', now())->orWhere('tanggal_selesai', '>=', now());
+    }
+
     public function kriteria()
     {
         return $this->hasMany(Kriteria::class, 'id_program', 'id');

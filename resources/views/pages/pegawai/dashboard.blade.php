@@ -125,8 +125,8 @@
                             <tr>
                                 <th>No</th>
                                 <th>Nama Kompetensi</th>
-                                <th>KPI Standar</th>
                                 <th>KPI Pegawai</th>
+                                <th>KPI Standar</th>
                             </tr>
                         </thead>
                         @foreach($kompetensi as $item)
@@ -142,8 +142,8 @@
                                 <tr class="{{$class_bg}}">
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->standarKompetensi->nama_kompetensi ?? 'Tidak Ada' }}</td>
-                                    <td>{{ $item->standarKompetensi->kpi_standar ?? '-' }}</td>
                                     <td style="{{ $warna_kpi }}">{{ $kpi_pegawai }}</td>
+                                    <td>{{ $item->standarKompetensi->kpi_standar ?? '-' }}</td>
                                 </tr>
                             </tbody>
                         @endforeach
@@ -179,7 +179,7 @@
                                 <th>Tanggal Selesai</th>
                                 <th>Lokasi</th>
                                 <th>Penyelenggara</th>
-                                <th>Di Usulkan Oleh</th>
+                                <th>Diusulkan Oleh</th>
                             </tr>
                         </thead>
                         @foreach($assignment as $item2)
@@ -205,11 +205,18 @@
                             <tbody>
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td><b>{{ $item2->Program->nama_pelatihan ?? '-' }}</b></td>
+                                    <td>
+                                        <p class="p-0 m-0 text-decoration-none text-primary text-bold"
+                                        style="cursor: pointer;"
+                                        onmouseover="this.classList.add('text-info', 'text-decoration-underline');"
+                                        onmouseout="this.classList.remove('text-info', 'text-decoration-underline');"
+                                        onclick="loadDetailModal({{ $item2->Program->id }})">{{ $item2->Program->nama_pelatihan }}</p>
+                                    </td>
+                                    {{-- <td><b>{{ $item2->Program->nama_pelatihan ?? '-' }}</b></td> --}}
                                     <th style="{{ $warna_status }}">{{ $status_text }}</td>
                                     <td>{{ $item2->Program->deskripsi ?? '-' }}</td>
-                                    <td>{{ $item2->Program->tanggal_mulai ?? '-' }}</td>
-                                    <td>{{ $item2->Program->tanggal_selesai ?? '-' }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($item2->Program->tanggal_mulai)->translatedFormat('j F Y') ?? '-' }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($item2->Program->tanggal_selesai)->translatedFormat('j F Y') ?? '-' }}</td>
                                     <td>{{ $item2->Program->lokasi ?? '-' }}</td>
                                     <td>{{ $item2->Program->penyelenggara ?? '-' }}</td>
                                     <td>{{ $item2->assigned_by_name ?? '-' }}</td>
@@ -228,4 +235,41 @@
     <!-- /.col -->
 </div>
 <!-- /.row -->
+
+<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div id="modal-loader" class="d-flex justify-content-center">
+                    <div  class="spinner-border text-primary" role="status" >
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
+
+@push('scripts')
+    <script>
+        function loadDetailModal(id) {
+            var modal = $('#detailModal');
+            modal.modal('show');
+            $('#modal-loader').show(); // Show the loader
+
+            $.ajax({
+                url: '{{ route('biro-sdm.pengusulan.show', '') }}/' + id,
+                method: 'GET',
+                success: function (data) {
+                    $('#modal-loader').hide(); // Hide the loader
+                    modal.find('.modal-content').html(data);
+                },
+                error: function () {
+                    $('#modal-loader').hide(); // Hide the loader
+                    alert('Error');
+                }
+            });
+        }
+    </script>
+@endpush

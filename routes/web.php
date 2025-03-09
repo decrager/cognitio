@@ -40,6 +40,7 @@ Route::post('/login', [Authentication::class, 'authenticate'])->name('login-acti
 Route::get('/logout', [Authentication::class, 'logout'])->name('logout-action');
 
 Route::get('/modal-pegawai/{id}', [BiroSdmPegawaiController::class,'show'])->name('biro-sdm.pegawai.show');
+Route::get('/modal-program/get/{id}', [BiroSdmPengusulanController::class, 'show'])->name('biro-sdm.pengusulan.show');
 
 Route::group(['prefix' => 'biro-sdm', 'middleware' => 'cekRole:biro-sdm'], function () {
     Route::get('/dashboard', [BiroSdmDashboardController::class, 'index'])->name('dashboard.biro-sdm');
@@ -53,7 +54,6 @@ Route::group(['prefix' => 'biro-sdm', 'middleware' => 'cekRole:biro-sdm'], funct
     Route::post('/program-pelatihan/delete/{id}', [BiroSdmProgramController::class, 'delete'])->name('biro-sdm.program.delete');
 
     Route::get('/pengusulan', [BiroSdmPengusulanController::class, 'index'])->name('biro-sdm.pengusulan.index');
-    Route::get('/pengusulan/get/{id}', [BiroSdmPengusulanController::class, 'show'])->name('biro-sdm.pengusulan.show');
     Route::get('/pengusulan/form', [BiroSdmPengusulanController::class, 'form'])->name('biro-sdm.pengusulan.form');
     Route::get('/listProgram', [BiroSdmPengusulanController::class, 'listProgram'])->name('biro-sdm.pengusulan.listProgram');
     Route::get('/listPegawai', [BiroSdmPengusulanController::class, 'listPegawai'])->name('biro-sdm.pengusulan.listPegawai');

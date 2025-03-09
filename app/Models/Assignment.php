@@ -22,6 +22,11 @@ class Assignment extends Model
         return $this->belongsTo(Program::class, 'id_program', 'id');
     }
 
+    public function onGoingProgram()
+    {
+        return $this->belongsTo(Program::class, 'id_program', 'id')->where('tanggal_mulai', '>=', now())->orWhere('tanggal_selesai', '>=', now());
+    }
+
     public function pegawai()
     {
         return $this->belongsTo(Pegawai::class, 'id_pegawai', 'id');

@@ -48,7 +48,7 @@
             <div class="inner">
                 <h3>{{ $jumlah_assignment_usulan }}</h3>
 
-                <p>Pelatihan yang Di Usulkan</p>
+                <p>Pegawai yang Diusulkan</p>
             </div>
             <div class="icon">
                 <i class="ion ion-information-circled"></i>
@@ -62,7 +62,7 @@
             <div class="inner">
                 <h3>{{ $jumlah_assignment_konfirmasi }}<sup style="font-size: 20px"></sup></h3>
 
-                <p>Pelatihan TerKonfirmasi</p>
+                <p>Pelatihan Terkonfirmasi</p>
             </div>
             <div class="icon">
                 <i class="ion ion-help-circled"></i>

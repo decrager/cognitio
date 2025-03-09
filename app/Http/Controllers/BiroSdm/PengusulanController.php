@@ -18,7 +18,10 @@ class PengusulanController extends Controller
     public function index(Request $request)
     {
         $results = new Program();
-        $results = $results->whereHas('assignment')->with('assignment');
+        $results = $results->whereHas('assignment')
+        // ->where('tanggal_selesai', '>=', now())
+        ->whereHas('onGoingProgram')
+        ->with('assignment');
         // $results = $results->with('assignment');
         $results = $this->withFilter($results, $request);
 
@@ -73,20 +76,22 @@ class PengusulanController extends Controller
         if ($request->listProgram) {
             $results = Program::select('nama_pelatihan')
             ->orderBy('nama_pelatihan')
-            ->where(function ($q) {
-                $q->where('tanggal_mulai', '>=', now())
-                ->orWhere('tanggal_selesai', '>=', now());
-            })
+            ->whereHas('onGoingProgram')
+            // ->where(function ($q) {
+            //     $q->where('tanggal_mulai', '>=', now())
+            //     ->orWhere('tanggal_selesai', '>=', now());
+            // })
             ->groupBy('nama_pelatihan')
             ->get()
             ->makeHidden(['status']);
         } else if ($request->listLocation) {
             $results = Program::select('lokasi')
             ->where('nama_pelatihan', $request->nama_pelatihan)
-            ->where(function ($q) {
-                $q->where('tanggal_mulai', '>=', now())
-                ->orWhere('tanggal_selesai', '>=', now());
-            })
+            ->whereHas('onGoingProgram')
+            // ->where(function ($q) {
+            //     $q->where('tanggal_mulai', '>=', now())
+            //     ->orWhere('tanggal_selesai', '>=', now());
+            // })
             ->groupBy('lokasi')
             ->get()
             ->makeHidden(['status']);
