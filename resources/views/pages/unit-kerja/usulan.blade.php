@@ -236,14 +236,13 @@
         function loadDetailModal(id) {
             var modal = $('#detailModal');
             modal.modal('show');
-            $('#modal-loader').show(); // Show the loader
-            console.log($('#modal-loader'));
+            showDetailModalLoader()
 
             $.ajax({
                 url: '{{ route('biro-sdm.pegawai.show', '') }}/' + id,
                 method: 'GET',
                 success: function (data) {
-                    $('#modal-loader').hide(); // Hide the loader
+                    hideDetailModalLoader()
                     modal.find('#section-content').html(data);
                 },
                 error: function () {
