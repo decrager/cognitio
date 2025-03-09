@@ -39,7 +39,7 @@ Route::get('/login', [Authentication::class, 'form'])->name('login-form');
 Route::post('/login', [Authentication::class, 'authenticate'])->name('login-action');
 Route::get('/logout', [Authentication::class, 'logout'])->name('logout-action');
 
-Route::get('/pegawai/{id}', [BiroSdmPegawaiController::class,'show'])->name('biro-sdm.pegawai.show');
+Route::get('/modal-pegawai/{id}', [BiroSdmPegawaiController::class,'show'])->name('biro-sdm.pegawai.show');
 
 Route::group(['prefix' => 'biro-sdm', 'middleware' => 'cekRole:biro-sdm'], function () {
     Route::get('/dashboard', [BiroSdmDashboardController::class, 'index'])->name('dashboard.biro-sdm');

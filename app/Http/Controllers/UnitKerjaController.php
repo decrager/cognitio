@@ -83,8 +83,6 @@ class UnitKerjaController extends Controller
             ->get();
         }
 
-        return $assignment_usulan;
-
         return view('pages.unit-kerja.usulan', compact('assignment_usulan', 'assignment_non_usulan'));
     }
 
