@@ -214,6 +214,7 @@ class ProgramController extends Controller
         try {
             Program::find($id)->delete();
             Kriteria::where('id_program', $id)->delete();
+            Assignment::where('id_program', $id)->delete();
             DB::commit();
 
             return redirect()->route('biro-sdm.program.index')->with('success', 'Data program dan pelatihan berhasil dihapus');

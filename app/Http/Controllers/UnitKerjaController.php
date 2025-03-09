@@ -66,20 +66,24 @@ class UnitKerjaController extends Controller
         if ($pegawai) {
             $assignment_usulan = Assignment::with('Program')
             ->join('pegawai', 'pegawai.id', '=', 'assignment.id_pegawai')
+            ->join('program', 'program.id', '=', 'assignment.id_program')
             ->where('pegawai.id_unit', $pegawai->id_unit)
             ->where('assignment.status', '1')
             ->select('assignment.*') // Memilih hanya data dari assignment
+            ->orderByRaw("CASE WHEN program.tanggal_mulai > CURDATE() THEN 0 ELSE 1 END, program.tanggal_mulai ASC")
             ->get();
 
             $assignment_non_usulan = Assignment::with('Program')
             ->join('pegawai', 'pegawai.id', '=', 'assignment.id_pegawai')
+            ->join('program', 'program.id', '=', 'assignment.id_program')
             ->where('pegawai.id_unit', $pegawai->id_unit)
             ->whereIn('assignment.status', [2, 3, 4])
             ->select('assignment.*') // Memilih hanya data dari assignment
+            ->orderByRaw("CASE WHEN program.tanggal_mulai > CURDATE() THEN 0 ELSE 1 END, program.tanggal_mulai ASC")
             ->get();
         }
 
-        // return $assignment_usulan;
+        return $assignment_usulan;
 
         return view('pages.unit-kerja.usulan', compact('assignment_usulan', 'assignment_non_usulan'));
     }
