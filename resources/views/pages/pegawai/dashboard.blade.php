@@ -56,7 +56,7 @@
             <div class="inner">
                 <h3>{{ $jumlah_assignment_usulan }}</h3>
 
-                <p>Pelatihan yang Di Usulkan</p>
+                <p>Pegawai Diusulkan Pelatihan</p>
             </div>
             <div class="icon">
                 <i class="ion ion-information-circled"></i>
@@ -70,7 +70,7 @@
             <div class="inner">
                 <h3>{{ $jumlah_assignment_konfirmasi }}<sup style="font-size: 20px"></sup></h3>
 
-                <p>Pelatihan Terkonfirmasi</p>
+                <p>Pegawai Terkonfirmasi Pelatihan</p>
             </div>
             <div class="icon">
                 <i class="ion ion-help-circled"></i>
@@ -84,7 +84,7 @@
             <div class="inner">
                 <h3>{{ $jumlah_assignment_tidak_dikonfirmasi }}</h3>
 
-                <p>Pelatihan Tidak Terkonfirmasi</p>
+                <p>Pegawai Tidak Terkonfirmasi Pelatihan</p>
             </div>
             <div class="icon">
                 <i class="ion ion-thumbsdown"></i>
@@ -98,7 +98,7 @@
             <div class="inner">
                 <h3>{{ $jumlah_assignment_ditetapkan }}</h3>
 
-                <p>Pelatihan Ditetapkan</p>
+                <p>Pegawai Ditetapkan Pelatihan</p>
             </div>
             <div class="icon">
                 <i class="ion ion-thumbsup"></i>

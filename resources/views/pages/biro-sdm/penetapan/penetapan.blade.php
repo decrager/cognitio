@@ -190,13 +190,13 @@
         function loadDetailModal(id) {
             var modal = $('#detailModal');
             modal.modal('show');
-            $('#modal-loader').show(); // Show the loader
+            $('#modal-loader').removeClass('d-none').addClass('d-flex');
 
             $.ajax({
                 url: '{{ route('biro-sdm.pengusulan.show', '') }}/' + id,
                 method: 'GET',
                 success: function (data) {
-                    $('#modal-loader').hide(); // Hide the loader
+                    $('#modal-loader').removeClass('d-flex').addClass('d-none');
                     modal.find('.modal-content').html(data);
                 },
                 error: function () {

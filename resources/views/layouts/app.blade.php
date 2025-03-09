@@ -124,6 +124,16 @@
 <!-- DataTables -->
 <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
 
+<script>
+    function showDetailModalLoader(){
+        $('#modal-loader').removeClass('d-none').addClass('d-flex');
+    }
+
+    function hideDetailModalLoader(){
+        $('#modal-loader').removeClass('d-flex').addClass('d-none');
+    }
+</script>
+
 @stack('scripts')
 
 </body>
