@@ -11,11 +11,11 @@
 Project IT Talent On Boarding CPNS BPKP TA 2024
 
 ## 👤 Developer
-- Aldo Bramantio Nugroho - Fullstack Developer
-- Ahmad Saifudin Syukroni - Fullstack Developer
-- Amri Nursaputra - Frontend Developer
-- Bagus Nugroho - Backend Developer
-- Chelsy Situmorang - Software Quality Assurance
+- Aldo Bramantio Nugroho - Fullstack Developer - Pranata SDM
+- Ahmad Saifudin Syukroni - Fullstack Developer - Pranata Komputer
+- Amri Nursaputra - Frontend Developer - Pranata Komputer
+- Bagus Nugroho - Backend Developer - Auditor Terampil
+- Chelsy Situmorang - Software Quality Assurance - Pranata Komputer
 
 ## About Laravel
 
