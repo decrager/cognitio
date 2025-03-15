@@ -7,6 +7,9 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## 🔥 PROJECT : Sistem Manajemen Program Pelatihan dan Pengembangan Pegawai BPKP
+Project IT Talent On Boarding CPNS BPKP TA 2024
+
 ## 👤 Developer
 - Aldo Bramantio Nugroho - Fullstack Developer
 - Ahmad Saifudin Syukroni - Fullstack Developer
